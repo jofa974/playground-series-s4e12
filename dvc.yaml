@@ -1,0 +1,5 @@
+stages:
+  pull_data:
+    cmd: mkdir -p data/raw && poetry run kaggle competitions download -c playground-series-s4e12 && mv playground-series-s4e12.zip data/raw/ && cd data/raw/ && unzip playground-series-s4e12.zip && rm playground-series-s4e12.zip
+    outs:
+    - data/raw
