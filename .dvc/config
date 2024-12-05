@@ -1,0 +1,4 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = /mnt/data/dvcremote/playground-series-s4e12
