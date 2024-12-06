@@ -1324,6 +1324,45 @@ docs = ["mkdocs (>=1.5.2,<2)", "mkdocs-gen-files (>=0.5.0,<1)", "mkdocs-material
 tests = ["pytest (>=7,<9)", "pytest-celery (<1)", "pytest-cov (>=4.1.0)", "pytest-mock", "pytest-rerunfailures", "pytest-sugar", "pytest-test-utils (>=0.0.6)"]
 
 [[package]]
+name = "dvclive"
+version = "3.48.0"
+description = "Experiments logger for ML projects."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "dvclive-3.48.0-py3-none-any.whl", hash = "sha256:6625b9eac49322165877a95696db8934d190d89fadf53294c471d2584b322879"},
+    {file = "dvclive-3.48.0.tar.gz", hash = "sha256:42434660f16b88c8931e625da010c9cdabf2b0d8d11173b81ed1d976c4b7fb0a"},
+]
+
+[package.dependencies]
+dvc = ">=3.48.4"
+dvc-render = ">=1.0.0,<2"
+dvc-studio-client = ">=0.20,<1"
+funcy = "*"
+gto = "*"
+psutil = "*"
+pynvml = "*"
+"ruamel.yaml" = "*"
+scmrepo = ">=3,<4"
+
+[package.extras]
+all = ["dvclive[fastai,huggingface,image,lgbm,lightning,markdown,mmcv,optuna,plots,tf,xgb]"]
+dev = ["dvclive[all,tests]", "mypy (==1.11.1)", "types-PyYAML"]
+fastai = ["fastai"]
+huggingface = ["datasets", "transformers"]
+image = ["numpy", "pillow"]
+lgbm = ["lightgbm"]
+lightning = ["jsonargparse[signatures] (>=4.26.1)", "lightning (>=2.0)", "torch"]
+markdown = ["matplotlib"]
+mmcv = ["mmcv"]
+optuna = ["optuna"]
+plots = ["numpy", "pandas", "scikit-learn"]
+sklearn = ["scikit-learn"]
+tests = ["dpath", "dvclive[image,markdown,plots]", "ipython", "pytest (>=7.2.0,<9.0)", "pytest-cov (>=3.0.0,<6.0)", "pytest-mock (>=3.8.2,<4.0)", "pytest-sugar (>=0.9.6,<2.0)", "pytest-voluptuous", "tf-keras", "transformers[torch]"]
+tf = ["tensorflow"]
+xgb = ["xgboost"]
+
+[[package]]
 name = "entrypoints"
 version = "0.4"
 description = "Discover and load entry points from installed packages."
@@ -3033,6 +3072,17 @@ files = [
 ]
 
 [[package]]
+name = "nvidia-ml-py"
+version = "12.560.30"
+description = "Python Bindings for the NVIDIA Management Library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "nvidia-ml-py-12.560.30.tar.gz", hash = "sha256:f0254dc7400647680a072ee02509bfd46102b60bdfeca321576d4d4817e7fe97"},
+    {file = "nvidia_ml_py-12.560.30-py3-none-any.whl", hash = "sha256:fea371c94d63e38a611c17bbb85fe400e9c8ddb9e8684a9cd0e47786a4bc3c73"},
+]
+
+[[package]]
 name = "omegaconf"
 version = "2.3.0"
 description = "A flexible configuration library"
@@ -3818,6 +3868,23 @@ files = [
 ]
 
 [[package]]
+name = "pynvml"
+version = "12.0.0"
+description = "Python utilities for the NVIDIA Management Library"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pynvml-12.0.0-py3-none-any.whl", hash = "sha256:fdff84b62a27dbe98e08e1a647eb77342bef1aebe0878bcd15e99a83fcbecb9e"},
+    {file = "pynvml-12.0.0.tar.gz", hash = "sha256:299ce2451a6a17e6822d6faee750103e25b415f06f59abb8db65d30f794166f5"},
+]
+
+[package.dependencies]
+nvidia-ml-py = ">=12.0.0,<13.0.0a0"
+
+[package.extras]
+test = ["pytest (>=3.6)", "pytest-cov", "pytest-runner"]
+
+[[package]]
 name = "pyparsing"
 version = "3.2.0"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -4366,6 +4433,33 @@ files = [
     {file = "ruamel.yaml.clib-0.2.12-cp39-cp39-win32.whl", hash = "sha256:beffaed67936fbbeffd10966a4eb53c402fafd3d6833770516bf7314bc6ffa12"},
     {file = "ruamel.yaml.clib-0.2.12-cp39-cp39-win_amd64.whl", hash = "sha256:040ae85536960525ea62868b642bdb0c2cc6021c9f9d507810c0c604e66f5a7b"},
     {file = "ruamel.yaml.clib-0.2.12.tar.gz", hash = "sha256:6c8fbb13ec503f99a91901ab46e0b07ae7941cd527393187039aec586fdfd36f"},
+]
+
+[[package]]
+name = "ruff"
+version = "0.8.2"
+description = "An extremely fast Python linter and code formatter, written in Rust."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "ruff-0.8.2-py3-none-linux_armv6l.whl", hash = "sha256:c49ab4da37e7c457105aadfd2725e24305ff9bc908487a9bf8d548c6dad8bb3d"},
+    {file = "ruff-0.8.2-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:ec016beb69ac16be416c435828be702ee694c0d722505f9c1f35e1b9c0cc1bf5"},
+    {file = "ruff-0.8.2-py3-none-macosx_11_0_arm64.whl", hash = "sha256:f05cdf8d050b30e2ba55c9b09330b51f9f97d36d4673213679b965d25a785f3c"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:60f578c11feb1d3d257b2fb043ddb47501ab4816e7e221fbb0077f0d5d4e7b6f"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:cbd5cf9b0ae8f30eebc7b360171bd50f59ab29d39f06a670b3e4501a36ba5897"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:b402ddee3d777683de60ff76da801fa7e5e8a71038f57ee53e903afbcefdaa58"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:705832cd7d85605cb7858d8a13d75993c8f3ef1397b0831289109e953d833d29"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:32096b41aaf7a5cc095fa45b4167b890e4c8d3fd217603f3634c92a541de7248"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:e769083da9439508833cfc7c23e351e1809e67f47c50248250ce1ac52c21fb93"},
+    {file = "ruff-0.8.2-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5fe716592ae8a376c2673fdfc1f5c0c193a6d0411f90a496863c99cd9e2ae25d"},
+    {file = "ruff-0.8.2-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:81c148825277e737493242b44c5388a300584d73d5774defa9245aaef55448b0"},
+    {file = "ruff-0.8.2-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:d261d7850c8367704874847d95febc698a950bf061c9475d4a8b7689adc4f7fa"},
+    {file = "ruff-0.8.2-py3-none-musllinux_1_2_i686.whl", hash = "sha256:1ca4e3a87496dc07d2427b7dd7ffa88a1e597c28dad65ae6433ecb9f2e4f022f"},
+    {file = "ruff-0.8.2-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:729850feed82ef2440aa27946ab39c18cb4a8889c1128a6d589ffa028ddcfc22"},
+    {file = "ruff-0.8.2-py3-none-win32.whl", hash = "sha256:ac42caaa0411d6a7d9594363294416e0e48fc1279e1b0e948391695db2b3d5b1"},
+    {file = "ruff-0.8.2-py3-none-win_amd64.whl", hash = "sha256:2aae99ec70abf43372612a838d97bfe77d45146254568d94926e8ed5bbb409ea"},
+    {file = "ruff-0.8.2-py3-none-win_arm64.whl", hash = "sha256:fb88e2a506b70cfbc2de6fae6681c4f944f7dd5f2fe87233a7233d888bad73e8"},
+    {file = "ruff-0.8.2.tar.gz", hash = "sha256:b84f4f414dda8ac7f75075c1fa0b905ac0ff25361f42e6d5da681a465e0f78e5"},
 ]
 
 [[package]]
@@ -5123,4 +5217,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d66c2f50e4e5d8e3edaf158f8de1359b869f58333bdc749edc66cb0ee7f99ffb"
+content-hash = "9bf9a7692f4bcda4397424d4c1117ae4cdadb9555af796f8651a562b0f7d1b3d"

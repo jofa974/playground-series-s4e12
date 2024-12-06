@@ -14,11 +14,13 @@ seaborn = "^0.13.2"
 matplotlib = "^3.9.3"
 jupyter = "^1.1.1"
 kaggle = "^1.6.17"
+dvclive = "^3.48.0"
 
 
 [tool.poetry.group.dev.dependencies]
 ipdb = "^0.13.13"
 pre-commit = "^4.0.1"
+ruff = "^0.8.2"
 
 [build-system]
 requires = ["poetry-core"]

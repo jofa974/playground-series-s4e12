@@ -10,3 +10,34 @@ stages:
       md5: 81fcdcb7e37e0ac83770494236eb8c60.dir
       size: 332735146
       nfiles: 3
+  prepare_basic:
+    cmd: poetry run python insurance/prepare_basic.py
+    deps:
+    - path: insurance/prepare_basic.py
+      hash: md5
+      md5: fa47767f818e03e1241dd54f4b79282b
+      size: 575
+    params:
+      params.yaml:
+        data.random_state: 42
+    outs:
+    - path: data/prepared/prepared_data.csv
+      hash: md5
+      md5: a1304a188e767c8ae47dcb80b7eaef35
+      size: 172496905
+  train_basic:
+    cmd: poetry run python insurance/train_basic.py
+    deps:
+    - path: data/prepared/prepared_data.csv
+      hash: md5
+      md5: a1304a188e767c8ae47dcb80b7eaef35
+      size: 172496905
+    - path: insurance/train_basic.py
+      hash: md5
+      md5: e85afc2504457a3df8303544435f2648
+      size: 4022
+    outs:
+    - path: out/models/model_basic.pkl
+      hash: md5
+      md5: 7fbbca60bad4fedacd76aeaf211d836e
+      size: 19680

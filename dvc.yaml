@@ -1,5 +1,38 @@
 stages:
   pull_data:
-    cmd: mkdir -p data/raw && poetry run kaggle competitions download -c playground-series-s4e12 && mv playground-series-s4e12.zip data/raw/ && cd data/raw/ && unzip playground-series-s4e12.zip && rm playground-series-s4e12.zip
+    cmd: mkdir -p data/raw && poetry run kaggle competitions download -c playground-series-s4e12
+      && mv playground-series-s4e12.zip data/raw/ && cd data/raw/ && unzip playground-series-s4e12.zip
+      && rm playground-series-s4e12.zip
     outs:
     - data/raw
+
+  prepare_basic:
+    cmd: poetry run python insurance/prepare_basic.py
+    deps:
+    - insurance/prepare_basic.py
+    params:
+    - data.random_state
+    outs:
+    - data/prepared/prepared_data.csv
+
+  train_basic:
+    cmd: poetry run python insurance/train_basic.py
+    deps:
+    - insurance/train_basic.py
+    - data/prepared/prepared_data.csv
+    outs:
+    - out/models/model_basic.pkl
+
+  # predict:
+  #   cmd: python insurance/predict.py
+  #   deps:
+  #     - insurance/predict.py
+  #     - out/models/model_basic.pkl
+  #     - data/raw/test.csv
+  #   outs:
+  #     - data/preds/submission.csv
+metrics:
+- out/metrics.json
+plots:
+- out/plots/metrics:
+    x: step

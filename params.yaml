@@ -1,0 +1,7 @@
+data:
+  random_state: 42
+
+train:
+  type: LinearRegression
+  random_state: 42 
+  n_splits: 5
