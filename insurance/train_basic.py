@@ -84,11 +84,11 @@ def main():
             y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
 
             # Fit the pipeline
-            pipeline.fit(X_train, y_train)
+            pipeline.fit(X_train, np.log1p(y_train))
 
             # Predict and evaluate
-            predictions = pipeline.predict(X_test)
-            rmsle = root_mean_squared_log_error(y_test, predictions)
+            y_pred = np.expm1(pipeline.predict(X_test))
+            rmsle = root_mean_squared_log_error(y_test, y_pred)
             rmsle_scores.append(rmsle)
             print(f"Root Mean Squared Logarithmic Error: {rmsle:.4f}")
             live.log_metric(f"rmsle/{fold}", rmsle)
