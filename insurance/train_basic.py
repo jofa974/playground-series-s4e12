@@ -5,6 +5,7 @@ from dvclive import Live
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 from sklearn.pipeline import Pipeline
@@ -65,7 +66,7 @@ def main():
         remainder="drop",
     )
 
-    model = LinearRegression()
+    model = RandomForestRegressor(n_estimators=50, n_jobs=-1)
     pipeline = Pipeline(
         [
             ("preprocessor", preprocessor),
