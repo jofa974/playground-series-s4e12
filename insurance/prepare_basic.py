@@ -6,6 +6,7 @@ from insurance.common import RAW_DATA_PATH, PREP_DATA_PATH
 
 def prepare(df: pd.DataFrame) -> pd.DataFrame:
     """Cleans data."""
+    df = df.drop(columns=["id"])
     df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"]).dt.strftime("%Y%m%d")
     return df
 

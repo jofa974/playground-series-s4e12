@@ -15,23 +15,23 @@ stages:
     deps:
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: e4b606ca8d4dd932c4fdf170537e3ff2
-      size: 695
+      md5: acf606b1584cb3e843e2d50bdbdd7965
+      size: 728
     params:
       params.yaml:
         data.random_state: 42
     outs:
     - path: data/prepared/prepared_data.csv
       hash: md5
-      md5: a1304a188e767c8ae47dcb80b7eaef35
-      size: 172496905
+      md5: be6d2a66bbfc1ca11856fe43b15f938d
+      size: 164008012
   train_basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
     - path: data/prepared/prepared_data.csv
       hash: md5
-      md5: a1304a188e767c8ae47dcb80b7eaef35
-      size: 172496905
+      md5: be6d2a66bbfc1ca11856fe43b15f938d
+      size: 164008012
     - path: insurance/train_basic.py
       hash: md5
       md5: a3a3ba14a26ab53b47be768b6d7f6d50
@@ -39,5 +39,5 @@ stages:
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: 9800393467bdf98371401ba9f555db71
-      size: 4652
+      md5: 924e2ca2b3c8afcb13cd8f7affd32a8d
+      size: 4593
