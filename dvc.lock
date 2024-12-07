@@ -34,10 +34,10 @@ stages:
       size: 164008012
     - path: insurance/train_basic.py
       hash: md5
-      md5: fa61ab5a8565ea67dd3ee35053c908bf
-      size: 3632
+      md5: c2b88bf84161aca81617c000ed19cc0d
+      size: 3984
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: d425d4b99935d3661fd8e74d911db020
-      size: 4344341532
+      md5: 5f387ab184ca41c49b088ba6c23ef5ad
+      size: 143511

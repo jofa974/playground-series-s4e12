@@ -1,9 +1,12 @@
-import typer
-from pathlib import Path
-import pandas as pd
-from insurance.common import OUT_PATH, PREP_DATA_PATH, RAW_DATA_PATH
-from insurance.prepare_basic import prepare
 import pickle
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import typer
+
+from insurance.common import OUT_PATH, RAW_DATA_PATH
+from insurance.prepare_basic import prepare
 
 
 def main(model: Path):
@@ -14,7 +17,7 @@ def main(model: Path):
 
     pipeline = pickle.load(model.open("rb"))
 
-    predictions = pipeline.predict(df_test)
+    predictions = np.expm1(pipeline.predict(df_test))
 
     # Prepare submission file
     submission = pd.DataFrame(

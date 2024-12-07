@@ -31,10 +31,15 @@ def main():
     features = df.drop(columns=[target_column])
     labels = df[target_column]
 
-    numeric_features = features.select_dtypes(include=[np.number]).columns.tolist()
-    categorical_features = features.select_dtypes(include=["object", "category"]).columns.tolist()
+    # numeric_features = features.select_dtypes(include=[np.number]).columns.tolist()
+    numeric_features = ["Previous Claims", "Health Score", "Annual Income", "Credit Score"]
+    # categorical_features = features.select_dtypes(include=["object", "category"]).columns.tolist()
+    categorical_features = ["Gender", "Policy Type"]
     # ordinal_features = ["Policy Start Date"]
     ordinal_features = []
+
+    feat_cols = numeric_features + categorical_features + ordinal_features
+
     # Preprocessing pipeline
     numeric_transformer = Pipeline(
         [
@@ -66,7 +71,7 @@ def main():
         remainder="drop",
     )
 
-    model = RandomForestRegressor(n_estimators=50, n_jobs=-1)
+    model = RandomForestRegressor(n_estimators=100, max_depth=3, n_jobs=-1)
     pipeline = Pipeline(
         [
             ("preprocessor", preprocessor),
@@ -80,11 +85,14 @@ def main():
 
     with Live(OUT_PATH) as live:
         rmsle_scores = []
-        for fold, (train_idx, test_idx) in enumerate(skf.split(features, labels)):
+        for fold, (train_idx, test_idx) in enumerate(skf.split(features[feat_cols])):
             print(f"Fold {fold + 1}")
-            X_train, X_test = features.iloc[train_idx], features.iloc[test_idx]
+            X_train, X_test = (
+                features[feat_cols].iloc[train_idx],
+                features[feat_cols].iloc[test_idx],
+            )
             y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
-
+            print(f"{X_train.shape=}")
             # Fit the pipeline
             pipeline.fit(X_train, np.log1p(y_train))
 
