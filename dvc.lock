@@ -15,8 +15,8 @@ stages:
     deps:
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: fa47767f818e03e1241dd54f4b79282b
-      size: 575
+      md5: e4b606ca8d4dd932c4fdf170537e3ff2
+      size: 695
     params:
       params.yaml:
         data.random_state: 42
@@ -34,10 +34,10 @@ stages:
       size: 172496905
     - path: insurance/train_basic.py
       hash: md5
-      md5: d42b2d7a4bfdb6a173727298a51bc73c
-      size: 4032
+      md5: a3a3ba14a26ab53b47be768b6d7f6d50
+      size: 3550
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: 7edeaa4b3b06d22b101f7ea3a7a27268
-      size: 19680
+      md5: 9800393467bdf98371401ba9f555db71
+      size: 4652

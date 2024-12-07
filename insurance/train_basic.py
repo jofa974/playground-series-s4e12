@@ -32,8 +32,8 @@ def main():
 
     numeric_features = features.select_dtypes(include=[np.number]).columns.tolist()
     categorical_features = features.select_dtypes(include=["object", "category"]).columns.tolist()
-    ordinal_features = ["Policy Start Date"]
-
+    # ordinal_features = ["Policy Start Date"]
+    ordinal_features = []
     # Preprocessing pipeline
     numeric_transformer = Pipeline(
         [
@@ -61,7 +61,8 @@ def main():
             ("num", numeric_transformer, numeric_features),
             ("oh", oh_transformer, categorical_features),
             ("ord", ord_transformer, ordinal_features),
-        ]
+        ],
+        remainder="drop",
     )
 
     model = LinearRegression()
@@ -106,22 +107,6 @@ def main():
             (model_path / "model_basic.pkl").open("wb"),
         )
         live.log_artifact(OUT_PATH / "models/model_basic.pkl")
-
-    # # Inference on a new dataset
-    # inference_data = pd.read_csv(inference_data_path)
-
-    # # Make predictions
-    # predictions = pipeline.predict(inference_data)
-
-    # # Prepare submission file
-    # submission = pd.DataFrame(
-    #     {
-    #         "Id": inference_data.index,  # Replace 'Id' with appropriate identifier column if needed
-    #         "Prediction": predictions,
-    #     }
-    # )
-    # submission.to_csv(submission_file_path, index=False)
-    # print(f"Submission file saved to {submission_file_path}")
 
 
 if __name__ == "__main__":

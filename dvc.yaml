@@ -23,14 +23,6 @@ stages:
     outs:
     - out/models/model_basic.pkl
 
-  # predict:
-  #   cmd: python insurance/predict.py
-  #   deps:
-  #     - insurance/predict.py
-  #     - out/models/model_basic.pkl
-  #     - data/raw/test.csv
-  #   outs:
-  #     - data/preds/submission.csv
 metrics:
 - out/metrics.json
 plots:
