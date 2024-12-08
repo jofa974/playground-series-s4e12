@@ -24,6 +24,7 @@ stages:
       deps:
       - insurance/train_${item}.py
       - data/prepared/prepared_data.csv
+      - insurance/data_pipeline.py
       outs:
       - out/models/model_${item}.pkl
       params:
@@ -33,8 +34,8 @@ stages:
 
 
 metrics:
-- dvclive-optuna/metrics.json
 - out/metrics.json
+- dvclive-optuna/metrics.json
 plots:
 - out/plots/metrics:
     x: step

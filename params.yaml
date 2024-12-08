@@ -5,21 +5,18 @@ train:
   random_state: 42 
   n_splits: 5
   xgboost:
+    random_state: 42
     device: cuda
     objective: reg:squarederror
     eval_metric: rmse
-    booster: dart
-    lambda: 2.877869889970495e-05
-    alpha: 3.025099923914481e-05
-    subsample: 0.3268802515791186
-    colsample_bytree: 0.8381014207396937
+    booster: gbtree
+    lambda: 2.9950094172974245e-05
+    alpha: 0.1014414863908301
+    subsample: 0.8765632614465999
+    colsample_bytree: 0.7678799312715366
     max_depth: 5
-    min_child_weight: 9
-    eta: 0.15415082108760558
-    gamma: 0.08681518013224823
+    min_child_weight: 3
+    eta: 0.1795659474066008
+    gamma: 0.00010292262387159199
     grow_policy: lossguide
-    sample_type: uniform
-    normalize_type: tree
-    rate_drop: 0.028879174270681974
-    skip_drop: 9.669669280432888e-07
   basic:

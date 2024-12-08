@@ -1,5 +1,10 @@
-booster: gblinear
-lambda: 0.002587150025664258
-alpha: 0.0001567697694803753
-subsample: 0.5934413868823308
-colsample_bytree: 0.9223872585890227
+booster: gbtree
+lambda: 0.09393361756359904
+alpha: 2.7011200927544123e-06
+subsample: 0.46026694726874623
+colsample_bytree: 0.9924925548935801
+max_depth: 9
+min_child_weight: 10
+eta: 4.863482116541513e-08
+gamma: 7.279901094076351e-07
+grow_policy: lossguide

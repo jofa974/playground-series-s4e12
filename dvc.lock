@@ -48,6 +48,10 @@ stages:
       hash: md5
       md5: be6d2a66bbfc1ca11856fe43b15f938d
       size: 164008012
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: ca275085bc23e535b8f588b0da60edc4
+      size: 2178
     - path: insurance/train_basic.py
       hash: md5
       md5: d094268d2afeb7a81edf3d16c9d6d3ea
@@ -60,7 +64,7 @@ stages:
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: f0092e5f072a599dc423169f71e594c6
+      md5: 48c8d863342b9ea63d2c927c2568d836
       size: 33615
   train@xgboost:
     cmd: poetry run python insurance/train_xgboost.py
@@ -69,34 +73,35 @@ stages:
       hash: md5
       md5: be6d2a66bbfc1ca11856fe43b15f938d
       size: 164008012
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: ca275085bc23e535b8f588b0da60edc4
+      size: 2178
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: a9076680941ebe31cfe84fdb3ab77039
-      size: 4402
+      md5: bd97940e9f221fd7aed44a21e787bd44
+      size: 2934
     params:
       params.yaml:
         train.n_splits: 5
         train.random_state: 42
         train.xgboost:
+          random_state: 42
           device: cuda
           objective: reg:squarederror
           eval_metric: rmse
-          booster: dart
-          lambda: 2.877869889970495e-05
-          alpha: 3.025099923914481e-05
-          subsample: 0.3268802515791186
-          colsample_bytree: 0.8381014207396937
+          booster: gbtree
+          lambda: 2.9950094172974245e-05
+          alpha: 0.1014414863908301
+          subsample: 0.8765632614465999
+          colsample_bytree: 0.7678799312715366
           max_depth: 5
-          min_child_weight: 9
-          eta: 0.15415082108760558
-          gamma: 0.08681518013224823
+          min_child_weight: 3
+          eta: 0.1795659474066008
+          gamma: 0.00010292262387159199
           grow_policy: lossguide
-          sample_type: uniform
-          normalize_type: tree
-          rate_drop: 0.028879174270681974
-          skip_drop: 9.669669280432888e-07
     outs:
     - path: out/models/model_xgboost.pkl
       hash: md5
-      md5: d01d935d4d4447e7246d7e396f0d3453
-      size: 288014
+      md5: 8ffee22d2bfc49c9053950b4034c8018
+      size: 31270
