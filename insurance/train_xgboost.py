@@ -25,13 +25,8 @@ def main():
 
     target_column = "Premium Amount"
 
-    df = pd.read_csv(PREP_DATA_PATH / "prepared_data.csv")
+    df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
     features = df.drop(columns=[target_column])
-
-    # TODO: Can we save this in prepare stage ? don't use csv ?
-    categorical_columns = features.select_dtypes(include=["object", "category"]).columns
-    for col in categorical_columns:
-        features[col] = features[col].astype("category")
 
     labels = df[target_column]
 

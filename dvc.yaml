@@ -13,7 +13,7 @@ stages:
     params:
     - data.random_state
     outs:
-    - data/prepared/prepared_data.csv
+    - data/prepared/prepared_data.feather
 
   train:
     foreach:
@@ -23,7 +23,7 @@ stages:
       cmd: poetry run python insurance/train_${item}.py
       deps:
       - insurance/train_${item}.py
-      - data/prepared/prepared_data.csv
+      - data/prepared/prepared_data.feather
       - insurance/data_pipeline.py
       outs:
       - out/models/model_${item}.pkl

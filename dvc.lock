@@ -15,16 +15,16 @@ stages:
     deps:
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: acf606b1584cb3e843e2d50bdbdd7965
-      size: 728
+      md5: cd00a7ca3b9157c32997b98c147e36f3
+      size: 940
     params:
       params.yaml:
         data.random_state: 42
     outs:
-    - path: data/prepared/prepared_data.csv
+    - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be6d2a66bbfc1ca11856fe43b15f938d
-      size: 164008012
+      md5: be9be223edd7835c118acb707733196d
+      size: 57045410
   train_basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
@@ -44,18 +44,18 @@ stages:
   train@basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
-    - path: data/prepared/prepared_data.csv
+    - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be6d2a66bbfc1ca11856fe43b15f938d
-      size: 164008012
+      md5: be9be223edd7835c118acb707733196d
+      size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
       md5: 579c31a86a6a103ee6f051153665df74
       size: 2232
     - path: insurance/train_basic.py
       hash: md5
-      md5: a06cbe504be513010151ff7bafe35db2
-      size: 4542
+      md5: 685a221e06fd1cf51fbe915aa59c3edd
+      size: 4550
     params:
       params.yaml:
         train.basic:
@@ -64,27 +64,27 @@ stages:
     outs:
     - path: out/models/data_pipeline_basic.pkl
       hash: md5
-      md5: 9b7521c0baf56fb6277312b2f948b187
-      size: 33615
+      md5: d80c2a468f75f25ab18e3149ec76e6e1
+      size: 33613
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: 9b7521c0baf56fb6277312b2f948b187
-      size: 33615
+      md5: d80c2a468f75f25ab18e3149ec76e6e1
+      size: 33613
   train@xgboost:
     cmd: poetry run python insurance/train_xgboost.py
     deps:
-    - path: data/prepared/prepared_data.csv
+    - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be6d2a66bbfc1ca11856fe43b15f938d
-      size: 164008012
+      md5: be9be223edd7835c118acb707733196d
+      size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 907369258aee6cd37800ed36e3d7b141
-      size: 2234
+      md5: 579c31a86a6a103ee6f051153665df74
+      size: 2232
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 7110d39b3fb3ace4a802303a79231c1e
-      size: 3349
+      md5: 11a5b0b915aadef4d8f9eded9531528b
+      size: 3174
     params:
       params.yaml:
         train.n_splits: 5
@@ -94,26 +94,22 @@ stages:
           device: cuda
           objective: reg:squarederror
           eval_metric: rmse
-          booster: dart
-          lambda: 1.196540467745646e-08
-          alpha: 0.0025864232742840608
-          subsample: 0.7451941308293244
-          colsample_bytree: 0.903307259113048
+          booster: gbtree
+          lambda: 6.843302774035178e-05
+          alpha: 0.006258449730947676
+          subsample: 0.901647304077349
+          colsample_bytree: 0.922549532305334
           max_depth: 5
-          min_child_weight: 10
-          eta: 0.488889903860356
-          gamma: 2.6789251648618205e-07
+          min_child_weight: 9
+          eta: 0.4802025848144224
+          gamma: 0.01363825229793838
           grow_policy: lossguide
-          sample_type: uniform
-          normalize_type: tree
-          rate_drop: 1.0241738602364063e-08
-          skip_drop: 0.082417918876473
     outs:
     - path: out/models/data_pipeline_xgboost.pkl
       hash: md5
-      md5: 85f03782b7a1df5c4d8039666ce60802
-      size: 1119
+      md5: fd9986981188f504b8a7d9f9dc67e68c
+      size: 1204
     - path: out/models/model_xgboost.pkl
       hash: md5
-      md5: 26693e18ae744facee3a8e385f5d8b1e
-      size: 33641
+      md5: e81b24d633be9c9484f0e1fbc0f22052
+      size: 33078

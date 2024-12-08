@@ -27,7 +27,7 @@ def main():
 
     target_column = "Premium Amount"
 
-    df = pd.read_csv(PREP_DATA_PATH / "prepared_data.csv")
+    df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
     features = df.drop(columns=[target_column])
     labels = df[target_column]
 

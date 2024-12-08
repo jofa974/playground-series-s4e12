@@ -41,9 +41,13 @@ def main():
             features[feat_cols], labels, test_size=0.25, random_state=42
         )
         # X_train = data_pipeline.fit_transform(X_train)
-        dtrain = xgb.DMatrix(X_train, label=np.log1p(y_train))
+        dtrain = xgb.DMatrix(
+            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
+        )
         # X_test = data_pipeline.transform(X_test)
-        dvalid = xgb.DMatrix(X_test, label=np.log1p(y_test))
+        dvalid = xgb.DMatrix(
+            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols
+        )
 
         param = {
             "device": "cuda",
@@ -53,7 +57,7 @@ def main():
             # use exact for small dataset.
             "tree_method": "auto",
             # defines booster, gblinear for linear functions.
-            "booster": trial.suggest_categorical("booster", ["gbtree", "gblinear", "dart"]),
+            "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
             # L2 regularization weight.
             "lambda": trial.suggest_float("lambda", 1e-8, 1.0, log=True),
             # L1 regularization weight.

@@ -9,18 +9,14 @@ train:
     device: cuda
     objective: reg:squarederror
     eval_metric: rmse
-    booster: dart
-    lambda: 1.196540467745647e-08
-    alpha: 0.0025864232742840608
-    subsample: 0.7451941308293244
-    colsample_bytree: 0.903307259113048
+    booster: gbtree
+    lambda: 6.843302774035178e-05
+    alpha: 0.006258449730947676
+    subsample: 0.901647304077349
+    colsample_bytree: 0.922549532305334
     max_depth: 5
-    min_child_weight: 10
-    eta: 0.488889903860356
-    gamma: 2.6789251648618206e-07
+    min_child_weight: 9
+    eta: 0.4802025848144224
+    gamma: 0.01363825229793838
     grow_policy: lossguide
-    sample_type: uniform
-    normalize_type: tree
-    rate_drop: 1.0241738602364063e-08
-    skip_drop: 0.082417918876473
   basic:
