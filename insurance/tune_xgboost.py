@@ -29,17 +29,20 @@ def main():
     df = pd.read_csv(PREP_DATA_PATH / "prepared_data.csv")
     features = df.drop(columns=[target_column])
     labels = df[target_column]
+    categorical_columns = features.select_dtypes(include=["object", "category"]).columns
+    for col in categorical_columns:
+        features[col] = features[col].astype("category")
 
     data_pipeline, feat_cols = make_pipeline(features=features)
     pickle.dump(data_pipeline, (DATA_PIPELINE_PATH).open("wb"))
 
     def objective(trial):
         X_train, X_test, y_train, y_test = train_test_split(
-            features[feat_cols], labels, test_size=0.25
+            features[feat_cols], labels, test_size=0.25, random_state=42
         )
-        X_train = data_pipeline.fit_transform(X_train)
+        # X_train = data_pipeline.fit_transform(X_train)
         dtrain = xgb.DMatrix(X_train, label=np.log1p(y_train))
-        X_test = data_pipeline.transform(X_test)
+        # X_test = data_pipeline.transform(X_test)
         dvalid = xgb.DMatrix(X_test, label=np.log1p(y_test))
 
         param = {

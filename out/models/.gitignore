@@ -2,3 +2,4 @@
 /model_train_basic.pkl
 /model_xgboost.pkl
 /data_pipeline_xgboost.pkl
+/data_pipeline_basic.pkl

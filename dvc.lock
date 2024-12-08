@@ -50,21 +50,25 @@ stages:
       size: 164008012
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: ca275085bc23e535b8f588b0da60edc4
-      size: 2178
+      md5: 579c31a86a6a103ee6f051153665df74
+      size: 2232
     - path: insurance/train_basic.py
       hash: md5
-      md5: d094268d2afeb7a81edf3d16c9d6d3ea
-      size: 4403
+      md5: a06cbe504be513010151ff7bafe35db2
+      size: 4542
     params:
       params.yaml:
         train.basic:
         train.n_splits: 5
         train.random_state: 42
     outs:
+    - path: out/models/data_pipeline_basic.pkl
+      hash: md5
+      md5: 9b7521c0baf56fb6277312b2f948b187
+      size: 33615
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: 48c8d863342b9ea63d2c927c2568d836
+      md5: 9b7521c0baf56fb6277312b2f948b187
       size: 33615
   train@xgboost:
     cmd: poetry run python insurance/train_xgboost.py
@@ -75,12 +79,12 @@ stages:
       size: 164008012
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: ca275085bc23e535b8f588b0da60edc4
-      size: 2178
+      md5: 907369258aee6cd37800ed36e3d7b141
+      size: 2234
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: e7b4ad771a36342197a40c5aff2e5763
-      size: 2935
+      md5: 7110d39b3fb3ace4a802303a79231c1e
+      size: 3349
     params:
       params.yaml:
         train.n_splits: 5
@@ -90,22 +94,26 @@ stages:
           device: cuda
           objective: reg:squarederror
           eval_metric: rmse
-          booster: gbtree
-          lambda: 2.9950094172974245e-05
-          alpha: 0.1014414863908301
-          subsample: 0.8765632614465999
-          colsample_bytree: 0.7678799312715366
+          booster: dart
+          lambda: 1.196540467745646e-08
+          alpha: 0.0025864232742840608
+          subsample: 0.7451941308293244
+          colsample_bytree: 0.903307259113048
           max_depth: 5
-          min_child_weight: 3
-          eta: 0.1795659474066008
-          gamma: 0.00010292262387159199
+          min_child_weight: 10
+          eta: 0.488889903860356
+          gamma: 2.6789251648618205e-07
           grow_policy: lossguide
+          sample_type: uniform
+          normalize_type: tree
+          rate_drop: 1.0241738602364063e-08
+          skip_drop: 0.082417918876473
     outs:
     - path: out/models/data_pipeline_xgboost.pkl
       hash: md5
-      md5: 1e5a963d8bea8d3020bf8417806dde16
-      size: 5285
+      md5: 85f03782b7a1df5c4d8039666ce60802
+      size: 1119
     - path: out/models/model_xgboost.pkl
       hash: md5
-      md5: 8ffee22d2bfc49c9053950b4034c8018
-      size: 31270
+      md5: 26693e18ae744facee3a8e385f5d8b1e
+      size: 33641

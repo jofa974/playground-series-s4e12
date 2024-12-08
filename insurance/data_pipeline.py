@@ -11,14 +11,14 @@ def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
         "Age",
         "Health Score",
         "Credit Score",
+        "Insurance Duration",
+        "Number of Dependents",
+        "Vehicle Age",
     ]
     numeric_log_features = ["Annual Income"]
     categorical_features = features.select_dtypes(include=["object", "category"]).columns.tolist()
     ordinal_features = [
         "Previous Claims",
-        "Insurance Duration",
-        "Number of Dependents",
-        "Vehicle Age",
     ]
 
     feat_cols = numeric_features + numeric_log_features + categorical_features + ordinal_features
@@ -27,28 +27,28 @@ def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
     numeric_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="mean")),
-            ("scaler", StandardScaler()),
+            # ("scaler", StandardScaler()),
         ]
     )
     log_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="median")),
-            ("log", FunctionTransformer(np.log1p, validate=True)),
-            ("scaler", StandardScaler()),
+            # ("log", FunctionTransformer(np.log1p, validate=True)),
+            # ("scaler", StandardScaler()),
         ]
     )
 
     oh_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("onehot", OneHotEncoder(handle_unknown="ignore")),
+            # ("onehot", OneHotEncoder(handle_unknown="ignore")),
         ]
     )
 
     ord_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
+            # ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
         ]
     )
 
@@ -71,4 +71,5 @@ def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
             ("preprocessor", preprocessor),
         ]
     )
+    pipeline.set_output(transform="pandas")
     return pipeline, feat_cols

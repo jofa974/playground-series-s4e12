@@ -27,6 +27,12 @@ def main():
 
     df = pd.read_csv(PREP_DATA_PATH / "prepared_data.csv")
     features = df.drop(columns=[target_column])
+
+    # TODO: Can we save this in prepare stage ? don't use csv ?
+    categorical_columns = features.select_dtypes(include=["object", "category"]).columns
+    for col in categorical_columns:
+        features[col] = features[col].astype("category")
+
     labels = df[target_column]
 
     data_pipeline, feat_cols = make_pipeline(features=features)
@@ -46,13 +52,17 @@ def main():
             y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
             print(f"{X_train.shape=}")
             # Fit the pipeline
-            X_train = data_pipeline.fit_transform(X_train)
-            dtrain = xgb.DMatrix(X_train, label=np.log1p(y_train))
+            # X_train = data_pipeline.fit_transform(X_train)
+            dtrain = xgb.DMatrix(
+                X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
+            )
             bst = xgb.train(params["xgboost"], dtrain)
 
             # Predict and evaluate
-            X_test = data_pipeline.transform(X_test)
-            dvalid = xgb.DMatrix(X_test, label=np.log1p(y_test))
+            # X_test = data_pipeline.transform(X_test)
+            dvalid = xgb.DMatrix(
+                X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols
+            )
             y_pred = np.expm1(bst.predict(dvalid))
             rmsle = root_mean_squared_log_error(y_test, y_pred)
             rmsle_scores.append(rmsle)
@@ -71,8 +81,10 @@ def main():
     X_train = features[feat_cols]
     y_train = labels
     re_pipeline = clone(data_pipeline)
-    X_train = re_pipeline.fit_transform(X_train)
-    dtrain = xgb.DMatrix(X_train, label=np.log1p(y_train))
+    # X_train = re_pipeline.fit_transform(X_train)
+    dtrain = xgb.DMatrix(
+        X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
+    )
     bst = xgb.train(params["xgboost"], dtrain)
     pickle.dump(re_pipeline, (DATA_PIPELINE_PATH).open("wb"))
     pickle.dump(bst, MODEL_PATH.open("wb"))

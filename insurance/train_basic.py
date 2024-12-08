@@ -19,6 +19,7 @@ model_label = Path(__file__).stem.split("_")[-1]
 
 MODEL_PATH = OUT_PATH / f"models/model_{model_label}.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
+DATA_PIPELINE_PATH = MODEL_PATH.parent / f"data_pipeline_{model_label}.pkl"
 
 
 def main():
@@ -131,6 +132,7 @@ def main():
         )
         pickle.dump(pipeline, (MODEL_PATH).open("wb"))
         live.log_artifact(MODEL_PATH)
+        pickle.dump(pipeline, (DATA_PIPELINE_PATH).open("wb"))
 
 
 if __name__ == "__main__":
