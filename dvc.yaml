@@ -26,9 +26,17 @@ stages:
       - data/prepared/prepared_data.csv
       outs:
       - out/models/model_${item}.pkl
+      params:
+      - train.random_state
+      - train.n_splits
+      - train.${item}
+
 
 metrics:
+- dvclive-optuna/metrics.json
 - out/metrics.json
 plots:
 - out/plots/metrics:
     x: step
+params:
+- dvclive-optuna/params.yaml

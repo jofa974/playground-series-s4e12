@@ -5,6 +5,7 @@ import dvc.api
 import numpy as np
 import pandas as pd
 from dvclive import Live
+from sklearn.base import clone
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import root_mean_squared_log_error
@@ -126,8 +127,14 @@ def main():
         print(
             f"Average Mean Squared Logarithmic Error across {n_splits} folds: {average_rmsle:.4f}"
         )
-        pickle.dump(pipeline, (MODEL_PATH).open("wb"))
-        live.log_artifact(MODEL_PATH)
+
+    # Re-train on entire dataset
+    X_train = features[feat_cols]
+    y_train = labels
+    re_pipeline = clone(pipeline)
+    re_pipeline.fit(X_train, np.log1p(y_train))
+    pickle.dump(re_pipeline, (MODEL_PATH).open("wb"))
+    live.log_artifact(MODEL_PATH)
 
 
 if __name__ == "__main__":

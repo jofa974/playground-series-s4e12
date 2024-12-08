@@ -52,10 +52,15 @@ stages:
       hash: md5
       md5: d094268d2afeb7a81edf3d16c9d6d3ea
       size: 4403
+    params:
+      params.yaml:
+        train.basic:
+        train.n_splits: 5
+        train.random_state: 42
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: c6d6c4bf3192fddd59bd9a45b0316504
+      md5: f0092e5f072a599dc423169f71e594c6
       size: 33615
   train@xgboost:
     cmd: poetry run python insurance/train_xgboost.py
@@ -66,10 +71,32 @@ stages:
       size: 164008012
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 3f4c472d9b780a45cf10e82328169c3f
-      size: 4205
+      md5: a9076680941ebe31cfe84fdb3ab77039
+      size: 4402
+    params:
+      params.yaml:
+        train.n_splits: 5
+        train.random_state: 42
+        train.xgboost:
+          device: cuda
+          objective: reg:squarederror
+          eval_metric: rmse
+          booster: dart
+          lambda: 2.877869889970495e-05
+          alpha: 3.025099923914481e-05
+          subsample: 0.3268802515791186
+          colsample_bytree: 0.8381014207396937
+          max_depth: 5
+          min_child_weight: 9
+          eta: 0.15415082108760558
+          gamma: 0.08681518013224823
+          grow_policy: lossguide
+          sample_type: uniform
+          normalize_type: tree
+          rate_drop: 0.028879174270681974
+          skip_drop: 9.669669280432888e-07
     outs:
     - path: out/models/model_xgboost.pkl
       hash: md5
-      md5: ea13ef91852ee1610effe601746a6622
-      size: 66921
+      md5: d01d935d4d4447e7246d7e396f0d3453
+      size: 288014
