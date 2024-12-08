@@ -2,6 +2,14 @@ data:
   random_state: 42
 
 train:
-  type: LinearRegression
   random_state: 42 
   n_splits: 5
+  xgboost:
+    n_estimators: 50
+    max_depth: 3
+    learning_rate: 0.5
+    device: cuda
+    reg_lambda: 1
+    reg_alpha: 0
+    objective: reg:squarederror
+    eval_metric: rmse

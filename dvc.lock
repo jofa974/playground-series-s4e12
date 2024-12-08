@@ -34,10 +34,42 @@ stages:
       size: 164008012
     - path: insurance/train_basic.py
       hash: md5
-      md5: c2b88bf84161aca81617c000ed19cc0d
-      size: 3984
+      md5: 1087798e3a88729a780248839e5d4271
+      size: 4474
     outs:
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: 5f387ab184ca41c49b088ba6c23ef5ad
-      size: 143511
+      md5: 4b8a371d04e5278a135523ea5aa7dc66
+      size: 145233
+  train@basic:
+    cmd: poetry run python insurance/train_basic.py
+    deps:
+    - path: data/prepared/prepared_data.csv
+      hash: md5
+      md5: be6d2a66bbfc1ca11856fe43b15f938d
+      size: 164008012
+    - path: insurance/train_basic.py
+      hash: md5
+      md5: d094268d2afeb7a81edf3d16c9d6d3ea
+      size: 4403
+    outs:
+    - path: out/models/model_basic.pkl
+      hash: md5
+      md5: c6d6c4bf3192fddd59bd9a45b0316504
+      size: 33615
+  train@xgboost:
+    cmd: poetry run python insurance/train_xgboost.py
+    deps:
+    - path: data/prepared/prepared_data.csv
+      hash: md5
+      md5: be6d2a66bbfc1ca11856fe43b15f938d
+      size: 164008012
+    - path: insurance/train_xgboost.py
+      hash: md5
+      md5: 3f4c472d9b780a45cf10e82328169c3f
+      size: 4205
+    outs:
+    - path: out/models/model_xgboost.pkl
+      hash: md5
+      md5: ea13ef91852ee1610effe601746a6622
+      size: 66921

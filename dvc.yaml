@@ -15,13 +15,17 @@ stages:
     outs:
     - data/prepared/prepared_data.csv
 
-  train_basic:
-    cmd: poetry run python insurance/train_basic.py
-    deps:
-    - insurance/train_basic.py
-    - data/prepared/prepared_data.csv
-    outs:
-    - out/models/model_basic.pkl
+  train:
+    foreach:
+    - basic
+    - xgboost
+    do:
+      cmd: poetry run python insurance/train_${item}.py
+      deps:
+      - insurance/train_${item}.py
+      - data/prepared/prepared_data.csv
+      outs:
+      - out/models/model_${item}.pkl
 
 metrics:
 - out/metrics.json
