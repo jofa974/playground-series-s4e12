@@ -79,8 +79,8 @@ stages:
       size: 2178
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: bd97940e9f221fd7aed44a21e787bd44
-      size: 2934
+      md5: e7b4ad771a36342197a40c5aff2e5763
+      size: 2935
     params:
       params.yaml:
         train.n_splits: 5
@@ -101,6 +101,10 @@ stages:
           gamma: 0.00010292262387159199
           grow_policy: lossguide
     outs:
+    - path: out/models/data_pipeline_xgboost.pkl
+      hash: md5
+      md5: 1e5a963d8bea8d3020bf8417806dde16
+      size: 5285
     - path: out/models/model_xgboost.pkl
       hash: md5
       md5: 8ffee22d2bfc49c9053950b4034c8018

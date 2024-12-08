@@ -27,6 +27,7 @@ stages:
       - insurance/data_pipeline.py
       outs:
       - out/models/model_${item}.pkl
+      - out/models/data_pipeline_${item}.pkl
       params:
       - train.random_state
       - train.n_splits
@@ -34,8 +35,8 @@ stages:
 
 
 metrics:
-- out/metrics.json
 - dvclive-optuna/metrics.json
+- out/metrics.json
 plots:
 - out/plots/metrics:
     x: step
