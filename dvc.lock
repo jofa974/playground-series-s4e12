@@ -95,7 +95,7 @@ stages:
           objective: reg:squarederror
           eval_metric: rmse
           booster: gbtree
-          lambda: 6.843302774035176e-05
+          lambda: 6.843302774035177e-05
           alpha: 0.006258449730947676
           subsample: 0.901647304077349
           colsample_bytree: 0.922549532305334
@@ -122,11 +122,11 @@ stages:
       size: 57045410
     - path: insurance/torch_imputer.py
       hash: md5
-      md5: 800955664ea6997e529678ef9a3f6f6c
-      size: 6924
+      md5: fdaa9a022bf09c08374a6eb5883bd482
+      size: 6916
     params:
       params.yaml:
         torch_imputer:
-          epochs: 50
-          lr: 0.001
+          epochs: 1000
+          lr: 0.0005
           batch_size: 2048

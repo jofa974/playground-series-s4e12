@@ -132,12 +132,12 @@ def train(prepared_data_path: Path):
 
     features_columns = Features(
         numeric=[
-            # "Age",
+            "Age",
             "Health Score",
             "Credit Score",
-            # "Insurance Duration",
-            # "Number of Dependents",
-            # "Vehicle Age",
+            "Insurance Duration",
+            "Number of Dependents",
+            "Vehicle Age",
         ],
         numeric_log=["Annual Income"],
         # categorical = [""],
