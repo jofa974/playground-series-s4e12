@@ -20,3 +20,8 @@ train:
     gamma: 0.01363825229793838
     grow_policy: lossguide
   basic:
+
+torch_imputer:
+  epochs: 10
+  lr: 1e-3
+  batch_size: 32

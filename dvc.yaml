@@ -32,13 +32,25 @@ stages:
       - train.random_state
       - train.n_splits
       - train.${item}
+      frozen: true
 
+  train_imputer:
+    cmd: poetry run python insurance/torch_imputer.py  data/prepared/prepared_data.feather
+    deps:
+    - data/prepared/prepared_data.feather
+    - insurance/torch_imputer.py
+    # outs:
+    # - out/models/torch_imputer.pt
 
 metrics:
 - dvclive-optuna/metrics.json
 - out/metrics.json
+- dvclive/metrics.json
 plots:
 - out/plots/metrics:
     x: step
+- dvclive/plots/metrics:
+    x: step
 params:
 - dvclive-optuna/params.yaml
+- dvclive/params.yaml
