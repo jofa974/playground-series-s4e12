@@ -127,6 +127,6 @@ stages:
     params:
       params.yaml:
         torch_imputer:
-          epochs: 20
-          lr: 0.01
-          batch_size: 1024
+          epochs: 50
+          lr: 0.001
+          batch_size: 2048
