@@ -39,6 +39,8 @@ stages:
     deps:
     - data/prepared/prepared_data.feather
     - insurance/torch_imputer.py
+    params:
+    - torch_imputer
     # outs:
     # - out/models/torch_imputer.pt
 
@@ -54,3 +56,7 @@ plots:
 params:
 - dvclive-optuna/params.yaml
 - dvclive/params.yaml
+artifacts:
+  pytorch-model:
+    path: out/models/torch_imputer.pt
+    type: model

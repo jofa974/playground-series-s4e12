@@ -95,7 +95,7 @@ stages:
           objective: reg:squarederror
           eval_metric: rmse
           booster: gbtree
-          lambda: 6.843302774035178e-05
+          lambda: 6.843302774035176e-05
           alpha: 0.006258449730947676
           subsample: 0.901647304077349
           colsample_bytree: 0.922549532305334
@@ -113,3 +113,20 @@ stages:
       hash: md5
       md5: e81b24d633be9c9484f0e1fbc0f22052
       size: 33078
+  train_imputer:
+    cmd: poetry run python insurance/torch_imputer.py  data/prepared/prepared_data.feather
+    deps:
+    - path: data/prepared/prepared_data.feather
+      hash: md5
+      md5: be9be223edd7835c118acb707733196d
+      size: 57045410
+    - path: insurance/torch_imputer.py
+      hash: md5
+      md5: 800955664ea6997e529678ef9a3f6f6c
+      size: 6924
+    params:
+      params.yaml:
+        torch_imputer:
+          epochs: 20
+          lr: 0.01
+          batch_size: 1024
