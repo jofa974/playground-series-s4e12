@@ -41,8 +41,8 @@ stages:
     - insurance/torch_imputer.py
     params:
     - torch_imputer
-    # outs:
-    # - out/models/torch_imputer.pt
+    outs:
+    - out/models/torch_imputer.pt
 
 metrics:
 - dvclive-optuna/metrics.json

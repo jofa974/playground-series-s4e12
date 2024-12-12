@@ -16,6 +16,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder, StandardScaler
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
+from insurance.common import OUT_PATH
+
+MODEL_PATH = OUT_PATH / "models/torch_imputer.pt"
 
 
 @dataclass
@@ -197,7 +200,8 @@ def train(prepared_data_path: Path):
 
             live.next_step()
 
-        live.log_artifact("out/models/torch_imputer.pt", type="model", name="pytorch-model")
+        torch.save(model.state_dict(), MODEL_PATH)
+        live.log_artifact(MODEL_PATH, type="model", name="pytorch-model")
 
 
 def evaluate_model(model, test_loader, device):
