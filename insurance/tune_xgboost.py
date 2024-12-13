@@ -8,10 +8,9 @@ import xgboost as xgb
 from dvclive.optuna import DVCLiveCallback
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import train_test_split
-from xgboost import XGBRegressor
 
 from insurance.common import OUT_PATH, PREP_DATA_PATH
-from insurance.data_pipeline import make_pipeline
+from insurance.data_pipeline import make_pipeline, get_feat_columns
 
 model_label = Path(__file__).stem.split("_")[-1]
 
@@ -26,27 +25,28 @@ TUNE_PATH.parent.mkdir(parents=True, exist_ok=True)
 def main():
     target_column = "Premium Amount"
 
-    df = pd.read_csv(PREP_DATA_PATH / "prepared_data.csv")
+    df = pd.read_feather(PREP_DATA_PATH / "prepared_imputed_data.feather")
     features = df.drop(columns=[target_column])
     labels = df[target_column]
     categorical_columns = features.select_dtypes(include=["object", "category"]).columns
     for col in categorical_columns:
         features[col] = features[col].astype("category")
 
-    data_pipeline, feat_cols = make_pipeline(features=features)
+    feat_cols = get_feat_columns()
+    data_pipeline = make_pipeline()
     pickle.dump(data_pipeline, (DATA_PIPELINE_PATH).open("wb"))
 
     def objective(trial):
         X_train, X_test, y_train, y_test = train_test_split(
-            features[feat_cols], labels, test_size=0.25, random_state=42
+            features[feat_cols.names], labels, test_size=0.25, random_state=42
         )
-        # X_train = data_pipeline.fit_transform(X_train)
+        X_train = data_pipeline.fit_transform(X_train)
         dtrain = xgb.DMatrix(
-            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
+            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols.names
         )
-        # X_test = data_pipeline.transform(X_test)
+        X_test = data_pipeline.transform(X_test)
         dvalid = xgb.DMatrix(
-            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols
+            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols.names
         )
 
         param = {

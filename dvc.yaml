@@ -23,7 +23,7 @@ stages:
       cmd: poetry run python insurance/train_${item}.py
       deps:
       - insurance/train_${item}.py
-      - data/prepared/prepared_data.feather
+      - data/prepared/prepared_imputed_data.feather
       - insurance/data_pipeline.py
       outs:
       - out/models/model_${item}.pkl
@@ -32,10 +32,10 @@ stages:
       - train.random_state
       - train.n_splits
       - train.${item}
-      frozen: true
+
 
   train_imputer:
-    cmd: poetry run python insurance/torch_imputer.py  data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/torch_imputer.py train data/prepared/prepared_data.feather
     deps:
     - data/prepared/prepared_data.feather
     - insurance/torch_imputer.py
@@ -43,20 +43,18 @@ stages:
     - torch_imputer
     outs:
     - out/models/torch_imputer.pt
+    - out/models/torch_imputer_data_pipeline.pkl
+    frozen: true
 
 metrics:
+- dvclive/metrics.json
 - dvclive-optuna/metrics.json
 - out/metrics.json
-- dvclive/metrics.json
 plots:
-- out/plots/metrics:
-    x: step
 - dvclive/plots/metrics:
     x: step
+- out/plots/metrics:
+    x: step
 params:
-- dvclive-optuna/params.yaml
 - dvclive/params.yaml
-artifacts:
-  pytorch-model:
-    path: out/models/torch_imputer.pt
-    type: model
+- dvclive-optuna/params.yaml

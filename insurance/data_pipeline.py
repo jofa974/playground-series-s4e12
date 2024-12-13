@@ -4,10 +4,28 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder, StandardScaler
+from dataclasses import dataclass, field, fields
 
 
-def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
-    numeric_features = [
+@dataclass
+class Features:
+    numeric: list[str] = field(default_factory=list)
+    categorical: list[str] = field(default_factory=list)
+    ordinal: list[str] = field(default_factory=list)
+    numeric_log: list[str] = field(default_factory=list)
+
+    @property
+    def names(self):
+        to_return = []
+        for f in fields(self):
+            vals = getattr(self, f.name)
+            if vals:
+                to_return.extend(vals)
+        return to_return
+
+
+def get_feat_columns():
+    numeric_feat_cols = [
         "Age",
         "Health Score",
         "Credit Score",
@@ -15,13 +33,34 @@ def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
         "Number of Dependents",
         "Vehicle Age",
     ]
-    numeric_log_features = ["Annual Income"]
-    categorical_features = features.select_dtypes(include=["object", "category"]).columns.tolist()
-    ordinal_features = [
+    numeric_log_feat_cols = ["Annual Income"]
+    categorical_feat_cols = [
+        "Gender",
+        "Marital Status",
+        "Education Level",
+        "Occupation",
+        "Location",
+        "Policy Type",
+        "Customer Feedback",
+        "Smoking Status",
+        "Exercise Frequency",
+        "Property Type",
+    ]
+    ordinal_feat_cols = [
         "Previous Claims",
     ]
 
-    feat_cols = numeric_features + numeric_log_features + categorical_features + ordinal_features
+    feat_cols = Features(
+        numeric=numeric_feat_cols,
+        numeric_log=numeric_log_feat_cols,
+        categorical=categorical_feat_cols,
+        ordinal=ordinal_feat_cols,
+    )
+    return feat_cols
+
+
+def make_pipeline() -> tuple[Pipeline, list[str]]:
+    feat_cols = get_feat_columns()
 
     # Preprocessing pipeline
     numeric_transformer = Pipeline(
@@ -52,17 +91,17 @@ def make_pipeline(features: pd.DataFrame) -> tuple[Pipeline, list[str]]:
         ]
     )
 
+    transformers = []
+    if feat_cols.numeric:
+        transformers.append(("num", numeric_transformer, feat_cols.numeric))
+    if feat_cols.numeric_log:
+        transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
+    if feat_cols.categorical:
+        transformers.append(("oh", oh_transformer, feat_cols.categorical))
+    if feat_cols.ordinal:
+        transformers.append(("ord", ord_transformer, feat_cols.ordinal))
     preprocessor = ColumnTransformer(
-        transformers=[
-            ("num", numeric_transformer, numeric_features),
-            (
-                "num_log",
-                log_transformer,
-                numeric_log_features,
-            ),
-            ("oh", oh_transformer, categorical_features),
-            ("ord", ord_transformer, ordinal_features),
-        ],
+        transformers=transformers,
         remainder="drop",
     )
 

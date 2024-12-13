@@ -11,12 +11,12 @@ from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH, PREP_DATA_PATH
-from insurance.data_pipeline import make_pipeline
+from insurance.data_pipeline import make_pipeline, get_feat_columns
 
 model_label = Path(__file__).stem.split("_")[-1]
 
 MODEL_PATH = OUT_PATH / f"models/model_{model_label}.pkl"
-DATA_PIPELINE_PATH = MODEL_PATH.parent / f"data_pipeline_{model_label}.pkl"
+DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -25,14 +25,18 @@ def main():
 
     target_column = "Premium Amount"
 
-    df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
+    prep_data = PREP_DATA_PATH / "prepared_imputed_data.feather"
+    df = pd.read_feather(prep_data)
+    print(f"Read file into dataframe: {prep_data}")
+
     features = df.drop(columns=[target_column])
 
     labels = df[target_column]
 
-    data_pipeline, feat_cols = make_pipeline(features=features)
+    feat_cols = get_feat_columns().names
+    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
 
-    # Stratified K-Fold Cross-Validation
+    # K-Fold Cross-Validation
     n_splits = params["n_splits"]
     skf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
 
@@ -75,13 +79,11 @@ def main():
     # Re-train on entire dataset
     X_train = features[feat_cols]
     y_train = labels
-    re_pipeline = clone(data_pipeline)
     # X_train = re_pipeline.fit_transform(X_train)
     dtrain = xgb.DMatrix(
         X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
     )
     bst = xgb.train(params["xgboost"], dtrain)
-    pickle.dump(re_pipeline, (DATA_PIPELINE_PATH).open("wb"))
     pickle.dump(bst, MODEL_PATH.open("wb"))
     live.log_artifact(MODEL_PATH)
 

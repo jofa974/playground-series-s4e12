@@ -10,15 +10,15 @@ train:
     objective: reg:squarederror
     eval_metric: rmse
     booster: gbtree
-    lambda: 6.843302774035178e-05
-    alpha: 0.006258449730947676
-    subsample: 0.901647304077349
-    colsample_bytree: 0.922549532305334
-    max_depth: 5
+    lambda: 0.4104749889610154
+    alpha: 5.561529990659439e-07
+    subsample: 0.9814736188143719
+    colsample_bytree: 0.7240915982708991
+    max_depth: 7
     min_child_weight: 9
-    eta: 0.4802025848144224
-    gamma: 0.01363825229793838
-    grow_policy: lossguide
+    eta: 0.4324358241129275
+    gamma: 2.865477838059048e-06
+    grow_policy: depthwise
   basic:
 
 torch_imputer:

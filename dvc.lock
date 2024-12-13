@@ -44,18 +44,18 @@ stages:
   train@basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
-    - path: data/prepared/prepared_data.feather
+    - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 540c4b236beb05faeda036c5adbd7429
+      size: 58049042
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 579c31a86a6a103ee6f051153665df74
-      size: 2232
+      md5: 5dadb2e52bc9356783bace5094a047f6
+      size: 3222
     - path: insurance/train_basic.py
       hash: md5
-      md5: 685a221e06fd1cf51fbe915aa59c3edd
-      size: 4550
+      md5: 5c9c38071cc78463eb8fc2abba4f039d
+      size: 4636
     params:
       params.yaml:
         train.basic:
@@ -64,27 +64,27 @@ stages:
     outs:
     - path: out/models/data_pipeline_basic.pkl
       hash: md5
-      md5: d80c2a468f75f25ab18e3149ec76e6e1
-      size: 33613
+      md5: b96209877d55303005fe34d2e0e03e1e
+      size: 33615
     - path: out/models/model_basic.pkl
       hash: md5
-      md5: d80c2a468f75f25ab18e3149ec76e6e1
-      size: 33613
+      md5: b96209877d55303005fe34d2e0e03e1e
+      size: 33615
   train@xgboost:
     cmd: poetry run python insurance/train_xgboost.py
     deps:
-    - path: data/prepared/prepared_data.feather
+    - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 540c4b236beb05faeda036c5adbd7429
+      size: 58049042
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 579c31a86a6a103ee6f051153665df74
-      size: 2232
+      md5: 5dadb2e52bc9356783bace5094a047f6
+      size: 3222
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 11a5b0b915aadef4d8f9eded9531528b
-      size: 3174
+      md5: 12b82287a2894cda952a1eac0e9202dc
+      size: 3245
     params:
       params.yaml:
         train.n_splits: 5
@@ -95,7 +95,7 @@ stages:
           objective: reg:squarederror
           eval_metric: rmse
           booster: gbtree
-          lambda: 6.843302774035177e-05
+          lambda: 6.843302774035178e-05
           alpha: 0.006258449730947676
           subsample: 0.901647304077349
           colsample_bytree: 0.922549532305334
@@ -111,8 +111,8 @@ stages:
       size: 1204
     - path: out/models/model_xgboost.pkl
       hash: md5
-      md5: e81b24d633be9c9484f0e1fbc0f22052
-      size: 33078
+      md5: f5ed57c419ce8b7331f89ce3f08d82a2
+      size: 33002
   train_imputer:
     cmd: poetry run python insurance/torch_imputer.py  data/prepared/prepared_data.feather
     deps:

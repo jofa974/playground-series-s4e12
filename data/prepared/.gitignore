@@ -1,2 +1,5 @@
 /prepared_data.csv
 /prepared_data.feather
+/prepared_imputed_data.feather
+/test_prepared_imputed.feather
+/test_prepared.feather

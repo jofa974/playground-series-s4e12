@@ -27,7 +27,9 @@ def main():
 
     target_column = "Premium Amount"
 
-    df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
+    prep_data = PREP_DATA_PATH / "prepared_imputed_data.feather"
+    df = pd.read_feather(prep_data)
+    print(f"Read file into dataframe: {prep_data}")
     features = df.drop(columns=[target_column])
     labels = df[target_column]
 

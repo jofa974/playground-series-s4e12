@@ -5,9 +5,10 @@ import numpy as np
 import pandas as pd
 import typer
 import xgboost as xgb
-from insurance.common import OUT_PATH, RAW_DATA_PATH
+from insurance.common import OUT_PATH, RAW_DATA_PATH, PREP_DATA_PATH
 from insurance.prepare_basic import prepare
-from insurance.data_pipeline import make_pipeline
+from insurance.data_pipeline import get_feat_columns
+from insurance.torch_imputer import run_inference
 
 
 def main(model: Path):
@@ -15,11 +16,14 @@ def main(model: Path):
     df_test = pd.read_csv(RAW_DATA_PATH / "test.csv")
     ids = df_test["id"].values
     df_test = prepare(df=df_test)
+    df_test.to_feather(PREP_DATA_PATH / "test_prepared.feather")
 
-    categorical_columns = df_test.select_dtypes(include=["object", "category"]).columns
-    for col in categorical_columns:
-        df_test[col] = df_test[col].astype("category")
-    _, feat_cols = make_pipeline(features=df_test)
+    imputed_test = PREP_DATA_PATH / "test_prepared_imputed.feather"
+    df_test = run_inference(
+        prepared_data_path=PREP_DATA_PATH / "test_prepared.feather", out_file_name=imputed_test
+    )
+
+    feat_cols = get_feat_columns().names
 
     df_test = df_test[feat_cols]
 
