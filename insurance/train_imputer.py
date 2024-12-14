@@ -9,6 +9,7 @@ import torch.nn as nn
 import torch.optim as optim
 import typer
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
 
@@ -22,7 +23,20 @@ DATA_PIPELINE_PATH = OUT_PATH / "models/torch_imputer_data_pipeline.pkl"
 
 app = typer.Typer()
 
-logger = setup_logger()
+
+features_columns = Features(
+    numeric=[
+        "Age",
+        "Health Score",
+        "Credit Score",
+        "Insurance Duration",
+        "Number of Dependents",
+        "Vehicle Age",
+    ],
+    numeric_log=["Annual Income"],
+    categorical=[],
+    ordinal=[],
+)
 
 
 # Custom Dataset class
@@ -53,8 +67,23 @@ class FeedforwardNN(nn.Module):
         return self.model(x)
 
 
+def prepare_data_pipeline(
+    input_df: pd.DataFrame,
+) -> tuple[pd.DataFrame, pd.Series, Pipeline]:
+    target_column = "Previous Claims"
+
+    input_df = input_df[~input_df[target_column].isna()]
+    features = input_df.drop(columns=[target_column])
+    target = input_df[target_column]
+
+    data_pipeline = make_pipeline(feat_cols=features_columns)
+    return features, target, data_pipeline
+
+
 @app.command()
 def train(prepared_data_path: Path):
+    logger = setup_logger()
+
     params = dvc.api.params_show()["torch_imputer"]
 
     device = torch.device(
@@ -65,40 +94,17 @@ def train(prepared_data_path: Path):
         else "cpu"
     )
     logger.info(f"Running torch on {device}")
-
-    target_column = "Previous Claims"
     df = pd.read_feather(prepared_data_path)
 
-    df = df[~df[target_column].isna()]
-    features = df.drop(columns=[target_column])
-    target = df[target_column]
-
-    logger.info("Initialized data")
+    features, target, data_pipeline = prepare_data_pipeline(input_df=df)
 
     X_train, X_test, y_train, y_test = train_test_split(
         features, target, test_size=0.2, random_state=42
     )
-
-    features_columns = Features(
-        numeric=[
-            "Age",
-            "Health Score",
-            "Credit Score",
-            "Insurance Duration",
-            "Number of Dependents",
-            "Vehicle Age",
-        ],
-        numeric_log=["Annual Income"],
-        categorical=[],
-        ordinal=[],
-    )
-
     X_train, X_test = (
         X_train[features_columns.names],
         X_test[features_columns.names],
     )
-
-    data_pipeline = make_pipeline(feat_cols=features_columns)
     X_train = data_pipeline.fit_transform(X_train).to_numpy()
     X_test = data_pipeline.transform(X_test).to_numpy()
 
@@ -146,6 +152,7 @@ def train(prepared_data_path: Path):
             )
 
             eval_loss = evaluate_model(model=model, test_loader=test_loader, device=device)
+            logger.info(f"Eval Loss: {eval_loss:.4f}")
             live.log_metric("loss/eval", eval_loss)
 
             live.next_step()
@@ -164,7 +171,6 @@ def evaluate_model(model, test_loader, device):
             outputs = model(features).squeeze()
             loss = criterion(outputs, targets)
             total_loss += loss.item()
-        logger.info(f"Test Loss: {total_loss / len(test_loader):.4f}")
     return total_loss / len(test_loader)
 
 
@@ -184,6 +190,7 @@ def run_inference(prepared_data_path: Path, out_file_name: str):
 
     X = df_init[df_init[target_column].isna()]
     X = X.drop(columns=[target_column])
+    X = X[features_columns.names]
 
     logger.info("Initialized data")
 

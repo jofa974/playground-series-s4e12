@@ -16,16 +16,26 @@ stages:
     - data/prepared/prepared_data.feather
 
   train_imputer:
-    cmd: poetry run python insurance/torch_imputer.py train data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/train_imputer.py train data/prepared/prepared_data.feather
     deps:
     - data/prepared/prepared_data.feather
-    - insurance/torch_imputer.py
+    - insurance/train_imputer.py
     - insurance/data_pipeline.py
     params:
     - torch_imputer
     outs:
     - out/models/torch_imputer.pt
     - out/models/torch_imputer_data_pipeline.pkl
+
+  impute:
+    cmd: poetry run python insurance/run_imputer.py
+    deps:
+    - data/prepared/prepared_data.feather
+    - insurance/run_imputer.py
+    - insurance/data_pipeline.py
+    - out/models/torch_imputer.pt
+    - out/models/torch_imputer_data_pipeline.pkl
+    outs:
     - data/prepared/prepared_imputed_data.feather
 
   tune_xboost:

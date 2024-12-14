@@ -8,7 +8,7 @@ import xgboost as xgb
 from insurance.common import OUT_PATH, RAW_DATA_PATH, PREP_DATA_PATH
 from insurance.prepare_basic import prepare
 from insurance.data_pipeline import get_feat_columns
-from insurance.torch_imputer import run_inference
+from insurance.train_imputer import run_inference
 
 
 def main(model: Path):
