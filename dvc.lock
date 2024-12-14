@@ -79,12 +79,12 @@ stages:
       size: 58049042
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 5dadb2e52bc9356783bace5094a047f6
-      size: 3222
+      md5: 3eec6e7d1c5eea1daccba3532417f362
+      size: 3245
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 12b82287a2894cda952a1eac0e9202dc
-      size: 3245
+      md5: ceabdaa0b46f136e34303f08a369764a
+      size: 3203
     params:
       params.yaml:
         train.n_splits: 5
@@ -95,15 +95,15 @@ stages:
           objective: reg:squarederror
           eval_metric: rmse
           booster: gbtree
-          lambda: 6.843302774035176e-05
-          alpha: 0.006258449730947676
-          subsample: 0.901647304077349
-          colsample_bytree: 0.922549532305334
-          max_depth: 5
+          lambda: 0.4104749889610154
+          alpha: 5.561529990659438e-07
+          subsample: 0.9814736188143719
+          colsample_bytree: 0.7240915982708991
+          max_depth: 7
           min_child_weight: 9
-          eta: 0.4802025848144224
-          gamma: 0.01363825229793838
-          grow_policy: lossguide
+          eta: 0.4324358241129275
+          gamma: 2.865477838059048e-06
+          grow_policy: depthwise
     outs:
     - path: out/models/data_pipeline_xgboost.pkl
       hash: md5
@@ -122,20 +122,20 @@ stages:
       size: 57045410
     - path: insurance/torch_imputer.py
       hash: md5
-      md5: 5ac036369a3f12575bbbea7d8dd23fbc
-      size: 9235
+      md5: 2289ed487a3630c6866f537c2a72b353
+      size: 9247
     params:
       params.yaml:
         torch_imputer:
-          epochs: 100
+          epochs: 1000
           lr: 0.001
           batch_size: 2048
     outs:
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: 4b9d1eac1f73a8d0dfa96af091219876
+      md5: 8f234c09a61d4fae3cece604108e578d
       size: 13316
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
-      md5: 95628642813c9fd3e84971ae914cdd21
-      size: 3100
+      md5: d55f921320d1fbd24925f122efbaa1f3
+      size: 3101

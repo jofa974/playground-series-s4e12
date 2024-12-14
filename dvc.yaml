@@ -15,46 +15,60 @@ stages:
     outs:
     - data/prepared/prepared_data.feather
 
-  train:
-    foreach:
-    - basic
-    - xgboost
-    do:
-      cmd: poetry run python insurance/train_${item}.py
-      deps:
-      - insurance/train_${item}.py
-      - data/prepared/prepared_imputed_data.feather
-      - insurance/data_pipeline.py
-      outs:
-      - out/models/model_${item}.pkl
-      - out/models/data_pipeline_${item}.pkl
-      params:
-      - train.random_state
-      - train.n_splits
-      - train.${item}
-
-
   train_imputer:
     cmd: poetry run python insurance/torch_imputer.py train data/prepared/prepared_data.feather
     deps:
     - data/prepared/prepared_data.feather
     - insurance/torch_imputer.py
+    - insurance/data_pipeline.py
     params:
     - torch_imputer
     outs:
     - out/models/torch_imputer.pt
     - out/models/torch_imputer_data_pipeline.pkl
-    frozen: true
+    - data/prepared/prepared_imputed_data.feather
+
+  tune_xboost:
+    cmd: poetry run python insurance/tune_xgboost.py
+    deps:
+    - insurance/tune_xgboost.py
+    - data/prepared/prepared_imputed_data.feather
+    - insurance/data_pipeline.py
+
+
+  # train:
+  #   foreach:
+  #   - xgboost
+  #   do:
+  #     cmd: poetry run python insurance/train_${item}.py
+  #     deps:
+  #     - insurance/train_${item}.py
+  #     - data/prepared/prepared_imputed_data.feather
+  #     - insurance/data_pipeline.py
+  #     outs:
+  #     - out/models/model_${item}.pkl
+  #     - out/models/data_pipeline_${item}.pkl
+  #     params:
+  #     - train.random_state
+  #     - train.n_splits
+  #     - train.${item}
+  #     frozen: true
+
+
 
 metrics:
-- dvclive/metrics.json
 - out/metrics.json
 - dvclive-optuna/metrics.json
+- dvclive/metrics.json
 plots:
-- dvclive/plots/metrics:
-    x: step
 - out/plots/metrics:
     x: step
+- dvclive/plots/metrics:
+    x: step
 params:
-- dvclive/params.yaml
 - dvclive-optuna/params.yaml
+- dvclive/params.yaml
+artifacts:
+  pytorch-model:
+    path: out/models/torch_imputer.pt
+    type: model

@@ -59,8 +59,9 @@ def get_feat_columns():
     return feat_cols
 
 
-def make_pipeline() -> Pipeline:
-    feat_cols = get_feat_columns()
+def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
+    if feat_cols is None:
+        feat_cols = get_feat_columns()
 
     # Preprocessing pipeline
     numeric_transformer = Pipeline(
