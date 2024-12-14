@@ -48,8 +48,8 @@ stages:
 
 metrics:
 - dvclive/metrics.json
-- dvclive-optuna/metrics.json
 - out/metrics.json
+- dvclive-optuna/metrics.json
 plots:
 - dvclive/plots/metrics:
     x: step

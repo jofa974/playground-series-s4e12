@@ -1,1 +1,6 @@
 /preds.csv
+/data_pipeline_tune_xgboost_fold_0.pkl
+/data_pipeline_tune_xgboost_fold_1.pkl
+/data_pipeline_tune_xgboost_fold_2.pkl
+/data_pipeline_tune_xgboost_fold_3.pkl
+/data_pipeline_tune_xgboost_fold_4.pkl

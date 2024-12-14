@@ -1,3 +1,4 @@
+from datetime import datetime
 import pickle
 from pathlib import Path
 
@@ -7,53 +8,119 @@ import pandas as pd
 import xgboost as xgb
 from dvclive.optuna import DVCLiveCallback
 from sklearn.metrics import root_mean_squared_log_error
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH, PREP_DATA_PATH
 from insurance.data_pipeline import make_pipeline, get_feat_columns
 
 model_label = Path(__file__).stem.split("_")[-1]
 
-DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}.pkl"
+DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}"
 MODEL_PATH = OUT_PATH / f"models/model_{model_label}.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 TUNE_PATH = OUT_PATH / f"tune_{model_label}"
 TUNE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+import logging
+
+
+def setup_logger(log_file: str = None, log_level: int = logging.DEBUG):
+    """
+    Sets up a logger that logs messages to both the terminal and a file.
+
+    Args:
+        log_file (str): Path to the log file. If None, the log file will be named with the current date and time.
+        log_level (int): Logging level (e.g., logging.INFO, logging.DEBUG).
+
+    Returns:
+        logging.Logger: Configured logger instance.
+    """
+    # If no log file is provided, create one with the current date and time
+    if log_file is None:
+        log_file = datetime.now().strftime("log_%Y-%m-%d_%H-%M-%S.log")
+
+    # Create a logger
+    logger = logging.getLogger("my_logger")
+    logger.setLevel(log_level)
+
+    # Create handlers
+    console_handler = logging.StreamHandler()
+    file_handler = logging.FileHandler(log_file)
+
+    # Set log levels for handlers
+    console_handler.setLevel(log_level)
+    file_handler.setLevel(log_level)
+
+    # Create formatter
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+
+    # Add formatter to handlers
+    console_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+
+    # Add handlers to the logger
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+
+    return logger
+
 
 def main():
+    log_file = datetime.now().strftime("xgboost_tune_log_%Y-%m-%d_%H-%M-%S.log")
+    logger = setup_logger(log_file=log_file)
+
     target_column = "Premium Amount"
 
     df = pd.read_feather(PREP_DATA_PATH / "prepared_imputed_data.feather")
     features = df.drop(columns=[target_column])
     labels = df[target_column]
-    categorical_columns = features.select_dtypes(include=["object", "category"]).columns
-    for col in categorical_columns:
-        features[col] = features[col].astype("category")
 
     feat_cols = get_feat_columns()
-    data_pipeline = make_pipeline()
-    pickle.dump(data_pipeline, (DATA_PIPELINE_PATH).open("wb"))
+    feat_names = feat_cols.names
+
+    n_splits = 5
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+
+    train_folds = []
+    test_folds = []
+    for fold, (train_idx, test_idx) in enumerate(kf.split(features[feat_names])):
+        logger.info(f"Fold {fold + 1}")
+        X_train, X_test = (
+            features[feat_names].iloc[train_idx],
+            features[feat_names].iloc[test_idx],
+        )
+        y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
+
+        # Fit the pipeline
+        data_pipeline = make_pipeline()
+        X_train = data_pipeline.fit_transform(X_train)
+        for col in feat_cols.categorical:
+            X_train[col] = X_train[col].astype("category")
+        dtrain = xgb.DMatrix(
+            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_names
+        )
+
+        # Predict and evaluate
+        X_test = data_pipeline.transform(X_test)
+        for col in feat_cols.categorical:
+            X_test[col] = X_test[col].astype("category")
+        dtest = xgb.DMatrix(
+            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_names
+        )
+
+        train_folds.append(dtrain)
+        test_folds.append(dtest)
+
+        pickle.dump(data_pipeline, open(str(DATA_PIPELINE_PATH) + f"_fold_{fold}.pkl", "wb"))
 
     def objective(trial):
-        X_train, X_test, y_train, y_test = train_test_split(
-            features[feat_cols.names], labels, test_size=0.25, random_state=42
-        )
-        X_train = data_pipeline.fit_transform(X_train)
-        dtrain = xgb.DMatrix(
-            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols.names
-        )
-        X_test = data_pipeline.transform(X_test)
-        dvalid = xgb.DMatrix(
-            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols.names
-        )
-
         param = {
             "device": "cuda",
             "verbosity": 0,
             "objective": "reg:squarederror",
             "random_state": 42,
+            "eval_metric": "rmse",
             # use exact for small dataset.
             "tree_method": "auto",
             # defines booster, gblinear for linear functions.
@@ -73,7 +140,7 @@ def main():
             param["max_depth"] = trial.suggest_int("max_depth", 3, 9, step=2)
             # minimum child weight, larger the term more conservative the tree.
             param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
-            param["eta"] = trial.suggest_float("eta", 1e-8, 1.0, log=True)
+            param["eta"] = trial.suggest_float("eta", 1e-5, 1.0, log=True)
             # defines how selective algorithm is.
             param["gamma"] = trial.suggest_float("gamma", 1e-8, 1.0, log=True)
             param["grow_policy"] = trial.suggest_categorical(
@@ -88,25 +155,31 @@ def main():
             param["rate_drop"] = trial.suggest_float("rate_drop", 1e-8, 1.0, log=True)
             param["skip_drop"] = trial.suggest_float("skip_drop", 1e-8, 1.0, log=True)
 
-        bst = xgb.train(param, dtrain)
+        score = 0
+        for fold, (dtrain, dtest) in enumerate(zip(train_folds, test_folds)):
+            bst = xgb.train(param, dtrain)
 
-        # Predict and evaluate
-        y_pred = np.expm1(bst.predict(dvalid))
-        rmsle = root_mean_squared_log_error(y_test, y_pred)
-        print(f"Root Mean Squared Logarithmic Error: {rmsle:.4f}")
-        return rmsle
+            # Predict and evaluate
+            y_pred = np.expm1(bst.predict(dtest))
+            rmsle = root_mean_squared_log_error(y_test, y_pred)
+            logger.info(f" !!! Fold {fold+1} !!! Root Mean Squared Logarithmic Error: {rmsle:.4f}")
+            score += rmsle
+
+        avg = score / n_splits
+        logger.info(f"Average RMSLE across folds: {avg}")
+        return avg
 
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=120, callbacks=[DVCLiveCallback(str(TUNE_PATH))])
+    study.optimize(objective, n_trials=300, callbacks=[DVCLiveCallback(str(TUNE_PATH))])
 
-    print("Number of finished trials: ", len(study.trials))
-    print("Best trial:")
+    logger.info(f"Number of finished trials: {len(study.trials)}")
+    logger.info("Best trial:")
     trial = study.best_trial
 
-    print("  Value: {}".format(trial.value))
-    print("  Params: ")
+    logger.info("  Value: {}".format(trial.value))
+    logger.info("  Params: ")
     for key, value in trial.params.items():
-        print("    {}: {}".format(key, value))
+        logger.info("    {}: {}".format(key, value))
 
 
 if __name__ == "__main__":

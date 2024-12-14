@@ -50,8 +50,8 @@ stages:
       size: 58049042
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 5dadb2e52bc9356783bace5094a047f6
-      size: 3222
+      md5: 3eec6e7d1c5eea1daccba3532417f362
+      size: 3245
     - path: insurance/train_basic.py
       hash: md5
       md5: 5c9c38071cc78463eb8fc2abba4f039d
@@ -95,7 +95,7 @@ stages:
           objective: reg:squarederror
           eval_metric: rmse
           booster: gbtree
-          lambda: 6.843302774035178e-05
+          lambda: 6.843302774035176e-05
           alpha: 0.006258449730947676
           subsample: 0.901647304077349
           colsample_bytree: 0.922549532305334

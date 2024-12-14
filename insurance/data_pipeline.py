@@ -59,35 +59,35 @@ def get_feat_columns():
     return feat_cols
 
 
-def make_pipeline() -> tuple[Pipeline, list[str]]:
+def make_pipeline() -> Pipeline:
     feat_cols = get_feat_columns()
 
     # Preprocessing pipeline
     numeric_transformer = Pipeline(
         [
-            ("imputer", SimpleImputer(strategy="mean")),
-            # ("scaler", StandardScaler()),
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
         ]
     )
     log_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="median")),
-            # ("log", FunctionTransformer(np.log1p, validate=True)),
-            # ("scaler", StandardScaler()),
+            ("log", FunctionTransformer(np.log1p, validate=True, feature_names_out="one-to-one")),
+            ("scaler", StandardScaler()),
         ]
     )
 
-    oh_transformer = Pipeline(
+    # No need to OH encode bc XGBoost can deal with that.
+    cat_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            # ("onehot", OneHotEncoder(handle_unknown="ignore")),
         ]
     )
 
     ord_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            # ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
+            ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
         ]
     )
 
@@ -97,12 +97,11 @@ def make_pipeline() -> tuple[Pipeline, list[str]]:
     if feat_cols.numeric_log:
         transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
     if feat_cols.categorical:
-        transformers.append(("oh", oh_transformer, feat_cols.categorical))
+        transformers.append(("cat", cat_transformer, feat_cols.categorical))
     if feat_cols.ordinal:
         transformers.append(("ord", ord_transformer, feat_cols.ordinal))
     preprocessor = ColumnTransformer(
-        transformers=transformers,
-        remainder="drop",
+        transformers=transformers, remainder="passthrough", verbose_feature_names_out=False
     )
 
     pipeline = Pipeline(
@@ -111,4 +110,4 @@ def make_pipeline() -> tuple[Pipeline, list[str]]:
         ]
     )
     pipeline.set_output(transform="pandas")
-    return pipeline, feat_cols
+    return pipeline
