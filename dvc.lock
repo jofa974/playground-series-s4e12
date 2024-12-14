@@ -114,7 +114,7 @@ stages:
       md5: f5ed57c419ce8b7331f89ce3f08d82a2
       size: 33002
   train_imputer:
-    cmd: poetry run python insurance/torch_imputer.py  data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/torch_imputer.py train data/prepared/prepared_data.feather
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
@@ -122,8 +122,8 @@ stages:
       size: 57045410
     - path: insurance/torch_imputer.py
       hash: md5
-      md5: 13724a55f61bb5ef00ccd881e5e6cf70
-      size: 7037
+      md5: 5ac036369a3f12575bbbea7d8dd23fbc
+      size: 9235
     params:
       params.yaml:
         torch_imputer:
@@ -135,3 +135,7 @@ stages:
       hash: md5
       md5: 4b9d1eac1f73a8d0dfa96af091219876
       size: 13316
+    - path: out/models/torch_imputer_data_pipeline.pkl
+      hash: md5
+      md5: 95628642813c9fd3e84971ae914cdd21
+      size: 3100
