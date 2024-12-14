@@ -128,7 +128,7 @@ def main():
         return avg
 
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=2)
+    study.optimize(objective, n_trials=50)
 
     logger.info(f"Number of finished trials: {len(study.trials)}")
     logger.info("Best trial:")

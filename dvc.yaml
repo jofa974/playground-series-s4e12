@@ -16,7 +16,7 @@ stages:
     - data/prepared/prepared_data.feather
 
   train_imputer:
-    cmd: poetry run python insurance/train_imputer.py train data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/train_imputer.py
     deps:
     - data/prepared/prepared_data.feather
     - insurance/train_imputer.py

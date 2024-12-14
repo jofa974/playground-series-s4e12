@@ -114,7 +114,7 @@ stages:
       md5: f5ed57c419ce8b7331f89ce3f08d82a2
       size: 33002
   train_imputer:
-    cmd: poetry run python insurance/train_imputer.py train data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/train_imputer.py
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
@@ -126,18 +126,18 @@ stages:
       size: 3308
     - path: insurance/train_imputer.py
       hash: md5
-      md5: ff63cdd696403a7e70cb958acd2dc3d8
-      size: 7307
+      md5: 2f9d23316d7ee3b0bcf7efc58c27ea21
+      size: 5565
     params:
       params.yaml:
         torch_imputer:
-          epochs: 10
-          lr: 0.001
+          epochs: 50
+          lr: 0.002
           batch_size: 2048
     outs:
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: 266cbda1f7c5db8a0fc32b35d220b6a4
+      md5: 42ddc5fda1de3c4124424581717e907b
       size: 13316
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
@@ -160,7 +160,7 @@ stages:
       size: 2333
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: 266cbda1f7c5db8a0fc32b35d220b6a4
+      md5: 42ddc5fda1de3c4124424581717e907b
       size: 13316
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
@@ -169,20 +169,20 @@ stages:
     outs:
     - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: b609a20930dd6a1bad56136ff8b1389d
-      size: 58053882
+      md5: 38dac65cb185a9d28a9622081b367464
+      size: 58036754
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py
     deps:
     - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: b609a20930dd6a1bad56136ff8b1389d
-      size: 58053882
+      md5: 38dac65cb185a9d28a9622081b367464
+      size: 58036754
     - path: insurance/data_pipeline.py
       hash: md5
       md5: 5b3ebe7bd623c9cb606fc8f0e2735e76
       size: 3308
     - path: insurance/tune_xgboost.py
       hash: md5
-      md5: 74e0f31af2a4a6c419b424f639d90876
-      size: 5515
+      md5: bf3fe67d19cbc81d5d7c9df343d6a9e9
+      size: 5516

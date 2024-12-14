@@ -20,7 +20,7 @@ from insurance.log import setup_logger
 
 MODEL_PATH = OUT_PATH / "models/torch_imputer.pt"
 DATA_PIPELINE_PATH = OUT_PATH / "models/torch_imputer_data_pipeline.pkl"
-
+INPUT_PATH = PREP_DATA_PATH / "prepared_data.feather"
 app = typer.Typer()
 
 
@@ -80,8 +80,7 @@ def prepare_data_pipeline(
     return features, target, data_pipeline
 
 
-@app.command()
-def train(prepared_data_path: Path):
+def train():
     logger = setup_logger()
 
     params = dvc.api.params_show()["torch_imputer"]
@@ -94,7 +93,7 @@ def train(prepared_data_path: Path):
         else "cpu"
     )
     logger.info(f"Running torch on {device}")
-    df = pd.read_feather(prepared_data_path)
+    df = pd.read_feather(INPUT_PATH)
 
     features, target, data_pipeline = prepare_data_pipeline(input_df=df)
 
@@ -174,59 +173,5 @@ def evaluate_model(model, test_loader, device):
     return total_loss / len(test_loader)
 
 
-@app.command()
-def run_inference(prepared_data_path: Path, out_file_name: str):
-    device = torch.device(
-        "cuda"
-        if torch.cuda.is_available()
-        else "mps"
-        if torch.backends.mps.is_available()
-        else "cpu"
-    )
-    logger.info(f"Running torch on {device}")
-
-    target_column = "Previous Claims"
-    df_init = pd.read_feather(prepared_data_path)
-
-    X = df_init[df_init[target_column].isna()]
-    X = X.drop(columns=[target_column])
-    X = X[features_columns.names]
-
-    logger.info("Initialized data")
-
-    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
-    X_transformed = data_pipeline.transform(X)
-
-    logger.info("Transformed trained data")
-
-    # Create PyTorch Datasets and DataLoaders
-    inference_dataset = TabularDataset(X_transformed)
-
-    inference_loader = DataLoader(inference_dataset, batch_size=1024)
-
-    logger.info("Pytorch data structures")
-
-    # Initialize the model, loss function, and optimizer
-    logger.info(f"{X_transformed.shape=}")
-    input_dim = X_transformed.shape[1]
-    model = FeedforwardNN(input_dim).to(device)
-    model.load_state_dict(torch.load(MODEL_PATH, weights_only=True))
-    model.eval()
-    with torch.no_grad():
-        preds = []
-        for features, _ in tqdm(inference_loader, desc="Inference"):
-            features = features.to(device)
-            outputs = model(features).squeeze().to("cpu")
-            preds.append(outputs)
-        preds = torch.cat(preds)
-        X[target_column] = preds.numpy()
-
-    df_init.loc[df_init[target_column].isna(), target_column] = X[target_column].values
-    out_file = PREP_DATA_PATH / out_file_name
-    df_init.to_feather(out_file)
-    logger.info(f"Inference saved to {out_file}")
-    return df_init
-
-
 if __name__ == "__main__":
-    app()
+    train()
