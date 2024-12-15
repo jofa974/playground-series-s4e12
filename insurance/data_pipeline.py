@@ -32,6 +32,7 @@ def get_feat_columns():
         "Insurance Duration",
         "Number of Dependents",
         "Vehicle Age",
+        "Previous Claims",
     ]
     numeric_log_feat_cols = ["Annual Income"]
     categorical_feat_cols = [
@@ -46,9 +47,7 @@ def get_feat_columns():
         "Exercise Frequency",
         "Property Type",
     ]
-    ordinal_feat_cols = [
-        "Previous Claims",
-    ]
+    ordinal_feat_cols = []
 
     feat_cols = Features(
         numeric=numeric_feat_cols,

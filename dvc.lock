@@ -180,17 +180,17 @@ stages:
       size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 5b3ebe7bd623c9cb606fc8f0e2735e76
-      size: 3308
+      md5: 7f04ff7c5db6ffc8f99038d7027fbc03
+      size: 3303
     - path: insurance/tune_xgboost.py
       hash: md5
-      md5: a39067c340b54b69bc545811550ee111
-      size: 5419
+      md5: f4425cc62d43e3d4fc1f129fd20a3672
+      size: 5421
     outs:
     - path: out/xgboost_model_params.yaml
       hash: md5
-      md5: 2da770fede44bb67edc133219816995b
-      size: 354
+      md5: 7c7e6dec70465db0b6978b3bb976e744
+      size: 249
   train_xgboost:
     cmd: poetry run python insurance/train_xgboost.py data/prepared/prepared_data.feather
     deps:
@@ -200,14 +200,14 @@ stages:
       size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 5b3ebe7bd623c9cb606fc8f0e2735e76
-      size: 3308
+      md5: 7f04ff7c5db6ffc8f99038d7027fbc03
+      size: 3303
     - path: out/xgboost_model_params.yaml
       hash: md5
-      md5: 2da770fede44bb67edc133219816995b
-      size: 354
+      md5: 7c7e6dec70465db0b6978b3bb976e744
+      size: 249
     outs:
     - path: out/models/xgboost_folds.pkl
       hash: md5
-      md5: d5270a9fd261c0cd3868f4133c75a321
-      size: 174589
+      md5: b5adcd7693bd95d94063b00ac1a004d3
+      size: 1937429
