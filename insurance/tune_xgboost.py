@@ -13,6 +13,7 @@ from sklearn.model_selection import KFold
 from insurance.common import OUT_PATH, PREP_DATA_PATH
 from insurance.data_pipeline import get_feat_columns, make_pipeline
 from insurance.log import setup_logger
+import typer
 
 model_label = Path(__file__).stem.split("_")[-1]
 
@@ -20,13 +21,13 @@ DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}"
 BEST_PARAMS_PATH = OUT_PATH / "xgboost_model_params.yaml"
 
 
-def main():
+def main(prep_data_path: Path):
     log_file = datetime.now().strftime("xgboost_tune_log_%Y-%m-%d_%H-%M-%S.log")
     logger = setup_logger(log_file=log_file)
 
     target_column = "Premium Amount"
 
-    df = pd.read_feather(PREP_DATA_PATH / "prepared_imputed_data.feather")
+    df = pd.read_feather(prep_data_path)
     features = df.drop(columns=[target_column])
     labels = df[target_column]
 
@@ -139,4 +140,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    typer.run(main)

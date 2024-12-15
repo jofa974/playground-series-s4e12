@@ -41,19 +41,19 @@ stages:
     frozen: true
 
   tune_xboost:
-    cmd: poetry run python insurance/tune_xgboost.py
+    cmd: poetry run python insurance/tune_xgboost.py data/prepared/prepared_data.feather
     deps:
     - insurance/tune_xgboost.py
-    - data/prepared/prepared_imputed_data.feather
+    - data/prepared/prepared_data.feather
     - insurance/data_pipeline.py
     outs:
     - out/xgboost_model_params.yaml
     frozen: false
 
   train_xgboost:
-    cmd: poetry run python insurance/train_xgboost.py
+    cmd: poetry run python insurance/train_xgboost.py data/prepared/prepared_data.feather
     deps:
-      - data/prepared/prepared_imputed_data.feather
+      - data/prepared/prepared_data.feather
       - insurance/data_pipeline.py
       - out/xgboost_model_params.yaml
     outs:
