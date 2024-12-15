@@ -33,6 +33,10 @@ def get_feat_columns():
         "Number of Dependents",
         "Vehicle Age",
         "Previous Claims",
+        "year",
+        "month",
+        "day",
+        "dayofweek",
     ]
     numeric_log_feat_cols = ["Annual Income"]
     categorical_feat_cols = [
@@ -59,6 +63,61 @@ def get_feat_columns():
 
 
 def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
+    if feat_cols is None:
+        feat_cols = get_feat_columns()
+
+    # Preprocessing pipeline
+    numeric_transformer = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="median")),
+            ("scaler", StandardScaler()),
+        ]
+    )
+    log_transformer = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="median")),
+            ("log", FunctionTransformer(np.log1p, validate=True, feature_names_out="one-to-one")),
+            ("scaler", StandardScaler()),
+        ]
+    )
+
+    # No need to OH encode bc XGBoost can deal with that.
+    cat_transformer = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+        ]
+    )
+
+    ord_transformer = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
+        ]
+    )
+
+    transformers = []
+    if feat_cols.numeric:
+        transformers.append(("num", numeric_transformer, feat_cols.numeric))
+    if feat_cols.numeric_log:
+        transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
+    if feat_cols.categorical:
+        transformers.append(("cat", cat_transformer, feat_cols.categorical))
+    if feat_cols.ordinal:
+        transformers.append(("ord", ord_transformer, feat_cols.ordinal))
+    preprocessor = ColumnTransformer(
+        transformers=transformers, remainder="passthrough", verbose_feature_names_out=False
+    )
+
+    pipeline = Pipeline(
+        [
+            ("preprocessor", preprocessor),
+        ]
+    )
+    pipeline.set_output(transform="pandas")
+    return pipeline
+
+
+def make_xgboost_pipeline(feat_cols: Features | None = None) -> Pipeline:
     if feat_cols is None:
         feat_cols = get_feat_columns()
 

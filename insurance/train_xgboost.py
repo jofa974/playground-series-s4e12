@@ -9,7 +9,7 @@ import yaml
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 
-from insurance.common import OUT_PATH, PREP_DATA_PATH
+from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns
 from insurance.log import setup_logger
 from insurance.tune_xgboost import BEST_PARAMS_PATH, DATA_PIPELINE_PATH
@@ -28,6 +28,14 @@ def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
     df = pd.read_feather(prep_data_path)
+
+    df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"])
+    df["year"] = df["Policy Start Date"].dt.year
+    df["month"] = df["Policy Start Date"].dt.month
+    df["day"] = df["Policy Start Date"].dt.day
+    df["dayofweek"] = df["Policy Start Date"].dt.dayofweek
+    df = df.drop(columns=["Policy Start Date"])
+
     features = df.drop(columns=[target_column])
     labels = df[target_column]
 

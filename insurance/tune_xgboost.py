@@ -10,8 +10,8 @@ import yaml
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 
-from insurance.common import OUT_PATH, PREP_DATA_PATH
-from insurance.data_pipeline import get_feat_columns, make_pipeline
+from insurance.common import OUT_PATH
+from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
 from insurance.log import setup_logger
 import typer
 
@@ -28,7 +28,17 @@ def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
     df = pd.read_feather(prep_data_path)
+
+    df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"])
+    df["year"] = df["Policy Start Date"].dt.year
+    df["month"] = df["Policy Start Date"].dt.month
+    df["day"] = df["Policy Start Date"].dt.day
+    df["dayofweek"] = df["Policy Start Date"].dt.dayofweek
+    df = df.drop(columns=["Policy Start Date"])
+
     features = df.drop(columns=[target_column])
+    logger.info(f"features shape: {features.shape}")
+
     labels = df[target_column]
 
     feat_cols = get_feat_columns()
@@ -48,7 +58,7 @@ def main(prep_data_path: Path):
         y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
 
         # Fit the pipeline
-        data_pipeline = make_pipeline()
+        data_pipeline = make_xgboost_pipeline()
         X_train = data_pipeline.fit_transform(X_train)
         for col in feat_cols.categorical:
             X_train[col] = X_train[col].astype("category")
