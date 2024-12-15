@@ -176,13 +176,38 @@ stages:
     deps:
     - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: 38dac65cb185a9d28a9622081b367464
-      size: 58036754
+      md5: c34e946b732269f7b58cb0542bd73620
+      size: 56337066
     - path: insurance/data_pipeline.py
       hash: md5
       md5: 5b3ebe7bd623c9cb606fc8f0e2735e76
       size: 3308
     - path: insurance/tune_xgboost.py
       hash: md5
-      md5: bf3fe67d19cbc81d5d7c9df343d6a9e9
-      size: 5516
+      md5: c8e1c9faeb7a30c0b24d89bfe30c82f4
+      size: 5411
+    outs:
+    - path: out/xgboost_model_params.yaml
+      hash: md5
+      md5: 859345f0905c3f573278bd00c51d5131
+      size: 357
+  train_xgboost:
+    cmd: poetry run python insurance/train_xgboost.py
+    deps:
+    - path: data/prepared/prepared_imputed_data.feather
+      hash: md5
+      md5: c34e946b732269f7b58cb0542bd73620
+      size: 56337066
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: 5b3ebe7bd623c9cb606fc8f0e2735e76
+      size: 3308
+    - path: out/xgboost_model_params.yaml
+      hash: md5
+      md5: 859345f0905c3f573278bd00c51d5131
+      size: 357
+    outs:
+    - path: out/models/xgboost_folds.pkl
+      hash: md5
+      md5: 312a64742910b17f21de8c96e7c3e38e
+      size: 518434

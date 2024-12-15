@@ -1,91 +1,84 @@
 import pickle
+from datetime import datetime
 from pathlib import Path
 
-import dvc.api
 import numpy as np
 import pandas as pd
 import xgboost as xgb
-from dvclive import Live
-from sklearn.base import clone
+import yaml
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH, PREP_DATA_PATH
-from insurance.data_pipeline import make_pipeline, get_feat_columns
+from insurance.data_pipeline import get_feat_columns
+from insurance.log import setup_logger
+from insurance.tune_xgboost import BEST_PARAMS_PATH, DATA_PIPELINE_PATH
 
 model_label = Path(__file__).stem.split("_")[-1]
 
-MODEL_PATH = OUT_PATH / f"models/model_{model_label}.pkl"
-DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}.pkl"
+MODEL_PATH = OUT_PATH / "models/"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 
 def main():
-    params = dvc.api.params_show()["train"]
+    log_file = datetime.now().strftime("xgboost_tune_log_%Y-%m-%d_%H-%M-%S.log")
+    logger = setup_logger(log_file=log_file, name="xgboost trainer")
 
     target_column = "Premium Amount"
 
-    prep_data = PREP_DATA_PATH / "prepared_imputed_data.feather"
-    df = pd.read_feather(prep_data)
-    print(f"Read file into dataframe: {prep_data}")
-
+    df = pd.read_feather(PREP_DATA_PATH / "prepared_imputed_data.feather")
     features = df.drop(columns=[target_column])
-
     labels = df[target_column]
 
-    feat_cols = get_feat_columns().names
-    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
+    feat_cols = get_feat_columns()
+    feat_names = feat_cols.names
 
-    # K-Fold Cross-Validation
-    n_splits = params["n_splits"]
-    skf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+    n_splits = 5
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
 
-    with Live(OUT_PATH, resume=True) as live:
-        rmsle_scores = []
-        for fold, (train_idx, test_idx) in enumerate(skf.split(features[feat_cols])):
-            print(f"Fold {fold + 1}")
-            X_train, X_test = (
-                features[feat_cols].iloc[train_idx],
-                features[feat_cols].iloc[test_idx],
-            )
-            y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
-            print(f"{X_train.shape=}")
-            # Fit the pipeline
-            # X_train = data_pipeline.fit_transform(X_train)
-            dtrain = xgb.DMatrix(
-                X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
-            )
-            bst = xgb.train(params["xgboost"], dtrain)
+    with open(BEST_PARAMS_PATH, "r") as file:
+        params = yaml.safe_load(file)
 
-            # Predict and evaluate
-            # X_test = data_pipeline.transform(X_test)
-            dvalid = xgb.DMatrix(
-                X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_cols
-            )
-            y_pred = np.expm1(bst.predict(dvalid))
-            rmsle = root_mean_squared_log_error(y_test, y_pred)
-            rmsle_scores.append(rmsle)
-            print(f"Root Mean Squared Logarithmic Error: {rmsle:.4f}")
-            live.log_metric(f"rmsle/{fold}/{model_label}", rmsle)
+    score = 0
+    models = {}
+    for fold, (train_idx, test_idx) in enumerate(kf.split(features[feat_names])):
+        logger.info(f"Fold {fold + 1}")
+        X_train, X_test = (
+            features[feat_names].iloc[train_idx],
+            features[feat_names].iloc[test_idx],
+        )
+        y_train, y_test = labels.iloc[train_idx], labels.iloc[test_idx]
 
-        # Overall performance
-        average_rmsle = np.mean(rmsle_scores)
-        live.log_metric(f"rmsle/average/{model_label}", average_rmsle)
-        live.next_step()
-        print(
-            f"Average Mean Squared Logarithmic Error across {n_splits} folds: {average_rmsle:.4f}"
+        # Fit the pipeline
+        data_pipeline = pickle.load(open(str(DATA_PIPELINE_PATH) + f"_fold_{fold}.pkl", "rb"))
+        X_train = data_pipeline.transform(X_train)
+        for col in feat_cols.categorical:
+            X_train[col] = X_train[col].astype("category")
+        dtrain = xgb.DMatrix(
+            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_names
         )
 
-    # Re-train on entire dataset
-    X_train = features[feat_cols]
-    y_train = labels
-    # X_train = re_pipeline.fit_transform(X_train)
-    dtrain = xgb.DMatrix(
-        X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_cols
-    )
-    bst = xgb.train(params["xgboost"], dtrain)
-    pickle.dump(bst, MODEL_PATH.open("wb"))
-    live.log_artifact(MODEL_PATH)
+        # Predict and evaluate
+        X_test = data_pipeline.transform(X_test)
+        for col in feat_cols.categorical:
+            X_test[col] = X_test[col].astype("category")
+        dtest = xgb.DMatrix(
+            X_test, label=np.log1p(y_test), enable_categorical=True, feature_names=feat_names
+        )
+
+        bst = xgb.train(params, dtrain)
+
+        # Predict and evaluate
+        y_pred = np.expm1(bst.predict(dtest))
+        rmsle = root_mean_squared_log_error(y_test, y_pred)
+        logger.info(f" !!! Fold {fold+1} !!! Root Mean Squared Logarithmic Error: {rmsle:.4f}")
+        score += rmsle
+        models[f"model_{fold+1}"] = bst
+
+    pickle.dump(models, open(MODEL_PATH / "xgboost_folds.pkl", "wb"))
+
+    avg = score / n_splits
+    logger.info(f"Average RMSLE across folds: {avg}")
 
 
 if __name__ == "__main__":

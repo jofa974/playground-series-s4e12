@@ -26,7 +26,7 @@ stages:
     outs:
     - out/models/torch_imputer.pt
     - out/models/torch_imputer_data_pipeline.pkl
-    frozen: false
+    frozen: true
 
   impute:
     cmd: poetry run python insurance/run_imputer.py
@@ -38,7 +38,7 @@ stages:
     - out/models/torch_imputer_data_pipeline.pkl
     outs:
     - data/prepared/prepared_imputed_data.feather
-    frozen: false
+    frozen: true
 
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py
@@ -46,7 +46,19 @@ stages:
     - insurance/tune_xgboost.py
     - data/prepared/prepared_imputed_data.feather
     - insurance/data_pipeline.py
-    frozen: true
+    outs:
+    - out/xgboost_model_params.yaml
+    frozen: false
+
+  train_xgboost:
+    cmd: poetry run python insurance/train_xgboost.py
+    deps:
+      - data/prepared/prepared_imputed_data.feather
+      - insurance/data_pipeline.py
+      - out/xgboost_model_params.yaml
+    outs:
+    - out/models/xgboost_folds.pkl
+    frozen: false
 
   # train:
   #   foreach:

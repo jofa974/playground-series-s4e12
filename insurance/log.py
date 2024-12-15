@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 
 
-def setup_logger(log_file: str = None, log_level: int = logging.DEBUG):
+def setup_logger(log_file: str = None, log_level: int = logging.DEBUG, name: str | None = None):
     """
     Sets up a logger that logs messages to both the terminal and a file.
 
@@ -18,7 +18,9 @@ def setup_logger(log_file: str = None, log_level: int = logging.DEBUG):
         log_file = datetime.now().strftime("log_%Y-%m-%d_%H-%M-%S.log")
 
     # Create a logger
-    logger = logging.getLogger("my_logger")
+    if name is None:
+        name = "logger"
+    logger = logging.getLogger(name)
     logger.setLevel(log_level)
 
     # Create handlers

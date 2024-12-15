@@ -1,27 +1,23 @@
-from datetime import datetime
 import pickle
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 import optuna
 import pandas as pd
 import xgboost as xgb
-from dvclive.optuna import DVCLiveCallback
+import yaml
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH, PREP_DATA_PATH
-from insurance.data_pipeline import make_pipeline, get_feat_columns
+from insurance.data_pipeline import get_feat_columns, make_pipeline
 from insurance.log import setup_logger
 
 model_label = Path(__file__).stem.split("_")[-1]
 
 DATA_PIPELINE_PATH = OUT_PATH / f"data_pipeline_tune_{model_label}"
-MODEL_PATH = OUT_PATH / f"models/model_{model_label}.pkl"
-MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-
-TUNE_PATH = OUT_PATH / f"tune_{model_label}"
-TUNE_PATH.parent.mkdir(parents=True, exist_ok=True)
+BEST_PARAMS_PATH = OUT_PATH / "xgboost_model_params.yaml"
 
 
 def main():
@@ -128,7 +124,7 @@ def main():
         return avg
 
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=50)
+    study.optimize(objective, n_trials=2)
 
     logger.info(f"Number of finished trials: {len(study.trials)}")
     logger.info("Best trial:")
@@ -138,6 +134,8 @@ def main():
     logger.info("  Params: ")
     for key, value in trial.params.items():
         logger.info("    {}: {}".format(key, value))
+    with open(BEST_PARAMS_PATH, "w") as f:
+        yaml.dump(trial.params, f)
 
 
 if __name__ == "__main__":
