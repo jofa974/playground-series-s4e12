@@ -156,12 +156,12 @@ stages:
       size: 3308
     - path: insurance/run_imputer.py
       hash: md5
-      md5: 583f82d146e1946e1dddd016dfe8a1e7
-      size: 2333
+      md5: 3b5c2d1612ef90c81aa8471587550683
+      size: 2532
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: 42ddc5fda1de3c4124424581717e907b
-      size: 13316
+      md5: ba144c294586f832a05348a772e3cd15
+      size: 6596
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
       md5: c523eef00d57bd2ce78f1b12fb566b8a
@@ -169,8 +169,8 @@ stages:
     outs:
     - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: 38dac65cb185a9d28a9622081b367464
-      size: 58036754
+      md5: a37d7c145b3c4a6a76e7a0b53e197097
+      size: 56426066
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py
     deps:

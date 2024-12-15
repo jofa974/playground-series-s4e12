@@ -55,7 +55,9 @@ def run_inference():
     # Initialize the model, loss function, and optimizer
     logger.info(f"{X_transformed.shape=}")
     input_dim = X_transformed.shape[1]
-    model = FeedforwardNN(input_dim).to(device)
+    output_dim = 10
+    logger.info(f"Number of output classes: {output_dim}")
+    model = FeedforwardNN(input_dim=input_dim, output_dim=output_dim).to(device)
     model.load_state_dict(torch.load(MODEL_PATH, weights_only=True))
     model.eval()
     with torch.no_grad():
@@ -63,7 +65,8 @@ def run_inference():
         for features, _ in tqdm(inference_loader, desc="Inference"):
             features = features.to(device)
             outputs = model(features).squeeze().to("cpu")
-            preds.append(outputs)
+            _, predicted = torch.max(outputs, 1)  # Get the class with highest score
+            preds.append(predicted)
         preds = torch.cat(preds)
         X[target_column] = preds.numpy()
 
