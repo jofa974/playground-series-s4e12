@@ -16,7 +16,7 @@ from tqdm import tqdm
 from dvclive import Live
 from insurance.common import OUT_PATH, PREP_DATA_PATH
 from insurance.data_pipeline import Features, make_pipeline
-from insurance.log import setup_logger
+from insurance.logger import setup_logger
 
 MODEL_PATH = OUT_PATH / "models/torch_imputer.pt"
 DATA_PIPELINE_PATH = OUT_PATH / "models/torch_imputer_data_pipeline.pkl"

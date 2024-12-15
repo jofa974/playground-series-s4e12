@@ -12,7 +12,7 @@ from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
-from insurance.log import setup_logger
+from insurance.logger import setup_logger
 import typer
 
 model_label = Path(__file__).stem.split("_")[-1]

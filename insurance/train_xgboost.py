@@ -11,7 +11,7 @@ from sklearn.model_selection import KFold
 
 from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns
-from insurance.log import setup_logger
+from insurance.logger import setup_logger
 from insurance.tune_xgboost import BEST_PARAMS_PATH, DATA_PIPELINE_PATH
 import typer
 
