@@ -126,19 +126,19 @@ stages:
       size: 3308
     - path: insurance/train_imputer.py
       hash: md5
-      md5: 2f9d23316d7ee3b0bcf7efc58c27ea21
-      size: 5565
+      md5: 79874dab2533bf0d868702cddc1e07dd
+      size: 6999
     params:
       params.yaml:
         torch_imputer:
-          epochs: 50
-          lr: 0.002
+          epochs: 20
+          lr: 0.001
           batch_size: 2048
     outs:
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: 42ddc5fda1de3c4124424581717e907b
-      size: 13316
+      md5: 30795e00bd4a786dc78042493124daa1
+      size: 14468
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
       md5: c523eef00d57bd2ce78f1b12fb566b8a

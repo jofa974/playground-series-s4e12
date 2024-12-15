@@ -22,6 +22,6 @@ train:
   basic:
 
 torch_imputer:
-  epochs: 50
-  lr: 2e-3
+  epochs: 20
+  lr: 1e-3
   batch_size: 2048

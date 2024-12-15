@@ -37,6 +37,7 @@ stages:
     - out/models/torch_imputer_data_pipeline.pkl
     outs:
     - data/prepared/prepared_imputed_data.feather
+    frozen: true
 
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py
@@ -44,7 +45,7 @@ stages:
     - insurance/tune_xgboost.py
     - data/prepared/prepared_imputed_data.feather
     - insurance/data_pipeline.py
-
+    frozen: true
 
   # train:
   #   foreach:
@@ -73,8 +74,18 @@ metrics:
 plots:
 - out/plots/metrics:
     x: step
-- dvclive/plots/metrics:
-    x: step
+- dvclive/plots/custom/loss.json:
+    template: linear
+    x: epoch
+    y:
+    - train_loss
+    - eval_loss
+- dvclive/plots/custom/accuracy.json:
+    template: linear
+    x: epoch
+    y:
+    - train_accuracy
+    - eval_accuracy
 params:
 - dvclive-optuna/params.yaml
 - dvclive/params.yaml
