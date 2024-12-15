@@ -105,7 +105,7 @@ def main(prep_data_path: Path):
             param["max_depth"] = trial.suggest_int("max_depth", 3, 9, step=2)
             # minimum child weight, larger the term more conservative the tree.
             param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
-            param["eta"] = trial.suggest_float("eta", 1e-5, 1.0, log=True)
+            param["eta"] = trial.suggest_float("eta", 1e-8, 1.0, log=True)
             # defines how selective algorithm is.
             param["gamma"] = trial.suggest_float("gamma", 1e-8, 1.0, log=True)
             param["grow_policy"] = trial.suggest_categorical(
