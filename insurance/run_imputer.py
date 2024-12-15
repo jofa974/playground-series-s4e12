@@ -55,7 +55,7 @@ def run_inference():
     # Initialize the model, loss function, and optimizer
     logger.info(f"{X_transformed.shape=}")
     input_dim = X_transformed.shape[1]
-    output_dim = 10
+    output_dim = 6
     logger.info(f"Number of output classes: {output_dim}")
     model = FeedforwardNN(input_dim=input_dim, output_dim=output_dim).to(device)
     model.load_state_dict(torch.load(MODEL_PATH, weights_only=True))

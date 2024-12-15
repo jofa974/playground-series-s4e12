@@ -126,22 +126,22 @@ stages:
       size: 3308
     - path: insurance/train_imputer.py
       hash: md5
-      md5: 71a3400c38a58f59879dc58d1f19c9db
-      size: 6999
+      md5: 392f99313c616f6202db27b2ced378f6
+      size: 7028
     params:
       params.yaml:
         torch_imputer:
-          epochs: 1000
+          epochs: 50
           lr: 0.001
           batch_size: 2048
     outs:
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: ba144c294586f832a05348a772e3cd15
-      size: 6596
+      md5: 7537c1a3a36c27d5b0852c44e8090698
+      size: 6340
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
-      md5: c523eef00d57bd2ce78f1b12fb566b8a
+      md5: 366088dae5e98c16271032306fbaf220
       size: 3037
   impute:
     cmd: poetry run python insurance/run_imputer.py
@@ -156,21 +156,21 @@ stages:
       size: 3308
     - path: insurance/run_imputer.py
       hash: md5
-      md5: 3b5c2d1612ef90c81aa8471587550683
-      size: 2532
+      md5: 0ea052fdd86050efeb668dcd5d59a08f
+      size: 2531
     - path: out/models/torch_imputer.pt
       hash: md5
-      md5: ba144c294586f832a05348a772e3cd15
-      size: 6596
+      md5: 7537c1a3a36c27d5b0852c44e8090698
+      size: 6340
     - path: out/models/torch_imputer_data_pipeline.pkl
       hash: md5
-      md5: c523eef00d57bd2ce78f1b12fb566b8a
+      md5: 366088dae5e98c16271032306fbaf220
       size: 3037
     outs:
     - path: data/prepared/prepared_imputed_data.feather
       hash: md5
-      md5: a37d7c145b3c4a6a76e7a0b53e197097
-      size: 56426066
+      md5: c34e946b732269f7b58cb0542bd73620
+      size: 56337066
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py
     deps:
