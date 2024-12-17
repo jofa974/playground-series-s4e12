@@ -48,6 +48,7 @@ stages:
     - insurance/data_pipeline.py
     outs:
     - out/xgboost_model_params.yaml
+    - out/data_pipeline_tune_xgboost_no_fold.pkl
     frozen: false
 
   train_xgboost:
@@ -56,6 +57,7 @@ stages:
       - data/prepared/prepared_data.feather
       - insurance/data_pipeline.py
       - out/xgboost_model_params.yaml
+      - out/data_pipeline_tune_xgboost_no_fold.pkl
     outs:
     - out/models/xgboost_folds.pkl
     frozen: false

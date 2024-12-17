@@ -3,7 +3,13 @@ import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import FunctionTransformer, OneHotEncoder, OrdinalEncoder, StandardScaler
+from sklearn.preprocessing import (
+    FunctionTransformer,
+    OneHotEncoder,
+    OrdinalEncoder,
+    StandardScaler,
+    LabelEncoder,
+)
 from dataclasses import dataclass, field, fields
 
 
@@ -32,7 +38,6 @@ def get_feat_columns():
         "Insurance Duration",
         "Number of Dependents",
         "Vehicle Age",
-        "Previous Claims",
         "year",
         "month",
         "day",
@@ -51,7 +56,9 @@ def get_feat_columns():
         "Exercise Frequency",
         "Property Type",
     ]
-    ordinal_feat_cols = []
+    ordinal_feat_cols = [
+        "Previous Claims",
+    ]
 
     feat_cols = Features(
         numeric=numeric_feat_cols,
@@ -82,11 +89,7 @@ def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
     )
 
     # No need to OH encode bc XGBoost can deal with that.
-    cat_transformer = Pipeline(
-        [
-            ("imputer", SimpleImputer(strategy="most_frequent")),
-        ]
-    )
+    cat_transformer = Pipeline([("imputer", SimpleImputer(strategy="most_frequent"))])
 
     ord_transformer = Pipeline(
         [
@@ -139,7 +142,7 @@ def make_xgboost_pipeline(feat_cols: Features | None = None) -> Pipeline:
     # No need to OH encode bc XGBoost can deal with that.
     cat_transformer = Pipeline(
         [
-            ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("imputer", SimpleImputer(strategy="constant", fill_value="Unknown")),
         ]
     )
 

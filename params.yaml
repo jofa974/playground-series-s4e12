@@ -9,6 +9,7 @@ train:
     device: cuda
     objective: reg:squarederror
     eval_metric: rmse
+    num_boost_round: 400,
     booster: gbtree
     lambda: 0.4104749889610154
     alpha: 5.561529990659439e-07
