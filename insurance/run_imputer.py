@@ -21,7 +21,7 @@ app = typer.Typer()
 logger = setup_logger()
 
 
-def run_inference():
+def run_inference(df_init: pd.DataFrame | None = None, output_path: Path | None = OUTPUT_PATH):
     device = torch.device(
         "cuda"
         if torch.cuda.is_available()
@@ -32,7 +32,8 @@ def run_inference():
     logger.info(f"Running torch on {device}")
 
     target_column = "Previous Claims"
-    df_init = pd.read_feather(INPUT_PATH)
+    if df_init is None:
+        df_init = pd.read_feather(INPUT_PATH)
 
     X = df_init[df_init[target_column].isna()]
     X = X.drop(columns=[target_column])
@@ -71,8 +72,9 @@ def run_inference():
         X[target_column] = preds.numpy()
 
     df_init.loc[df_init[target_column].isna(), target_column] = X[target_column].values
-    df_init.to_feather(OUTPUT_PATH)
-    logger.info(f"Inference saved to {OUTPUT_PATH}")
+    if output_path:
+        df_init.to_feather(output_path)
+        logger.info(f"Inference saved to {output_path}")
     return df_init
 
 

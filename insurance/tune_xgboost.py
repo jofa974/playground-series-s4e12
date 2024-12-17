@@ -11,7 +11,7 @@ import yaml
 from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.preprocessing import LabelEncoder
-
+import random
 from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
 from insurance.logger import setup_logger
@@ -38,52 +38,24 @@ def main(prep_data_path: Path):
     df["dayofweek"] = df["Policy Start Date"].dt.dayofweek
     df = df.drop(columns=["Policy Start Date"])
 
+    feat_cols = get_feat_columns()
+    feat_names = feat_cols.names
+
     features = df.drop(columns=[target_column])
+    features = features[feat_names]
     logger.info(f"features shape: {features.shape}")
 
     labels = df[target_column]
 
-    feat_cols = get_feat_columns()
-    feat_names = feat_cols.names
-
-    # n_splits = 1
-    # train_folds = []
-    # valid_folds = []
-    # logger.info("No KFold !")
-
-    # X_train, X_valid, y_train, y_valid = train_test_split(
-    #     features, labels, random_state=42, shuffle=True, valid_size=0.2
-    # )
-
-    # # Fit the pipeline
-    # data_pipeline = make_xgboost_pipeline()
-    # X_train = data_pipeline.fit_transform(X_train)
-    # for col in feat_cols.categorical:
-    #     X_train[col] = X_train[col].astype("category")
-    # dtrain = xgb.DMatrix(
-    #     X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_names
-    # )
-
-    # # Predict and evaluate
-    # X_valid = data_pipeline.transform(X_valid)
-    # for col in feat_cols.categorical:
-    #     X_valid[col] = X_valid[col].astype("category")
-    # dvalid = xgb.DMatrix(
-    #     X_valid, label=np.log1p(y_valid), enable_categorical=True, feature_names=feat_names
-    # )
-
-    # train_folds.append(dtrain)
-    # valid_folds.append(dvalid)
-
-    # pickle.dump(data_pipeline, open(str(DATA_PIPELINE_PATH) + f"_NO_FOLD.pkl", "wb"))
-
-    n_splits = 10
-    kf = KFold(n_splits=n_splits, shuffle=True, random_state=42)
+    n_splits = 5
+    kf = KFold(n_splits=n_splits, shuffle=True, random_state=21)
 
     train_folds = []
     valid_folds = []
     idx = []
-    for fold, (train_idx, valid_idx) in enumerate(kf.split(features[feat_names])):
+    for fold, (train_idx, valid_idx) in enumerate(
+        random.sample(list(kf.split(features[feat_names])), n_splits)
+    ):
         logger.info(f"Fold {fold + 1}")
         X_train, X_valid = (
             features[feat_names].iloc[train_idx],
@@ -127,48 +99,50 @@ def main(prep_data_path: Path):
         param = copy.deepcopy(base_param)
         param.update(
             {
-                # defines booster, gblinear for linear functions.
-                "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
+                # # defines booster, gblinear for linear functions.
+                # "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
+                "booster": "gbtree",
                 # L2 regularization weight.
-                "lambda": trial.suggest_float("lambda", 1e-7, 1.0, log=True),
+                "lambda": trial.suggest_float("lambda", 0.1, 100, log=True),
                 # L1 regularization weight.
-                "alpha": trial.suggest_float("alpha", 1e-7, 1.0, log=True),
+                "alpha": trial.suggest_float("alpha", 1e-3, 0.2, log=True),
                 # sampling ratio for training data.
-                "subsample": trial.suggest_float("subsample", 0.2, 1.0),
-                # sampling according to each tree.
-                "colsample_bytree": trial.suggest_float("colsample_bytree", 0.5, 1.0),
+                # "subsample": trial.suggest_float("subsample", 0.2, 1.0),
+                # # sampling according to each tree.
+                # "colsample_bytree": trial.suggest_float("colsample_bytree", 0.2, 1.0),
             }
         )
 
         if param["booster"] in ["gbtree", "dart"]:
             # maximum depth of the tree, signifies complexity of the tree.
-            param["max_depth"] = trial.suggest_int("max_depth", 2, 9, step=1)
-            # minimum child weight, larger the term more conservative the tree.
-            param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
-            param["eta"] = trial.suggest_float("eta", 1e-8, 1.0, log=True)
-            # defines how selective algorithm is.
-            param["gamma"] = trial.suggest_float("gamma", 1e-8, 1e-5, log=True)
-            param["grow_policy"] = trial.suggest_categorical(
-                "grow_policy", ["depthwise", "lossguide"]
-            )
+            param["max_depth"] = trial.suggest_int("max_depth", 3, 10, step=1)
+        #     # minimum child weight, larger the term more conservative the tree.
+        #     param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
+        #     param["eta"] = trial.suggest_float("eta", 1e-8, 1.0, log=True)
+        #     # defines how selective algorithm is.
+        #     param["gamma"] = trial.suggest_float("gamma", 1e-8, 1.0, log=True)
+        #     param["grow_policy"] = trial.suggest_categorical(
+        #         "grow_policy", ["depthwise", "lossguide"]
+        #     )
 
-        if param["booster"] == "dart":
-            param["sample_type"] = trial.suggest_categorical("sample_type", ["uniform", "weighted"])
-            param["normalize_type"] = trial.suggest_categorical(
-                "normalize_type", ["tree", "forest"]
-            )
-            param["rate_drop"] = trial.suggest_float("rate_drop", 1e-8, 1.0, log=True)
-            param["skip_drop"] = trial.suggest_float("skip_drop", 1e-8, 1.0, log=True)
+        # if param["booster"] == "dart":
+        #     param["sample_type"] = trial.suggest_categorical("sample_type", ["uniform", "weighted"])
+        #     param["normalize_type"] = trial.suggest_categorical(
+        #         "normalize_type", ["tree", "forest"]
+        #     )
+        #     param["rate_drop"] = trial.suggest_float("rate_drop", 1e-8, 1.0, log=True)
+        #     param["skip_drop"] = trial.suggest_float("skip_drop", 1e-8, 1.0, log=True)
 
+        num_boost_round = trial.suggest_int("num_boost_round", 10, 400)
         rmsle_scores = np.zeros(n_splits)
         oof_preds = np.zeros(labels.shape[0])
         for fold, (dtrain, dvalid, val_idx) in enumerate(zip(train_folds, valid_folds, idx)):
-            bst = xgb.train(param, dtrain, num_boost_round=30)
+            bst = xgb.train(param, dtrain, num_boost_round=num_boost_round)
 
             # Predict and evaluate
             y_pred = np.expm1(bst.predict(dvalid))
             oof_preds[val_idx] = y_pred
-            rmsle = root_mean_squared_log_error(y_valid, y_pred)
+            rmsle = root_mean_squared_log_error(labels.iloc[val_idx], y_pred)
             logger.info(f" !!! Fold {fold+1} !!! Root Mean Squared Logarithmic Error: {rmsle:.4f}")
             rmsle_scores[fold] = rmsle
 
@@ -182,7 +156,7 @@ def main(prep_data_path: Path):
         return rmsle_oof
 
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=20)
+    study.optimize(objective, n_trials=1000)
 
     logger.info(f"Number of finished trials: {len(study.trials)}")
     logger.info("Best trial:")

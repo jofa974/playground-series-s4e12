@@ -42,6 +42,7 @@ def get_feat_columns():
         "month",
         "day",
         "dayofweek",
+        "Previous Claims",
     ]
     numeric_log_feat_cols = ["Annual Income"]
     categorical_feat_cols = [
@@ -56,9 +57,7 @@ def get_feat_columns():
         "Exercise Frequency",
         "Property Type",
     ]
-    ordinal_feat_cols = [
-        "Previous Claims",
-    ]
+    ordinal_feat_cols = []
 
     feat_cols = Features(
         numeric=numeric_feat_cols,
@@ -128,14 +127,14 @@ def make_xgboost_pipeline(feat_cols: Features | None = None) -> Pipeline:
     numeric_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="median")),
-            ("scaler", StandardScaler()),
+            # ("scaler", StandardScaler()),
         ]
     )
     log_transformer = Pipeline(
         [
             ("imputer", SimpleImputer(strategy="median")),
             ("log", FunctionTransformer(np.log1p, validate=True, feature_names_out="one-to-one")),
-            ("scaler", StandardScaler()),
+            # ("scaler", StandardScaler()),
         ]
     )
 
