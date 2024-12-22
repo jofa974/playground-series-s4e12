@@ -138,7 +138,7 @@ def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeli
 
     ord_transformer = Pipeline(
         [
-            ("imputer", SimpleImputer(strategy="most_frequent")),
+            # ("imputer", SimpleImputer(strategy="most_frequent")),
             ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value", unknown_value=-1)),
         ]
     )
@@ -149,12 +149,12 @@ def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeli
     )
 
     transformers = []
-    if feat_cols.numeric:
-        transformers.append(("num", numeric_transformer, feat_cols.numeric))
-    if feat_cols.numeric_log:
-        transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
-    if feat_cols.categorical:
-        transformers.append(("cat", cat_transformer, feat_cols.categorical))
+    # if feat_cols.numeric:
+    #     transformers.append(("num", numeric_transformer, feat_cols.numeric))
+    # if feat_cols.numeric_log:
+    #     transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
+    # if feat_cols.categorical:
+    #     transformers.append(("cat", cat_transformer, feat_cols.categorical))
     if feat_cols.ordinal:
         transformers.append(("ord", ord_transformer, feat_cols.ordinal))
     if feat_cols.date_time:
