@@ -9,8 +9,7 @@ import pandas as pd
 import xgboost as xgb
 import yaml
 from sklearn.metrics import root_mean_squared_log_error
-from sklearn.model_selection import KFold, train_test_split
-from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import KFold
 import random
 from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
@@ -30,13 +29,6 @@ def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
     df = pd.read_feather(prep_data_path)
-
-    df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"], format="%Y%m%d")
-    df["year"] = df["Policy Start Date"].dt.year
-    df["month"] = df["Policy Start Date"].dt.month
-    df["day"] = df["Policy Start Date"].dt.day
-    df["dayofweek"] = df["Policy Start Date"].dt.dayofweek
-    df = df.drop(columns=["Policy Start Date"])
 
     feat_cols = get_feat_columns()
     feat_names = feat_cols.names
@@ -69,14 +61,20 @@ def main(prep_data_path: Path):
         for col in feat_cols.categorical:
             X_train[col] = X_train[col].astype("category")
         dtrain = xgb.DMatrix(
-            X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_names
+            X_train,
+            label=np.log1p(y_train),
+            enable_categorical=True,
+            feature_names=X_train.columns.to_list(),
         )
 
         X_valid = data_pipeline.transform(X_valid)
         for col in feat_cols.categorical:
             X_valid[col] = X_valid[col].astype("category")
         dvalid = xgb.DMatrix(
-            X_valid, label=np.log1p(y_valid), enable_categorical=True, feature_names=feat_names
+            X_valid,
+            label=np.log1p(y_valid),
+            enable_categorical=True,
+            feature_names=X_valid.columns.to_list(),
         )
 
         train_folds.append(dtrain)
@@ -115,7 +113,7 @@ def main(prep_data_path: Path):
 
         if param["booster"] in ["gbtree", "dart"]:
             # maximum depth of the tree, signifies complexity of the tree.
-            param["max_depth"] = trial.suggest_int("max_depth", 3, 10, step=1)
+            param["max_depth"] = trial.suggest_int("max_depth", 2, 12, step=1)
         #     # minimum child weight, larger the term more conservative the tree.
         #     param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
         #     param["eta"] = trial.suggest_float("eta", 1e-8, 1.0, log=True)
@@ -156,7 +154,7 @@ def main(prep_data_path: Path):
         return rmsle_oof
 
     study = optuna.create_study(direction="minimize")
-    study.optimize(objective, n_trials=1000)
+    study.optimize(objective, n_trials=50)
 
     logger.info(f"Number of finished trials: {len(study.trials)}")
     logger.info("Best trial:")

@@ -15,31 +15,6 @@ stages:
     outs:
     - data/prepared/prepared_data.feather
 
-  train_imputer:
-    cmd: poetry run python insurance/train_imputer.py
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/train_imputer.py
-    - insurance/data_pipeline.py
-    params:
-    - torch_imputer
-    outs:
-    - out/models/torch_imputer.pt
-    - out/models/torch_imputer_data_pipeline.pkl
-    frozen: true
-
-  impute:
-    cmd: poetry run python insurance/run_imputer.py
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/run_imputer.py
-    - insurance/data_pipeline.py
-    - out/models/torch_imputer.pt
-    - out/models/torch_imputer_data_pipeline.pkl
-    outs:
-    - data/prepared/prepared_imputed_data.feather
-    frozen: true
-
   tune_xboost:
     cmd: poetry run python insurance/tune_xgboost.py data/prepared/prepared_data.feather
     deps:

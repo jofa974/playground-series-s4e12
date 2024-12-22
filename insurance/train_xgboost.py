@@ -30,13 +30,6 @@ def main(prep_data_path: Path):
 
     df = pd.read_feather(prep_data_path)
 
-    df["Policy Start Date"] = pd.to_datetime(df["Policy Start Date"], format="%Y%m%d")
-    df["year"] = df["Policy Start Date"].dt.year
-    df["month"] = df["Policy Start Date"].dt.month
-    df["day"] = df["Policy Start Date"].dt.day
-    df["dayofweek"] = df["Policy Start Date"].dt.dayofweek
-    df = df.drop(columns=["Policy Start Date"])
-
     X_train = df.drop(columns=[target_column])
     y_train = df[target_column]
 
@@ -54,7 +47,10 @@ def main(prep_data_path: Path):
 
     logger.info(f"Train shape: {X_train.shape=}")
     dtrain = xgb.DMatrix(
-        X_train, label=np.log1p(y_train), enable_categorical=True, feature_names=feat_names
+        X_train,
+        label=np.log1p(y_train),
+        enable_categorical=True,
+        feature_names=X_train.columns.to_list(),
     )
 
     bst = xgb.train(params, dtrain, num_boost_round=params["num_boost_round"])
