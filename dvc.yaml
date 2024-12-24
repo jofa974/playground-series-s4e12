@@ -15,27 +15,15 @@ stages:
     outs:
     - data/prepared/prepared_data.feather
 
-  tune_xboost:
-    cmd: poetry run python insurance/tune_xgboost.py data/prepared/prepared_data.feather
-    deps:
-    - insurance/tune_xgboost.py
-    - data/prepared/prepared_data.feather
-    - insurance/data_pipeline.py
-    outs:
-    - out/xgboost_model_params.yaml
-    - out/data_pipeline_tune_xgboost_no_fold.pkl
-    frozen: false
-
   train_xgboost:
     cmd: poetry run python insurance/train_xgboost.py data/prepared/prepared_data.feather
     deps:
-      - data/prepared/prepared_data.feather
-      - insurance/data_pipeline.py
-      - out/xgboost_model_params.yaml
-      - out/data_pipeline_tune_xgboost_no_fold.pkl
+    - data/prepared/prepared_data.feather
+    - insurance/data_pipeline.py
+    - insurance/train_xgboost.py
     outs:
-    - out/models/xgboost_folds.pkl
-    frozen: false
+    - out/data_pipeline_train_xgboost.pkl
+    - out/models/xgboost_model.pkl
 
   # train:
   #   foreach:
@@ -59,27 +47,13 @@ stages:
 
 metrics:
 - out/metrics.json
-- dvclive-optuna/metrics.json
-- dvclive/metrics.json
 plots:
-- out/plots/metrics:
-    x: step
-- dvclive/plots/custom/loss.json:
+- dvclive/plots/custom/XGBoost CV Loss.json:
     template: linear
-    x: epoch
+    x: booster
     y:
-    - train_loss
-    - eval_loss
-- dvclive/plots/custom/accuracy.json:
-    template: linear
-    x: epoch
-    y:
-    - train_accuracy
-    - eval_accuracy
-params:
-- dvclive-optuna/params.yaml
-- dvclive/params.yaml
-artifacts:
-  pytorch-model:
-    path: out/models/torch_imputer.pt
-    type: model
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+
