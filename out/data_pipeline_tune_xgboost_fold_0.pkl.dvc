@@ -1,5 +1,5 @@
 outs:
-- md5: 67f1fac0888d928c14b1d40b9ebb5292
-  size: 4043
+- md5: e60314d2624f85365d38ed2d1cc0b9e0
+  size: 3451
   hash: md5
   path: data_pipeline_tune_xgboost_fold_0.pkl

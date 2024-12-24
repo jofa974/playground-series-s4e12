@@ -5,3 +5,4 @@
 /data_pipeline_tune_xgboost_fold_3.pkl
 /data_pipeline_tune_xgboost_fold_4.pkl
 /xgboost_model_params.yaml
+/data_pipeline_train_xgboost.pkl

@@ -200,14 +200,18 @@ stages:
       size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 62daeae84ed48ce63fd650e97c9736be
-      size: 5106
-    - path: out/xgboost_model_params.yaml
+      md5: f1a368a886366811793693f8fe0e1b80
+      size: 8130
+    - path: insurance/train_xgboost.py
       hash: md5
-      md5: 11bca7628477bb73deaa189557db0d33
-      size: 250
+      md5: f40256317c19a70be330d77264facbbd
+      size: 4559
     outs:
-    - path: out/models/xgboost_folds.pkl
+    - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
-      md5: 8c6a85ef016f1af7948a4323fe5090b3
-      size: 167544
+      md5: bd86c17d25f0ef828c3b4f2b8adc06f9
+      size: 2983
+    - path: out/models/xgboost_model.pkl
+      hash: md5
+      md5: 31f61234ae0ea7b169ca30e8eb1fcdaf
+      size: 8938320
