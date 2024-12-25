@@ -200,18 +200,42 @@ stages:
       size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 351fbf9043d96299bb16e52f74f1f1b0
-      size: 8327
+      md5: 1cf43579b4e2eb0f8b49ec1c10de3d4a
+      size: 8318
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 7e5d39db3613f631474e8af504be0251
-      size: 4719
+      md5: 11a1e80cf52da1568f30ee47eed468a7
+      size: 4759
     outs:
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
-      md5: bd86c17d25f0ef828c3b4f2b8adc06f9
-      size: 2983
+      md5: 31943f3484a26a02342081d0b9c6e66f
+      size: 3610
     - path: out/models/xgboost_model.pkl
       hash: md5
-      md5: 31f61234ae0ea7b169ca30e8eb1fcdaf
-      size: 8938320
+      md5: 02ace4bf11db386d01b1e5b5f5dbed41
+      size: 8289118
+  train_catboost:
+    cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
+    deps:
+    - path: data/prepared/prepared_data.feather
+      hash: md5
+      md5: be9be223edd7835c118acb707733196d
+      size: 57045410
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: 1cf43579b4e2eb0f8b49ec1c10de3d4a
+      size: 8318
+    - path: insurance/train_catboost.py
+      hash: md5
+      md5: d7c8faca7d07e345de31db8269512bb1
+      size: 2891
+    outs:
+    - path: out/data_pipeline_train_catboost.pkl
+      hash: md5
+      md5: 31943f3484a26a02342081d0b9c6e66f
+      size: 3610
+    - path: out/models/catboost_model.pkl
+      hash: md5
+      md5: 0d6b2c68cfaacea8a5977261c7a42cff
+      size: 1882025

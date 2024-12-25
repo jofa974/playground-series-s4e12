@@ -7,3 +7,4 @@
 /torch_imputer_data_pipeline.pkl
 /xgboost_folds.pkl
 /xgboost_model.pkl
+/catboost_model.pkl

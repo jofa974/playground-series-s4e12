@@ -12,7 +12,7 @@ from sklearn.metrics import root_mean_squared_log_error
 from sklearn.model_selection import KFold
 import random
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
+from insurance.data_pipeline import get_feat_columns, make_boosters_pipeline
 from insurance.logger import setup_logger
 import typer
 
@@ -56,7 +56,7 @@ def main(prep_data_path: Path):
         y_train, y_valid = labels.iloc[train_idx], labels.iloc[valid_idx]
 
         # Fit the pipeline
-        data_pipeline = make_xgboost_pipeline()
+        data_pipeline = make_boosters_pipeline()
         X_train = data_pipeline.fit_transform(X_train)
         for col in feat_cols.categorical:
             X_train[col] = X_train[col].astype("category")

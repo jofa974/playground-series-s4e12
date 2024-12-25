@@ -10,7 +10,7 @@ import xgboost as xgb
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline, get_folds
+from insurance.data_pipeline import get_feat_columns, make_boosters_pipeline, get_folds
 from insurance.logger import setup_logger
 
 
@@ -110,10 +110,8 @@ def main(prep_data_path: Path):
     y_train = np.log1p(y_train)
 
     feat_cols = get_feat_columns()
-    feat_names = feat_cols.names
 
-    data_pipeline = make_xgboost_pipeline()
-    X_train = X_train[feat_names]
+    data_pipeline = make_boosters_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")
@@ -145,7 +143,9 @@ def main(prep_data_path: Path):
 
     plot_train_test(history=history)
 
-    with Live() as live:
+    live_dir = Path("dvclive/xgboost/")
+    live_dir.mkdir(parents=True, exist_ok=True)
+    with Live(dir=str(live_dir)) as live:
         live.log_plot(
             "XGBoost CV Loss",
             history,
