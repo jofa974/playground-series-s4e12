@@ -10,8 +10,9 @@ import xgboost as xgb
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline
+from insurance.data_pipeline import get_feat_columns, make_xgboost_pipeline, get_folds
 from insurance.logger import setup_logger
+
 
 MODEL_PATH = OUT_PATH / "models/xgboost_model.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -106,6 +107,7 @@ def main(prep_data_path: Path):
 
     X_train = df.drop(columns=[target_column])
     y_train = df[target_column]
+    y_train = np.log1p(y_train)
 
     feat_cols = get_feat_columns()
     feat_names = feat_cols.names
@@ -119,10 +121,13 @@ def main(prep_data_path: Path):
     logger.info(f"Train shape: {X_train.shape=}")
     dtrain = xgb.DMatrix(
         X_train,
-        label=np.log1p(y_train),
+        label=y_train,
         enable_categorical=True,
         feature_names=X_train.columns.to_list(),
     )
+
+    folds = get_folds(df_train=X_train, labels=y_train, n_splits=5)
+    folds = [(train, val) for (val, train) in folds]
 
     lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
     cv_boosters = []
@@ -130,8 +135,8 @@ def main(prep_data_path: Path):
         xgb_params,
         dtrain,
         num_boost_round=100,
-        nfold=5,
         callbacks=[lr_scheduler, SaveBestModel(cv_boosters)],
+        folds=folds,
     )
 
     history = history.reset_index()

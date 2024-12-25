@@ -13,6 +13,7 @@ from sklearn.preprocessing import (
 )
 from sklearn.utils.metaestimators import _safe_indexing
 from sklearn.utils.validation import check_is_fitted
+from sklearn.model_selection import KFold
 
 
 @dataclass
@@ -244,3 +245,8 @@ def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeli
 
 def make_xgboost_pipeline(feat_cols: Features | None = None) -> Pipeline:
     return make_pipeline(feat_cols=feat_cols, do_scale=False)
+
+
+def get_folds(df_train: pd.DataFrame, labels: pd.Series, n_splits: int = 5):
+    kf = KFold(n_splits=n_splits)
+    return kf.split(X=df_train, y=labels)

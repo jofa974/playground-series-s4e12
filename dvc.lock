@@ -200,12 +200,12 @@ stages:
       size: 57045410
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: f1a368a886366811793693f8fe0e1b80
-      size: 8130
+      md5: 351fbf9043d96299bb16e52f74f1f1b0
+      size: 8327
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: f40256317c19a70be330d77264facbbd
-      size: 4559
+      md5: 7e5d39db3613f631474e8af504be0251
+      size: 4719
     outs:
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
