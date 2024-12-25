@@ -8,3 +8,4 @@
 /xgboost_folds.pkl
 /xgboost_model.pkl
 /catboost_model.pkl
+/ensemble_model.pkl

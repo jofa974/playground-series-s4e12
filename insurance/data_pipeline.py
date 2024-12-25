@@ -248,6 +248,6 @@ def make_boosters_pipeline(feat_cols: Features | None = None) -> Pipeline:
     return make_pipeline(feat_cols=feat_cols, do_scale=False)
 
 
-def get_folds(df_train: pd.DataFrame, labels: pd.Series, n_splits: int = 5):
+def get_folds(df_train: pd.DataFrame, n_splits: int = 5):
     kf = KFold(n_splits=n_splits, random_state=42, shuffle=True)
     return kf.split(X=df_train)

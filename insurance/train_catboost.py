@@ -34,6 +34,22 @@ catboost_params = {
 }
 
 
+def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
+    models = pickle.load(MODEL_PATH.open("rb"))
+
+    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
+    X_train = data_pipeline.transform(X_train)
+    feat_cols = get_feat_columns()
+    for col in feat_cols.categorical:
+        X_train[col] = X_train[col].astype("category")
+
+    oof_preds = np.zeros(len(X_train))
+    for i, ((_, test_index), model) in enumerate(zip(get_folds(df_train=X_train), models)):
+        logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
+        oof_preds[test_index] = model.predict(data=X_train.loc[test_index, :])
+    return oof_preds
+
+
 def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
