@@ -22,7 +22,7 @@ MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 DATA_PIPELINE_PATH = OUT_PATH / "data_pipeline_train_ensemble.pkl"
 
-log_file = datetime.now().strftime("xgboost_train_log_%Y-%m-%d_%H-%M-%S.log")
+log_file = datetime.now().strftime("ensemble_train_log_%Y-%m-%d_%H-%M-%S.log")
 logger = setup_logger(log_file=log_file, name="ensemble trainer")
 
 PREV_LAYER_OOF = {"xgboost": xgboost_oof_preds, "catboost": catboost_oof_preds}
@@ -198,9 +198,11 @@ def main(prep_data_path: Path):
     y_train = df[target_column]
     y_train = np.log1p(y_train)
 
+    columns = X_train.columns
     for model, oof_func in PREV_LAYER_OOF.items():
         logger.info(f"{model} OOF predictions...")
-        X_train[f"{model}_oof_preds"] = oof_func(X_train=X_train)
+        # Ensure that OOF predictions of a model do not use previous model OOF preds.
+        X_train[f"{model}_preds"] = oof_func(X_train=X_train[columns])
 
     feat_cols = get_feat_columns()
 

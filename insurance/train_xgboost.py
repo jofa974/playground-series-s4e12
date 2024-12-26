@@ -103,6 +103,7 @@ class SaveBestModel(xgb.callback.TrainingCallback):
 
 
 def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
+    X_train = X_train.copy()
     models = pickle.load(MODEL_PATH.open("rb"))
 
     data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
@@ -123,6 +124,29 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
         )
         oof_preds[test_index] = model.predict(data=data)
     return oof_preds
+
+
+def get_avg_preds(X: pd.DataFrame) -> np.ndarray[np.float64]:
+    X = X.copy()
+    models = pickle.load(MODEL_PATH.open("rb"))
+
+    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
+    X = data_pipeline.transform(X)
+    feat_cols = get_feat_columns()
+    for col in feat_cols.categorical:
+        X[col] = X[col].astype("category")
+
+    preds = np.zeros(len(X))
+    for i, model in enumerate(models):
+        logger.info(f"Predicting on Test Data -- {i+1}/{len(models)}")
+        data = xgb.DMatrix(
+            data=X,
+            enable_categorical=True,
+            feature_names=X.columns.to_list(),
+        )
+        preds += model.predict(data=data)
+    preds = preds / len(models)
+    return preds
 
 
 def main(prep_data_path: Path):
