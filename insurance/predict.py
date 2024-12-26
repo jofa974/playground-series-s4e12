@@ -66,6 +66,7 @@ def main():
     for col in feat_cols.categorical:
         df_test[col] = df_test[col].astype("category")
 
+    df_test = df_test[["xgboost_preds", "catboost_preds"]]
     logger.info(f"Test shape: {df_test.shape=}")
     X_test = xgb.DMatrix(df_test, enable_categorical=True, feature_names=df_test.columns.to_list())
 

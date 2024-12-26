@@ -211,6 +211,7 @@ def main(prep_data_path: Path):
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")
 
+    X_train = X_train[["xgboost_preds", "catboost_preds"]]
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
     dtrain = xgb.DMatrix(
