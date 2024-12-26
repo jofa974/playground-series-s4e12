@@ -1,10 +1,11 @@
+import copy
 import pickle
 from datetime import datetime
 from pathlib import Path
-from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
+import optuna
 import pandas as pd
 import typer
 import xgboost as xgb
@@ -103,10 +104,92 @@ class SaveBestModel(xgb.callback.TrainingCallback):
         return model
 
 
+def tune_ensemble(dtrain: xgb.DMatrix):
+    base_param = {
+        "device": "cuda",
+        "verbosity": 0,
+        "objective": "reg:squarederror",
+        "random_state": 42,
+        "eval_metric": "rmse",
+        # use exact for small dataset.
+        "tree_method": "auto",
+        "alpha": 0.1,
+        "booster": "gbtree",
+        "gamma": 3e-6,
+        "grow_policy": "depthwise",
+        "eta": 0.2,
+    }
+
+    def objective(trial):
+        param = copy.deepcopy(base_param)
+        param.update(
+            {
+                # # defines booster, gblinear for linear functions.
+                # "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
+                # L2 regularization weight.
+                "lambda": trial.suggest_float("lambda", 10, 200),
+                # L1 regularization weight.
+                "alpha": trial.suggest_float("alpha", 1e-3, 0.2, log=True),
+                # sampling ratio for training data.
+                "subsample": trial.suggest_float("subsample", 0.2, 1.0),
+                # # sampling according to each tree.
+                "colsample_bytree": trial.suggest_float("colsample_bytree", 0.2, 1.0),
+            }
+        )
+
+        if param["booster"] in ["gbtree", "dart"]:
+            # maximum depth of the tree, signifies complexity of the tree.
+            param["max_depth"] = trial.suggest_int("max_depth", 2, 10, step=1)
+            # minimum child weight, larger the term more conservative the tree.
+            param["min_child_weight"] = trial.suggest_int("min_child_weight", 2, 10)
+            # param["eta"] = trial.suggest_float("eta", 0.15, 0.25)
+            # defines how selective algorithm is.
+            # param["grow_policy"] = trial.suggest_categorical("grow_policy", ["depthwise", "lossguide"])
+
+        # if param["booster"] == "dart":
+        #     param["sample_type"] = trial.suggest_categorical("sample_type", ["uniform", "weighted"])
+        #     param["normalize_type"] = trial.suggest_categorical(
+        #         "normalize_type", ["tree", "forest"]
+        #     )
+        #     param["rate_drop"] = trial.suggest_float("rate_drop", 1e-8, 1.0, log=True)
+        #     param["skip_drop"] = trial.suggest_float("skip_drop", 1e-8, 1.0, log=True)
+
+        # num_boost_round = trial.suggest_int("num_boost_round", 10, 40)
+        num_boost_round = 40
+
+        pruning_callback = optuna.integration.XGBoostPruningCallback(trial, "test-rmse")
+        history = xgb.cv(
+            param, dtrain, num_boost_round=num_boost_round, callbacks=[pruning_callback]
+        )
+        mean_rmse = history["test-rmse-mean"].values[-1]
+
+        print(f"Out-of-fold RMSLE: {mean_rmse:.4f}")
+        return mean_rmse
+
+    study = optuna.create_study(
+        direction="minimize",
+        sampler=optuna.samplers.TPESampler(seed=42),
+        # pruner=optuna.pruners.MedianPruner(),
+    )
+    study.optimize(objective, n_trials=300)
+
+    print(f"Number of finished trials: {len(study.trials)}")
+    print("Best trial:")
+    trial = study.best_trial
+
+    print("  Value: {}".format(trial.value))
+    print("  Params: ")
+    base_param.update(trial.params)
+    for key, value in base_param.items():
+        print("    {}: {}".format(key, value))
+
+
 def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
     df = pd.read_feather(prep_data_path)
+
+    tune = True
 
     X_train = df.drop(columns=[target_column])
     y_train = df[target_column]
@@ -123,6 +206,18 @@ def main(prep_data_path: Path):
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")
 
+    # X_train = X_train[
+    #     [
+    #         "Previous Claims",
+    #         "Customer Feedback",
+    #         "Annual Income",
+    #         "year",
+    #         "Credit Score",
+    #         "Health Score",
+    #         "xgboost_oof_preds",
+    #         "catboost_oof_preds",
+    #     ]
+    # ]
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
     dtrain = xgb.DMatrix(
@@ -135,41 +230,44 @@ def main(prep_data_path: Path):
     folds = get_folds(df_train=X_train, n_splits=5)
     folds = [(train, val) for (val, train) in folds]
 
-    lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
-    cv_ensemble_boosters = []
-    history = xgb.fit(
-        xgb_params,
-        dtrain,
-        num_boost_round=100,
-        callbacks=[lr_scheduler, SaveBestModel(cv_ensemble_boosters)],
-        folds=folds,
-    )
-
-    history = history.reset_index()
-    history["index"] = history["index"] + 1
-    history = history.rename(columns={"index": "booster"})
-
-    plot_train_test(history=history)
-
-    live_dir = Path("dvclive/ensemble/")
-    live_dir.mkdir(parents=True, exist_ok=True)
-    with Live(dir=str(live_dir)) as live:
-        live.log_plot(
-            "ensemble CV Loss",
-            history,
-            x="booster",
-            y=["train-rmse-mean", "test-rmse-mean"],
-            template="linear",
-            y_label="Booster",
-            x_label="RMSLE",
+    if tune:
+        tune_ensemble(dtrain=dtrain)
+    else:
+        lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
+        cv_ensemble_boosters = []
+        history = xgb.cv(
+            xgb_params,
+            dtrain,
+            num_boost_round=20,
+            callbacks=[lr_scheduler, SaveBestModel(cv_ensemble_boosters)],
+            folds=folds,
         )
 
-        live.log_metric("ensemble/train-cv-loss", history["train-rmse-mean"].iloc[-1])
-        live.log_metric("ensemble/test-cv-loss", history["test-rmse-mean"].iloc[-1])
-    pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
-    logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
-    pickle.dump(cv_ensemble_boosters, open(MODEL_PATH, "wb"))
-    logger.info(f"Model saved at {MODEL_PATH}")
+        history = history.reset_index()
+        history["index"] = history["index"] + 1
+        history = history.rename(columns={"index": "booster"})
+
+        plot_train_test(history=history)
+
+        live_dir = Path("dvclive/ensemble/")
+        live_dir.mkdir(parents=True, exist_ok=True)
+        with Live(dir=str(live_dir)) as live:
+            live.log_plot(
+                "ensemble CV Loss",
+                history,
+                x="booster",
+                y=["train-rmse-mean", "test-rmse-mean"],
+                template="linear",
+                y_label="Booster",
+                x_label="RMSLE",
+            )
+
+            live.log_metric("ensemble/train-cv-loss", history["train-rmse-mean"].iloc[-1])
+            live.log_metric("ensemble/test-cv-loss", history["test-rmse-mean"].iloc[-1])
+        pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
+        logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
+        pickle.dump(cv_ensemble_boosters, open(MODEL_PATH, "wb"))
+        logger.info(f"Model saved at {MODEL_PATH}")
 
 
 if __name__ == "__main__":

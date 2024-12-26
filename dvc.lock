@@ -250,6 +250,10 @@ stages:
       hash: md5
       md5: 46a38f67563e19efb9118acceef0f895
       size: 8299
+    - path: insurance/train_ensemble.py
+      hash: md5
+      md5: 2ee654c43a0e815dc267f7b74bd40437
+      size: 5525
     - path: out/models/catboost_model.pkl
       hash: md5
       md5: 0d6b2c68cfaacea8a5977261c7a42cff
@@ -265,5 +269,5 @@ stages:
       size: 3698
     - path: out/models/ensemble_model.pkl
       hash: md5
-      md5: 1ef17fb9888d4b3e809c991e42a67cd6
-      size: 8105283
+      md5: db5a98ccc9fa1373b9a4ec211e70c275
+      size: 7053239
