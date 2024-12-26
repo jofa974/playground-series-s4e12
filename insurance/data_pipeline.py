@@ -43,8 +43,9 @@ def get_feat_columns():
         "Number of Dependents",
         "Vehicle Age",
         "Previous Claims",
+        "Annual Income",
     ]
-    numeric_log_feat_cols = ["Annual Income"]
+    numeric_log_feat_cols = []
     categorical_feat_cols = [
         "Gender",
         "Marital Status",
@@ -54,8 +55,10 @@ def get_feat_columns():
         "Smoking Status",
         "Exercise Frequency",
         "Property Type",
+        "Policy Type",
+        "Customer Feedback",
     ]
-    ordinal_feat_cols = ["Policy Type", "Customer Feedback"]
+    ordinal_feat_cols = []
     date_time_cols = ["Policy Start Date"]
 
     feat_cols = Features(
@@ -92,9 +95,19 @@ class DateTransformer(BaseEstimator, TransformerMixin):
         X["month"] = X[self.date_column].dt.month
         X["day"] = X[self.date_column].dt.day
         X["dayofweek"] = X[self.date_column].dt.dayofweek
-        X["Avg Claims Per Month Since Policy Started"] = X["Previous Claims"] / X[
-            self.date_column
-        ].apply(lambda x: (2024 - x.year) * 12 + 12 - x.month)
+        X["quarter"] = X[self.date_column].dt.quarter
+
+        today = pd.Timestamp.now()
+
+        X["policy_age"] = (today - X[self.date_column]).dt.days
+        X["policy_age_month"] = X["policy_age"] // 30
+        X["policy_age_years"] = X["policy_age"] // 365
+
+        X["claim_rate"] = X["Previous Claims"] / X["policy_age"]
+        X["combined_risk"] = X["Health Score"] + X["Credit Score"].fillna(0.0) + X["claim_rate"]
+
+        X["n_nan"] = X.isna().sum(axis=1)
+
         # Drop the original date column
         X = X.drop(columns=[self.date_column])
 
@@ -115,28 +128,41 @@ class DateTransformer(BaseEstimator, TransformerMixin):
         return {"requires_fit": True}
 
 
-class ClaimsTransformer(BaseEstimator, TransformerMixin):
-    def __init__(self):
+class FrequencyEncoder(BaseEstimator, TransformerMixin):
+    def __init__(self, columns):
+        """
+        FrequencyEncoder constructor.
+        :param columns: List of columns to apply frequency encoding.
+        """
+        self.columns = columns
+        self.frequency_maps = {}
         self._is_fitted = False
 
     def fit(self, X, y=None):
-        # Store feature names for compatibility with set_output
-        self.feature_names_in_ = X.columns if hasattr(X, "columns") else None
+        """
+        Learn the frequency encoding mapping.
+        :param X: Input data
+        :param y: Ignored.
+        :return: self
+        """
+        X = pd.DataFrame(X)
+        for col in self.columns:
+            freq_map = X[col].value_counts(normalize=True)
+            self.frequency_maps[col] = freq_map
         self._is_fitted = True
         return self
 
     def transform(self, X):
-        # Check if the transformer has been fitted
+        """
+        Apply the frequency encoding.
+        :param X: Input DataFrame.
+        :return: Transformed DataFrame.
+        """
         check_is_fitted(self, attributes=["_is_fitted"])
         X = pd.DataFrame(_safe_indexing(X, None))  # Handle different types of inputs safely
-
-        # Convert the date column to datetime
-        X.loc[X["Previous Claims"].isna(), "Previous Claims"] = X["Previous Claims"].median()
-        start_date = pd.to_datetime(X["Policy Start Date"], format="%Y%m%d")
-        X["Avg Claims Per Month Since Policy Started"] = X["Previous Claims"] / start_date.apply(
-            lambda x: (2024 - x.year) * 12 + 12 - x.month
-        )
-        # Return a pandas DataFrame with consistent column names
+        for col in self.columns:
+            if col in self.frequency_maps:
+                X[f"{col}__freq"] = X[col].map(self.frequency_maps[col])
         return X
 
     def set_output(self, transform="default"):
@@ -157,86 +183,56 @@ def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeli
     if feat_cols is None:
         feat_cols = get_feat_columns()
 
-    # Preprocessing pipeline
-    trans = [
-        ("imputer", SimpleImputer(strategy="median")),
-    ]
-    if do_scale:
-        trans.append(("scaler", StandardScaler()))
-    numeric_transformer = Pipeline(trans)
-
-    trans = [
-        ("imputer", SimpleImputer(strategy="median")),
-        ("log", FunctionTransformer(np.log1p, validate=True, feature_names_out="one-to-one")),
-    ]
-    if do_scale:
-        trans.append(("scaler", StandardScaler()))
-    log_transformer = Pipeline(trans)
-
-    cat_transformer = Pipeline(
-        [("imputer", SimpleImputer(strategy="constant", fill_value="unknown"))]
-    )
-
-    policy_ord_transformer = Pipeline(
+    transfo = Pipeline(
         [
-            # ("imputer", SimpleImputer(strategy="most_frequent")),
+            ("transfo", DateTransformer(date_column="Policy Start Date")),
+        ]
+    )
+    columns_engineering = ColumnTransformer(
+        transformers=[
             (
-                "ordinal",
-                OrdinalEncoder(
-                    categories=[["Basic", "Comprehensive", "Premium"]],
-                    handle_unknown="use_encoded_value",
-                    unknown_value=-1,
-                ),
+                "date_transformer",
+                transfo,
+                ["Policy Start Date", "Previous Claims", "Health Score", "Credit Score"],
             ),
-        ]
-    )
-    feedback_ord_transformer = Pipeline(
-        [
-            # ("imputer", SimpleImputer(strategy="most_frequent")),
-            (
-                "ordinal",
-                OrdinalEncoder(
-                    categories=[["Poor", "Average", "Good"]],
-                    handle_unknown="use_encoded_value",
-                    unknown_value=-1,
-                ),
-            ),
-        ]
-    )
-    date_transformer = Pipeline(
-        [
-            ("date_transformer", DateTransformer(date_column="Policy Start Date")),
-        ]
+            ("cat_transfo", FrequencyEncoder(columns=feat_cols.categorical), feat_cols.categorical),
+        ],
+        remainder="passthrough",
+        verbose_feature_names_out=False,
     )
 
-    # claims_transformer = Pipeline(
-    #     [
-    #         ("claims_transformer", ClaimsTransformer()),
-    #     ]
-    # )
-
-    transformers = []
-    # if feat_cols.numeric:
-    #     transformers.append(("num", numeric_transformer, feat_cols.numeric))
-    # if feat_cols.numeric_log:
-    #     transformers.append(("num_log", log_transformer, feat_cols.numeric_log))
-    if feat_cols.categorical:
-        transformers.append(("cat", cat_transformer, feat_cols.categorical))
-    # if feat_cols.ordinal:
-    #     transformers.append(("ord", ord_transformer, feat_cols.ordinal))
-    if feat_cols.date_time:
-        transformers.append(("date", date_transformer, ["Policy Start Date", "Previous Claims"]))
-
-    # transformers.append(("avg_claims", claims_transformer, ["Previous Claims", "Insurance Duration"]))
-    transformers.append(("policy_type", policy_ord_transformer, ["Policy Type"]))
-    transformers.append(("customer_feedback", feedback_ord_transformer, ["Customer Feedback"]))
-
+    num_transformer = Pipeline([("scaler", StandardScaler())])
+    cat_imputer = Pipeline([("imputer", SimpleImputer(strategy="constant", fill_value="unknown"))])
     preprocessor = ColumnTransformer(
-        transformers=transformers, remainder="passthrough", verbose_feature_names_out=False
+        transformers=[
+            (
+                "num",
+                num_transformer,
+                feat_cols.numeric
+                + [
+                    "year",
+                    "month",
+                    "day",
+                    "dayofweek",
+                    "quarter",
+                    "policy_age",
+                    "policy_age_month",
+                    "policy_age_years",
+                    "claim_rate",
+                    "combined_risk",
+                    "n_nan",
+                ]
+                + [f"{col}__freq" for col in feat_cols.categorical],
+            ),
+            ("cat", cat_imputer, feat_cols.categorical),
+        ],
+        remainder="passthrough",
+        verbose_feature_names_out=False,
     )
 
     pipeline = Pipeline(
         [
+            ("date_preproc", columns_engineering),
             ("preprocessor", preprocessor),
         ]
     )

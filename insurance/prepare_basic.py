@@ -25,7 +25,7 @@ def main():
 
     df = (
         pd.read_csv(RAW_DATA_PATH / "train.csv")
-        .pipe(shuffle, random_state=params["random_state"])
+        # .pipe(shuffle, random_state=params["random_state"])
         .pipe(prepare)
         .pipe(lambda df: df.to_feather(PREP_DATA_PATH / "prepared_data.feather"))
     )

@@ -24,19 +24,18 @@ logger = setup_logger(log_file=log_file, name="xgboost trainer")
 
 
 xgb_params = {
-    "lambda": 151.89367354249936,
-    "max_depth": 8,
-    "min_child_weight": 2,
-    "device": "cuda",
-    "verbosity": 0,
-    "objective": "reg:squarederror",
+    "learning_rate": 0.01,
+    "max_depth": 10,
+    "reg_lambda": 1.17,
+    "reg_alpha": 0.1,
     "random_state": 42,
+    "num_leaves": None,
+    "min_child_weight": 1,
+    "objective": "reg:squarederror",
     "eval_metric": "rmse",
-    "tree_method": "auto",
-    "alpha": 0.1,
-    "booster": "gbtree",
-    "gamma": 3e-06,
-    "grow_policy": "depthwise",
+    "device": "gpu",
+    "tree_method": "gpu_hist",
+    "verbosity": 0,
 }
 
 
@@ -126,16 +125,23 @@ def main(prep_data_path: Path):
 
     df = pd.read_feather(prep_data_path)
 
-    X_train = df.drop(columns=[target_column])
-    y_train = df[target_column]
+    X_train = pd.read_feather("data/leaked_dataset.feather")
+
+    # X_train = df.drop(columns=[target_column])
+    logger.info(f"Train shape: {X_train.shape=}")
+    # X_train = X_train.loc[
+    #     pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
+    # ]
+    # logger.info(f"Train shape: {X_train.shape=}")
+    y_train = df.loc[X_train.index, target_column]
     y_train = np.log1p(y_train)
 
-    feat_cols = get_feat_columns()
+    # feat_cols = get_feat_columns()
 
-    data_pipeline = make_boosters_pipeline()
-    X_train = data_pipeline.fit_transform(X_train)
-    for col in feat_cols.categorical:
-        X_train[col] = X_train[col].astype("category")
+    # data_pipeline = make_boosters_pipeline()
+    # X_train = data_pipeline.fit_transform(X_train)
+    # for col in feat_cols.categorical:
+    #     X_train[col] = X_train[col].astype("category")
 
     logger.info(f"Train shape: {X_train.shape=}")
     dtrain = xgb.DMatrix(
@@ -145,7 +151,7 @@ def main(prep_data_path: Path):
         feature_names=X_train.columns.to_list(),
     )
 
-    folds = get_folds(df_train=X_train, labels=y_train, n_splits=5)
+    folds = get_folds(df_train=X_train, n_splits=5)
     folds = [(train, val) for (val, train) in folds]
 
     lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
@@ -153,9 +159,11 @@ def main(prep_data_path: Path):
     history = xgb.cv(
         xgb_params,
         dtrain,
-        num_boost_round=100,
-        callbacks=[lr_scheduler, SaveBestModel(cv_boosters)],
+        num_boost_round=1000,
+        # callbacks=[lr_scheduler, SaveBestModel(cv_boosters)],
+        callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
+        verbose_eval=True,
     )
 
     history = history.reset_index()
@@ -179,8 +187,8 @@ def main(prep_data_path: Path):
 
         live.log_metric("xgboost/train-cv-loss", history["train-rmse-mean"].iloc[-1])
         live.log_metric("xgboost/test-cv-loss", history["test-rmse-mean"].iloc[-1])
-    pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
-    logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
+    # pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
+    # logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
     pickle.dump(cv_boosters, open(MODEL_PATH, "wb"))
     logger.info(f"Model saved at {MODEL_PATH}")
 
