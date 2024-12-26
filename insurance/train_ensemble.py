@@ -28,19 +28,22 @@ logger = setup_logger(log_file=log_file, name="ensemble trainer")
 PREV_LAYER_OOF = {"xgboost": xgboost_oof_preds, "catboost": catboost_oof_preds}
 
 xgb_params = {
-    "lambda": 151.89367354249936,
-    "max_depth": 8,
-    "min_child_weight": 2,
     "device": "cuda",
     "verbosity": 0,
     "objective": "reg:squarederror",
     "random_state": 42,
     "eval_metric": "rmse",
     "tree_method": "auto",
-    "alpha": 0.1,
+    "alpha": 0.012278360049275504,
     "booster": "gbtree",
     "gamma": 3e-06,
     "grow_policy": "depthwise",
+    "eta": 0.2,
+    "lambda": 189.5759434037735,
+    "subsample": 0.9756296886302929,
+    "colsample_bytree": 0.9555993163831182,
+    "max_depth": 10,
+    "min_child_weight": 8,
 }
 
 
@@ -171,7 +174,7 @@ def tune_ensemble(dtrain: xgb.DMatrix):
         sampler=optuna.samplers.TPESampler(seed=42),
         # pruner=optuna.pruners.MedianPruner(),
     )
-    study.optimize(objective, n_trials=300)
+    study.optimize(objective, n_trials=50)
 
     print(f"Number of finished trials: {len(study.trials)}")
     print("Best trial:")
@@ -189,7 +192,7 @@ def main(prep_data_path: Path):
 
     df = pd.read_feather(prep_data_path)
 
-    tune = True
+    tune = False
 
     X_train = df.drop(columns=[target_column])
     y_train = df[target_column]
@@ -206,18 +209,6 @@ def main(prep_data_path: Path):
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")
 
-    # X_train = X_train[
-    #     [
-    #         "Previous Claims",
-    #         "Customer Feedback",
-    #         "Annual Income",
-    #         "year",
-    #         "Credit Score",
-    #         "Health Score",
-    #         "xgboost_oof_preds",
-    #         "catboost_oof_preds",
-    #     ]
-    # ]
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
     dtrain = xgb.DMatrix(
@@ -228,18 +219,16 @@ def main(prep_data_path: Path):
     )
 
     folds = get_folds(df_train=X_train, n_splits=5)
-    folds = [(train, val) for (val, train) in folds]
 
     if tune:
         tune_ensemble(dtrain=dtrain)
     else:
-        lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
         cv_ensemble_boosters = []
         history = xgb.cv(
             xgb_params,
             dtrain,
-            num_boost_round=20,
-            callbacks=[lr_scheduler, SaveBestModel(cv_ensemble_boosters)],
+            num_boost_round=40,
+            callbacks=[SaveBestModel(cv_ensemble_boosters)],
             folds=folds,
         )
 

@@ -70,13 +70,23 @@ stages:
 metrics:
 - out/metrics.json
 - dvclive/metrics.json
-- dvclive/xgboost/metrics.json
 - dvclive/catboost/metrics.json
+- dvclive/xgboost/metrics.json
 - dvclive/ensemble/metrics.json
 plots:
 - dvclive/plots/metrics:
     x: step
 - dvclive/plots/custom/catboost CV Loss.json:
+    template: linear
+    x: booster
+    y:
+    - train-RMSE-mean
+    - test-RMSE-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/catboost/plots/metrics:
+    x: step
+- dvclive/catboost/plots/custom/catboost CV Loss.json:
     template: linear
     x: booster
     y:
@@ -92,16 +102,6 @@ plots:
     y:
     - train-rmse-mean
     - test-rmse-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/catboost/plots/metrics:
-    x: step
-- dvclive/catboost/plots/custom/catboost CV Loss.json:
-    template: linear
-    x: booster
-    y:
-    - train-RMSE-mean
-    - test-RMSE-mean
     x_label: RMSLE
     y_label: Booster
 - dvclive/ensemble/plots/metrics:

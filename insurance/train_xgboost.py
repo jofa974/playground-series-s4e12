@@ -12,7 +12,8 @@ from dvclive import Live
 from insurance.common import OUT_PATH
 from insurance.data_pipeline import get_feat_columns, make_boosters_pipeline, get_folds
 from insurance.logger import setup_logger
-
+from sklearn.model_selection import KFold
+from sklearn.metrics import mean_squared_log_error, root_mean_squared_error
 
 MODEL_PATH = OUT_PATH / "models/xgboost_model.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -24,6 +25,7 @@ logger = setup_logger(log_file=log_file, name="xgboost trainer")
 
 
 xgb_params = {
+    "n_estimators": 1000,
     "learning_rate": 0.01,
     "max_depth": 10,
     "reg_lambda": 1.17,
@@ -33,9 +35,10 @@ xgb_params = {
     "min_child_weight": 1,
     "objective": "reg:squarederror",
     "eval_metric": "rmse",
-    "device": "gpu",
-    "tree_method": "gpu_hist",
+    "device": "cuda",
+    "tree_method": "hist",
     "verbosity": 0,
+    "enable_categorical": True,
 }
 
 
@@ -109,7 +112,9 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
         X_train[col] = X_train[col].astype("category")
 
     oof_preds = np.zeros(len(X_train))
-    for i, ((_, test_index), model) in enumerate(zip(get_folds(df_train=X_train), models)):
+    folds = get_folds(df_train=X_train)
+    splits = folds.split(X_train)
+    for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
         data = xgb.DMatrix(
             data=X_train.loc[test_index, :],
@@ -125,25 +130,24 @@ def main(prep_data_path: Path):
 
     df = pd.read_feather(prep_data_path)
 
-    X_train = pd.read_feather("data/leaked_dataset.feather")
-
-    # X_train = df.drop(columns=[target_column])
+    X_train = df.drop(columns=[target_column])
     logger.info(f"Train shape: {X_train.shape=}")
-    # X_train = X_train.loc[
-    #     pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
-    # ]
-    # logger.info(f"Train shape: {X_train.shape=}")
+    X_train = X_train.loc[
+        pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
+    ]
+    logger.info(f"Train shape: {X_train.shape=}")
     y_train = df.loc[X_train.index, target_column]
     y_train = np.log1p(y_train)
 
-    # feat_cols = get_feat_columns()
+    feat_cols = get_feat_columns()
 
-    # data_pipeline = make_boosters_pipeline()
-    # X_train = data_pipeline.fit_transform(X_train)
-    # for col in feat_cols.categorical:
-    #     X_train[col] = X_train[col].astype("category")
+    data_pipeline = make_boosters_pipeline()
+    X_train = data_pipeline.fit_transform(X_train)
+    for col in feat_cols.categorical:
+        X_train[col] = X_train[col].astype("category")
 
     logger.info(f"Train shape: {X_train.shape=}")
+
     dtrain = xgb.DMatrix(
         X_train,
         label=y_train,
@@ -152,7 +156,6 @@ def main(prep_data_path: Path):
     )
 
     folds = get_folds(df_train=X_train, n_splits=5)
-    folds = [(train, val) for (val, train) in folds]
 
     lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
     cv_boosters = []
@@ -160,6 +163,7 @@ def main(prep_data_path: Path):
         xgb_params,
         dtrain,
         num_boost_round=1000,
+        early_stopping_rounds=10,
         # callbacks=[lr_scheduler, SaveBestModel(cv_boosters)],
         callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
@@ -187,8 +191,8 @@ def main(prep_data_path: Path):
 
         live.log_metric("xgboost/train-cv-loss", history["train-rmse-mean"].iloc[-1])
         live.log_metric("xgboost/test-cv-loss", history["test-rmse-mean"].iloc[-1])
-    # pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
-    # logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
+    pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
+    logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
     pickle.dump(cv_boosters, open(MODEL_PATH, "wb"))
     logger.info(f"Model saved at {MODEL_PATH}")
 

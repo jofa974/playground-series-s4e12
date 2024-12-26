@@ -23,7 +23,7 @@ logger = setup_logger(log_file=log_file, name="catboost trainer")
 
 catboost_params = {
     "loss_function": "RMSE",
-    "iterations": 100,
+    "iterations": 1000,
     "learning_rate": 0.5,
     "devices": [0],
     "task_type": "GPU",
@@ -44,7 +44,9 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
         X_train[col] = X_train[col].astype("category")
 
     oof_preds = np.zeros(len(X_train))
-    for i, ((_, test_index), model) in enumerate(zip(get_folds(df_train=X_train), models)):
+    folds = get_folds(df_train=X_train)
+    splits = folds.split(X_train)
+    for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
         oof_preds[test_index] = model.predict(data=X_train.loc[test_index, :])
     return oof_preds
@@ -56,7 +58,12 @@ def main(prep_data_path: Path):
     df = pd.read_feather(prep_data_path)
 
     X_train = df.drop(columns=[target_column])
-    y_train = df[target_column]
+    logger.info(f"Train shape: {X_train.shape=}")
+    X_train = X_train.loc[
+        pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
+    ]
+    logger.info(f"Train shape: {X_train.shape=}")
+    y_train = df.loc[X_train.index, target_column]
     y_train = np.log1p(y_train)
 
     feat_cols = get_feat_columns()
@@ -71,8 +78,7 @@ def main(prep_data_path: Path):
         data=X_train, label=y_train, cat_features=feat_cols.categorical, has_header=True
     )
 
-    folds = get_folds(df_train=X_train, labels=y_train, n_splits=5)
-    folds = [(train, val) for (val, train) in folds]
+    folds = get_folds(df_train=X_train, n_splits=5)
 
     history, cv_boosters = cb.cv(
         pool=train_pool,

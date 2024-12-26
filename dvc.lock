@@ -15,16 +15,16 @@ stages:
     deps:
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: cd00a7ca3b9157c32997b98c147e36f3
-      size: 940
+      md5: 9e108eb9a1de356116285e1eada7ac45
+      size: 942
     params:
       params.yaml:
         data.random_state: 42
     outs:
     - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
   train_basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
@@ -196,78 +196,78 @@ stages:
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 46a38f67563e19efb9118acceef0f895
-      size: 8299
+      md5: a1056f8641075af2816bbc8e98130017
+      size: 7656
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 014a5e0b410ce3c263727e55c508e063
-      size: 5561
+      md5: 2df9ae4f05142d5d7bf92582f14ca4a5
+      size: 6044
     outs:
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
-      md5: 31943f3484a26a02342081d0b9c6e66f
-      size: 3610
+      md5: 8d8abc8de6a7ac207aa23190152cf086
+      size: 10108
     - path: out/models/xgboost_model.pkl
       hash: md5
-      md5: 02ace4bf11db386d01b1e5b5f5dbed41
-      size: 8289118
+      md5: 4901e94cdd53eeb851c5bff8507dfa36
+      size: 111527608
   train_catboost:
     cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 46a38f67563e19efb9118acceef0f895
-      size: 8299
+      md5: a1056f8641075af2816bbc8e98130017
+      size: 7656
     - path: insurance/train_catboost.py
       hash: md5
-      md5: 86c759a98cf505f397a1fc88fc66f164
-      size: 3542
+      md5: 025b0be06a3b33085c1b8da722067ae9
+      size: 3765
     outs:
     - path: out/data_pipeline_train_catboost.pkl
       hash: md5
-      md5: 31943f3484a26a02342081d0b9c6e66f
-      size: 3610
+      md5: 8d8abc8de6a7ac207aa23190152cf086
+      size: 10108
     - path: out/models/catboost_model.pkl
       hash: md5
-      md5: 0d6b2c68cfaacea8a5977261c7a42cff
-      size: 1882025
+      md5: 721cf334cfa1951a5769f1010b4ce574
+      size: 17133865
   train_ensemble:
     cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
-      md5: be9be223edd7835c118acb707733196d
-      size: 57045410
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: 46a38f67563e19efb9118acceef0f895
-      size: 8299
+      md5: a1056f8641075af2816bbc8e98130017
+      size: 7656
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: 2ee654c43a0e815dc267f7b74bd40437
-      size: 5525
+      md5: 5936f10a47757f64b4d5b7c0bc0de580
+      size: 8642
     - path: out/models/catboost_model.pkl
       hash: md5
-      md5: 0d6b2c68cfaacea8a5977261c7a42cff
-      size: 1882025
+      md5: 721cf334cfa1951a5769f1010b4ce574
+      size: 17133865
     - path: out/models/xgboost_model.pkl
       hash: md5
-      md5: 02ace4bf11db386d01b1e5b5f5dbed41
-      size: 8289118
+      md5: 4901e94cdd53eeb851c5bff8507dfa36
+      size: 111527608
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: f28b7836b84c586bee71e6688d7ceccc
-      size: 3698
+      md5: 1ff50e7253727b02bc42823b2b6060e2
+      size: 10407
     - path: out/models/ensemble_model.pkl
       hash: md5
-      md5: db5a98ccc9fa1373b9a4ec211e70c275
-      size: 7053239
+      md5: 8f175b050c8a2760eb21b1172d537185
+      size: 9686309
