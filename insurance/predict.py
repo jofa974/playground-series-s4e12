@@ -15,34 +15,17 @@ from insurance.train_ensemble import DATA_PIPELINE_PATH as ENSEMBLE_DATA_PIPELIN
 from insurance.train_ensemble import MODEL_PATH as ENSEMBLE_MODEL_PATH
 from insurance.train_xgboost import get_avg_preds as xgboost_avg_preds
 from insurance.train_catboost import get_avg_preds as catboost_avg_preds
+from insurance.train_lgbm import get_avg_preds as lgbm_avg_preds
 
 
 log_file = datetime.now().strftime("ensemble_predict_log_%Y-%m-%d_%H-%M-%S.log")
 logger = setup_logger(log_file=log_file, name="ensemble predict")
 
-PREV_LAYER_AVG_PREDS = {"xgboost": xgboost_avg_preds, "catboost": catboost_avg_preds}
-
-
-def get_avg_preds(X: pd.DataFrame) -> np.ndarray[np.float64]:
-    models = pickle.load(ENSEMBLE_MODEL_PATH.open("rb"))
-
-    data_pipeline = pickle.load(ENSEMBLE_DATA_PIPELINE.open("rb"))
-    X = data_pipeline.transform(X)
-    feat_cols = get_feat_columns()
-    for col in feat_cols.categorical:
-        X[col] = X[col].astype("category")
-
-    preds = np.zeros(len(X))
-    for i, model in enumerate(models):
-        logger.info(f"Predicting on Test Data -- {i+1}/{len(models)}")
-        data = xgb.DMatrix(
-            data=X,
-            enable_categorical=True,
-            feature_names=X.columns.to_list(),
-        )
-        preds += model.predict(data=data)
-    preds = preds / len(models)
-    return preds
+PREV_LAYER_AVG_PREDS = {
+    "xgboost": xgboost_avg_preds,
+    "catboost": catboost_avg_preds,
+    "lgbm": lgbm_avg_preds,
+}
 
 
 def main():
@@ -63,12 +46,12 @@ def main():
     df_test = data_pipeline.transform(df_test)
 
     logger.info(f"Test shape: {df_test.shape=}")
-    X_test = df_test
+    logger.info(f"Columns: {df_test.columns=}")
 
     ensemble_model = pickle.load(ENSEMBLE_MODEL_PATH.open("rb"))
     predictions = np.zeros(len(df_test))
     for model in ensemble_model:
-        predictions += np.expm1(model.predict(X_test)) / len(ensemble_model)
+        predictions += np.expm1(model.predict(df_test)) / len(ensemble_model)
 
     # Prepare submission file
     submission = pd.DataFrame(

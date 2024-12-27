@@ -1,4 +1,3 @@
-import copy
 import pickle
 from datetime import datetime
 from pathlib import Path
@@ -8,7 +7,6 @@ import numpy as np
 import optuna
 import pandas as pd
 import typer
-import xgboost as xgb
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
@@ -175,7 +173,7 @@ def make_ensemble_pipeline() -> Pipeline:
                             ["xgboost_preds", "catboost_preds", "lgbm_preds"],
                         ),
                     ],
-                    remainder="passthrough",
+                    remainder="drop",
                     verbose_feature_names_out=False,
                 ),
             ),
@@ -202,7 +200,6 @@ def main(prep_data_path: Path):
 
     data_pipeline = make_ensemble_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
-    X_train = X_train[["xgboost_preds", "catboost_preds", "lgbm_preds"]]
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
