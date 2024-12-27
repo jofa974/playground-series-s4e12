@@ -22,8 +22,9 @@ scikit-learn = "1.5.2"
 plotly = "^5.24.1"
 nbformat = "^5.10.4"
 optuna-dashboard = "^0.17.0"
-optuna-integration = {extras = ["xgboost"], version = "^4.1.0"}
+optuna-integration = {extras = ["lightgbm"], version = "^4.1.0"}
 autogluon = "^1.2"
+lightgbm = "^4.5.0"
 
 
 [tool.poetry.group.dev.dependencies]

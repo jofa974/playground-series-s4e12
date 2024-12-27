@@ -9,3 +9,4 @@
 /xgboost_model.pkl
 /catboost_model.pkl
 /ensemble_model.pkl
+/lgbm_model.pkl

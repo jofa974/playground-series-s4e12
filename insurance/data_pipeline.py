@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field, fields
 
+import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.compose import ColumnTransformer
@@ -93,6 +94,12 @@ class DateTransformer(BaseEstimator, TransformerMixin):
         X["day"] = X[self.date_column].dt.day
         X["dayofweek"] = X[self.date_column].dt.dayofweek
         X["quarter"] = X[self.date_column].dt.quarter
+        X["year_sin"] = np.sin(2 * np.pi * X["year"])
+        X["year_cos"] = np.cos(2 * np.pi * X["year"])
+        X["month_sin"] = np.sin(2 * np.pi * X["month"] / 12)
+        X["month_cos"] = np.cos(2 * np.pi * X["month"] / 12)
+        X["day_sin"] = np.sin(2 * np.pi * X["day"] / 31)
+        X["day_cos"] = np.cos(2 * np.pi * X["day"] / 31)
 
         today = pd.Timestamp.now()
 

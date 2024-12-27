@@ -35,6 +35,16 @@ stages:
     - out/data_pipeline_train_catboost.pkl
     - out/models/catboost_model.pkl
 
+  train_lgbm:
+    cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
+    deps:
+    - data/prepared/prepared_data.feather
+    - insurance/data_pipeline.py
+    - insurance/train_lgbm.py
+    outs:
+    - out/data_pipeline_train_lgbm.pkl
+    - out/models/lgbm_model.pkl
+
   train_ensemble:
     cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
     deps:
@@ -72,6 +82,7 @@ metrics:
 - dvclive/metrics.json
 - dvclive/xgboost/metrics.json
 - dvclive/catboost/metrics.json
+- dvclive/lgbm/metrics.json
 - dvclive/ensemble/metrics.json
 plots:
 - dvclive/plots/metrics:
@@ -102,6 +113,15 @@ plots:
     y:
     - train-RMSE-mean
     - test-RMSE-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/lgbm/plots/metrics:
+    x: step
+- dvclive/lgbm/plots/custom/LGBM CV Loss.json:
+    template: linear
+    x: x
+    y:
+    - valid rmse-mean
     x_label: RMSLE
     y_label: Booster
 - dvclive/ensemble/plots/metrics:

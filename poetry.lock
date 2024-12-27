@@ -5307,8 +5307,9 @@ files = [
 ]
 
 [package.dependencies]
+lightgbm = {version = "*", optional = true, markers = "extra == \"lightgbm\""}
 optuna = "*"
-xgboost = {version = "*", optional = true, markers = "extra == \"xgboost\""}
+scikit-learn = {version = "*", optional = true, markers = "extra == \"lightgbm\""}
 
 [package.extras]
 allennlp = ["allennlp", "jsonnet", "numpy (<2.0.0)", "psutil"]
@@ -9566,4 +9567,4 @@ test = ["zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11, <3.13"
-content-hash = "af9a949442e74b93173ec3f6631e169aacfd2ef4dddf929bc4c0a0c74fdd4cd6"
+content-hash = "4f9629073add9c8a18542913283c5d3f29735df24b4800ed8920740352ff0d2c"

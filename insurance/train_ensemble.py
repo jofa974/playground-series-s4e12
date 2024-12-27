@@ -25,6 +25,7 @@ from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
 from insurance.train_catboost import get_oof_preds as catboost_oof_preds
 from insurance.train_xgboost import get_oof_preds as xgboost_oof_preds
+from insurance.train_lgbm import get_oof_preds as lgbm_oof_preds
 
 MODEL_PATH = OUT_PATH / "models/ensemble_model.pkl"
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -34,19 +35,17 @@ DATA_PIPELINE_PATH = OUT_PATH / "data_pipeline_train_ensemble.pkl"
 log_file = datetime.now().strftime("ensemble_train_log_%Y-%m-%d_%H-%M-%S.log")
 logger = setup_logger(log_file=log_file, name="ensemble trainer")
 
-PREV_LAYER_OOF = {"xgboost": xgboost_oof_preds, "catboost": catboost_oof_preds}
+PREV_LAYER_OOF = {
+    "xgboost": xgboost_oof_preds,
+    "catboost": catboost_oof_preds,
+    "lgbm": lgbm_oof_preds,
+}
 
 PARAMS = {
     "alpha": 1.6333478843987628,
     "solver": "saga",
     "random_state": 42,
 }
-
-
-def custom_learning_rate(current_iter):
-    base_learning_rate = 0.3
-    lr = base_learning_rate * np.power(0.95, current_iter)
-    return lr if lr > 1e-3 else 1e-3
 
 
 def plot_train_test(history: pd.DataFrame):
@@ -92,15 +91,6 @@ def plot_train_test(history: pd.DataFrame):
     fig_path = OUT_PATH / "ensemble_training.png"
     fig.savefig(fig_path, dpi=300)
     logger.info(f"Training loss saved at {fig_path}")
-
-
-class SaveBestModel(xgb.callback.TrainingCallback):
-    def __init__(self, cvboosters):
-        self._cvboosters = cvboosters
-
-    def after_training(self, model):
-        self._cvboosters[:] = [cvpack.bst for cvpack in model.cvfolds]
-        return model
 
 
 def tune_ensemble(X_train: pd.DataFrame, y_train: pd.Series):
@@ -182,7 +172,7 @@ def make_ensemble_pipeline() -> Pipeline:
                         (
                             "num",
                             num_transformer,
-                            ["xgboost_preds", "catboost_preds", "Previous Claims"],
+                            ["xgboost_preds", "catboost_preds", "lgbm_preds", "Previous Claims"],
                         ),
                     ],
                     remainder="passthrough",
@@ -212,7 +202,7 @@ def main(prep_data_path: Path):
 
     data_pipeline = make_ensemble_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
-    X_train = X_train[["xgboost_preds", "catboost_preds", "Previous Claims"]]
+    X_train = X_train[["xgboost_preds", "catboost_preds", "lgbm_preds", "Previous Claims"]]
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
