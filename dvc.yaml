@@ -19,6 +19,8 @@ stages:
   train_layer_0:
     foreach:
     - xgboost
+    - catboost
+    - lgbm
     do:
       cmd: poetry run python insurance/train_${item}.py --input-data-path data/prepared/prepared_data.feather
         --layer 0
@@ -34,6 +36,8 @@ stages:
   train_layer_1:
     foreach:
     - xgboost
+    - catboost
+    - lgbm
     do:
       cmd: poetry run python insurance/train_${item}.py --input-data-path data/oof/${item}_layer_0.feather
         --layer 1

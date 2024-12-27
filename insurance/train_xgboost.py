@@ -1,5 +1,4 @@
 import pickle
-from datetime import datetime
 from pathlib import Path
 from typing import Annotated
 
@@ -9,7 +8,7 @@ import typer
 import xgboost as xgb
 
 from dvclive import Live
-from insurance.common import OUT_PATH, OOF_PREDS_PATH
+from insurance.common import OUT_PATH, OOF_PREDS_PATH, TARGET_COLUMN
 from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
 from insurance.logger import setup_logger
 
@@ -89,13 +88,11 @@ def main(
     input_data_path: Annotated[Path, typer.Option(help="Input data path")],
     layer: Annotated[int, typer.Option(help="Stack layer number")],
 ):
-    target_column = "Premium Amount"
-
     df = pd.read_feather(input_data_path)
 
-    X_train = df.drop(columns=[target_column])
+    X_train = df.drop(columns=[TARGET_COLUMN])
     logger.info(f"Train shape: {X_train.shape=}")
-    y_train = df[target_column]
+    y_train = df[TARGET_COLUMN]
     y_train = np.log1p(y_train)
 
     if layer == 0:
@@ -153,7 +150,7 @@ def main(
 
     preds = get_oof_preds(X_train=X_train, model_path=model_path)
     X_train[f"xgboost_layer_{layer}"] = preds
-    X_train[target_column] = df[target_column]
+    X_train[TARGET_COLUMN] = df[TARGET_COLUMN]
 
     OOF_PREDS_PATH.mkdir(parents=True, exist_ok=True)
     X_train.to_feather(OOF_PREDS_PATH / f"xgboost_layer_{layer}.feather")
