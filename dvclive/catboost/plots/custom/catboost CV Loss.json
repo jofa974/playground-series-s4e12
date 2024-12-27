@@ -2,1601 +2,1601 @@
     {
         "booster": 1,
         "iterations": 0,
-        "test-RMSE-mean": 3.474335126929128,
-        "test-RMSE-std": 0.0034627397072670013,
-        "train-RMSE-mean": 3.474323834211314,
-        "train-RMSE-std": 0.0004257804514565152
+        "test-RMSE-mean": 3.474331944271549,
+        "test-RMSE-std": 0.0034684916764925722,
+        "train-RMSE-mean": 3.4743122915446256,
+        "train-RMSE-std": 0.00042203169329910146
     },
     {
         "booster": 2,
         "iterations": 1,
-        "test-RMSE-mean": 1.9698000227840968,
-        "test-RMSE-std": 0.0029767830309300526,
-        "train-RMSE-mean": 1.969760180431796,
-        "train-RMSE-std": 0.00022337925019778475
+        "test-RMSE-mean": 1.9697783698131377,
+        "test-RMSE-std": 0.0029858310465043112,
+        "train-RMSE-mean": 1.9697298398457708,
+        "train-RMSE-std": 0.0002094769899625177
     },
     {
         "booster": 3,
         "iterations": 2,
-        "test-RMSE-mean": 1.349518105020051,
-        "test-RMSE-std": 0.0021945879709566836,
-        "train-RMSE-mean": 1.3494402402706218,
-        "train-RMSE-std": 0.00016700810885584243
+        "test-RMSE-mean": 1.3495131695798939,
+        "test-RMSE-std": 0.0022058531310968936,
+        "train-RMSE-mean": 1.3494316340559962,
+        "train-RMSE-std": 0.0001589705055712518
     },
     {
         "booster": 4,
         "iterations": 3,
-        "test-RMSE-mean": 1.1389611439415124,
-        "test-RMSE-std": 0.00355611412013804,
-        "train-RMSE-mean": 1.1388133192193315,
-        "train-RMSE-std": 0.002507802901807971
+        "test-RMSE-mean": 1.1383428647232168,
+        "test-RMSE-std": 0.003475442191327292,
+        "train-RMSE-mean": 1.1380918983735269,
+        "train-RMSE-std": 0.00289409921392663
     },
     {
         "booster": 5,
         "iterations": 4,
-        "test-RMSE-mean": 1.076659446298345,
-        "test-RMSE-std": 0.002944634217735626,
-        "train-RMSE-mean": 1.0763625203125442,
-        "train-RMSE-std": 0.0023037197532243857
+        "test-RMSE-mean": 1.0735237378039222,
+        "test-RMSE-std": 0.0015782525262607362,
+        "train-RMSE-mean": 1.0731579137766523,
+        "train-RMSE-std": 0.0011877272816876846
     },
     {
         "booster": 6,
         "iterations": 5,
-        "test-RMSE-mean": 1.0584858616291857,
-        "test-RMSE-std": 0.001081630397789631,
-        "train-RMSE-mean": 1.058096894961498,
-        "train-RMSE-std": 0.00047384443238264755
+        "test-RMSE-mean": 1.056479417283573,
+        "test-RMSE-std": 0.001077239621669778,
+        "train-RMSE-mean": 1.0560208914899682,
+        "train-RMSE-std": 0.000451656764052117
     },
     {
         "booster": 7,
         "iterations": 6,
-        "test-RMSE-mean": 1.0521509098022912,
-        "test-RMSE-std": 0.0008458554918020127,
-        "train-RMSE-mean": 1.0517004461741484,
-        "train-RMSE-std": 0.00025427699090646626
+        "test-RMSE-mean": 1.051657209278686,
+        "test-RMSE-std": 0.0006033816153464387,
+        "train-RMSE-mean": 1.0511025580392102,
+        "train-RMSE-std": 0.0005424482641737029
     },
     {
         "booster": 8,
         "iterations": 7,
-        "test-RMSE-mean": 1.0505411471577073,
-        "test-RMSE-std": 0.0010922331299333735,
-        "train-RMSE-mean": 1.0500245355817606,
-        "train-RMSE-std": 0.0004917142310798918
+        "test-RMSE-mean": 1.0502998161885175,
+        "test-RMSE-std": 0.0005220025939271999,
+        "train-RMSE-mean": 1.0497035157523535,
+        "train-RMSE-std": 0.0006014917027791587
     },
     {
         "booster": 9,
         "iterations": 8,
-        "test-RMSE-mean": 1.0498905158443406,
-        "test-RMSE-std": 0.0010260604906319887,
-        "train-RMSE-mean": 1.0493458427906552,
-        "train-RMSE-std": 0.000302182276328192
+        "test-RMSE-mean": 1.0497412359254026,
+        "test-RMSE-std": 0.0007474730834942811,
+        "train-RMSE-mean": 1.0491025639708962,
+        "train-RMSE-std": 0.00041592471082203646
     },
     {
         "booster": 10,
         "iterations": 9,
-        "test-RMSE-mean": 1.0496205524028848,
-        "test-RMSE-std": 0.0009043691149354406,
-        "train-RMSE-mean": 1.0490362119647765,
-        "train-RMSE-std": 0.0002674803563900188
+        "test-RMSE-mean": 1.0495716998055844,
+        "test-RMSE-std": 0.0007457243817808901,
+        "train-RMSE-mean": 1.048916064549901,
+        "train-RMSE-std": 0.0004207322206296535
     },
     {
         "booster": 11,
         "iterations": 10,
-        "test-RMSE-mean": 1.049494539442387,
-        "test-RMSE-std": 0.0010601772331917103,
-        "train-RMSE-mean": 1.0488901985891463,
-        "train-RMSE-std": 0.000260836685589491
+        "test-RMSE-mean": 1.0492423898602925,
+        "test-RMSE-std": 0.0008772496762595966,
+        "train-RMSE-mean": 1.0485632248258991,
+        "train-RMSE-std": 0.0002041273429450917
     },
     {
         "booster": 12,
         "iterations": 11,
-        "test-RMSE-mean": 1.0493672146654414,
-        "test-RMSE-std": 0.00097883452824654,
-        "train-RMSE-mean": 1.048742832316978,
-        "train-RMSE-std": 0.00020665116412853427
+        "test-RMSE-mean": 1.049232066915096,
+        "test-RMSE-std": 0.000874230906025422,
+        "train-RMSE-mean": 1.0485437288542483,
+        "train-RMSE-std": 0.0002032714584962029
     },
     {
         "booster": 13,
         "iterations": 12,
-        "test-RMSE-mean": 1.0493663962510715,
-        "test-RMSE-std": 0.0009781215239686232,
-        "train-RMSE-mean": 1.0487395544657665,
-        "train-RMSE-std": 0.00020736123583005469
+        "test-RMSE-mean": 1.0491661767564793,
+        "test-RMSE-std": 0.0008230154352149832,
+        "train-RMSE-mean": 1.0484282387456023,
+        "train-RMSE-std": 0.0003591670821902627
     },
     {
         "booster": 14,
         "iterations": 13,
-        "test-RMSE-mean": 1.0492549394399147,
-        "test-RMSE-std": 0.0009942402507827992,
-        "train-RMSE-mean": 1.0485845237408615,
-        "train-RMSE-std": 0.00036391302385918985
+        "test-RMSE-mean": 1.0490687294073566,
+        "test-RMSE-std": 0.0009775743584715378,
+        "train-RMSE-mean": 1.0483022771246007,
+        "train-RMSE-std": 0.0002348103228727034
     },
     {
         "booster": 15,
         "iterations": 14,
-        "test-RMSE-mean": 1.0492087228462565,
-        "test-RMSE-std": 0.0009469435440324561,
-        "train-RMSE-mean": 1.0485024933732323,
-        "train-RMSE-std": 0.00039616407813833127
+        "test-RMSE-mean": 1.0490099786945857,
+        "test-RMSE-std": 0.0009492425828851079,
+        "train-RMSE-mean": 1.0482283932704899,
+        "train-RMSE-std": 0.0003043091234022173
     },
     {
         "booster": 16,
         "iterations": 15,
-        "test-RMSE-mean": 1.0492064522579363,
-        "test-RMSE-std": 0.0009462912130438191,
-        "train-RMSE-mean": 1.048501723157149,
-        "train-RMSE-std": 0.00039705135410841695
+        "test-RMSE-mean": 1.0489984413500957,
+        "test-RMSE-std": 0.0009404420964534088,
+        "train-RMSE-mean": 1.0482061627755688,
+        "train-RMSE-std": 0.00028345557729191306
     },
     {
         "booster": 17,
         "iterations": 16,
-        "test-RMSE-mean": 1.0492064522899516,
-        "test-RMSE-std": 0.000946246841117916,
-        "train-RMSE-mean": 1.0485016734969912,
-        "train-RMSE-std": 0.00039700547136116025
+        "test-RMSE-mean": 1.0489985781020752,
+        "test-RMSE-std": 0.0009401450405693917,
+        "train-RMSE-mean": 1.048205032485614,
+        "train-RMSE-std": 0.00028292777098120643
     },
     {
         "booster": 18,
         "iterations": 17,
-        "test-RMSE-mean": 1.0491114228969187,
-        "test-RMSE-std": 0.0009294468801625023,
-        "train-RMSE-mean": 1.0484174311945984,
-        "train-RMSE-std": 0.0002660685680265066
+        "test-RMSE-mean": 1.0488628374501154,
+        "test-RMSE-std": 0.0009569424572938585,
+        "train-RMSE-mean": 1.0480125241489608,
+        "train-RMSE-std": 0.00037717743994431093
     },
     {
         "booster": 19,
         "iterations": 18,
-        "test-RMSE-mean": 1.0490516191712795,
-        "test-RMSE-std": 0.0009180634850340824,
-        "train-RMSE-mean": 1.0483329117902183,
-        "train-RMSE-std": 0.0002035337059122565
+        "test-RMSE-mean": 1.048843336964851,
+        "test-RMSE-std": 0.000936335567301007,
+        "train-RMSE-mean": 1.0479379000696878,
+        "train-RMSE-std": 0.0004212667398364495
     },
     {
         "booster": 20,
         "iterations": 19,
-        "test-RMSE-mean": 1.0490053437536577,
-        "test-RMSE-std": 0.0009037142824321514,
-        "train-RMSE-mean": 1.0482673964971898,
-        "train-RMSE-std": 0.00030581040544953755
+        "test-RMSE-mean": 1.0488384607350234,
+        "test-RMSE-std": 0.0009325924797308337,
+        "train-RMSE-mean": 1.0479225897343585,
+        "train-RMSE-std": 0.0004286112775878541
     },
     {
         "booster": 21,
         "iterations": 20,
-        "test-RMSE-mean": 1.0489549298728569,
-        "test-RMSE-std": 0.0008749193508771676,
-        "train-RMSE-mean": 1.0482006403685484,
-        "train-RMSE-std": 0.000314223842582988
+        "test-RMSE-mean": 1.0487206885037028,
+        "test-RMSE-std": 0.0008807875163161419,
+        "train-RMSE-mean": 1.0477774943683957,
+        "train-RMSE-std": 0.0005158973809548949
     },
     {
         "booster": 22,
         "iterations": 21,
-        "test-RMSE-mean": 1.0489356627629773,
-        "test-RMSE-std": 0.0008958589872943337,
-        "train-RMSE-mean": 1.0481703871741952,
-        "train-RMSE-std": 0.00028153470177593625
+        "test-RMSE-mean": 1.048717698348808,
+        "test-RMSE-std": 0.0008776768422115943,
+        "train-RMSE-mean": 1.0477584381384872,
+        "train-RMSE-std": 0.0005292206508018108
     },
     {
         "booster": 23,
         "iterations": 22,
-        "test-RMSE-mean": 1.0489100647368048,
-        "test-RMSE-std": 0.0008978055414895079,
-        "train-RMSE-mean": 1.0481366023338352,
-        "train-RMSE-std": 0.000258536950160416
+        "test-RMSE-mean": 1.0486696631208958,
+        "test-RMSE-std": 0.0008540222773393175,
+        "train-RMSE-mean": 1.047685990750669,
+        "train-RMSE-std": 0.0005438977262183103
     },
     {
         "booster": 24,
         "iterations": 23,
-        "test-RMSE-mean": 1.04881177428391,
-        "test-RMSE-std": 0.0008521102010963581,
-        "train-RMSE-mean": 1.0479879618023387,
-        "train-RMSE-std": 0.00027395798038993646
+        "test-RMSE-mean": 1.0486400442241617,
+        "test-RMSE-std": 0.000842664089837412,
+        "train-RMSE-mean": 1.0476305719525147,
+        "train-RMSE-std": 0.0005440516750032931
     },
     {
         "booster": 25,
         "iterations": 24,
-        "test-RMSE-mean": 1.0486862793162637,
-        "test-RMSE-std": 0.0009403227359337441,
-        "train-RMSE-mean": 1.0478389391321463,
-        "train-RMSE-std": 0.0003429590937332922
+        "test-RMSE-mean": 1.0486109246411908,
+        "test-RMSE-std": 0.000825673826217928,
+        "train-RMSE-mean": 1.0475865232460104,
+        "train-RMSE-std": 0.0005131865350022436
     },
     {
         "booster": 26,
         "iterations": 25,
-        "test-RMSE-mean": 1.0486880659372486,
-        "test-RMSE-std": 0.0009421733250709253,
-        "train-RMSE-mean": 1.0478223343413746,
-        "train-RMSE-std": 0.00035434280570017845
+        "test-RMSE-mean": 1.0485569203548235,
+        "test-RMSE-std": 0.000806375126027814,
+        "train-RMSE-mean": 1.047512904151319,
+        "train-RMSE-std": 0.00047325750941670954
     },
     {
         "booster": 27,
         "iterations": 26,
-        "test-RMSE-mean": 1.0486393959536973,
-        "test-RMSE-std": 0.00092037392640111,
-        "train-RMSE-mean": 1.047758118299496,
-        "train-RMSE-std": 0.0003297647511699058
+        "test-RMSE-mean": 1.0484923557989543,
+        "test-RMSE-std": 0.0009225459512201981,
+        "train-RMSE-mean": 1.0474253233074795,
+        "train-RMSE-std": 0.0003315259331929979
     },
     {
         "booster": 28,
         "iterations": 27,
-        "test-RMSE-mean": 1.0486381431464629,
-        "test-RMSE-std": 0.0009185223675477524,
-        "train-RMSE-mean": 1.0477512946225847,
-        "train-RMSE-std": 0.0003339162152665024
+        "test-RMSE-mean": 1.0484732938703107,
+        "test-RMSE-std": 0.0009213604577204078,
+        "train-RMSE-mean": 1.0474004992728105,
+        "train-RMSE-std": 0.00032547670286678956
     },
     {
         "booster": 29,
         "iterations": 28,
-        "test-RMSE-mean": 1.048612873534741,
-        "test-RMSE-std": 0.0009019646705358581,
-        "train-RMSE-mean": 1.0477196404393303,
-        "train-RMSE-std": 0.00033818636554441557
+        "test-RMSE-mean": 1.048380918412485,
+        "test-RMSE-std": 0.0008283016716327986,
+        "train-RMSE-mean": 1.0472865581845021,
+        "train-RMSE-std": 0.00041212769956171436
     },
     {
         "booster": 30,
         "iterations": 29,
-        "test-RMSE-mean": 1.0486050671542009,
-        "test-RMSE-std": 0.000896036550979347,
-        "train-RMSE-mean": 1.047677192019308,
-        "train-RMSE-std": 0.00031513397577163997
+        "test-RMSE-mean": 1.048376423731286,
+        "test-RMSE-std": 0.0008261653882770123,
+        "train-RMSE-mean": 1.0472815337674015,
+        "train-RMSE-std": 0.00041687797842526633
     },
     {
         "booster": 31,
         "iterations": 30,
-        "test-RMSE-mean": 1.0485270584094788,
-        "test-RMSE-std": 0.0008404424668875484,
-        "train-RMSE-mean": 1.0475837431164734,
-        "train-RMSE-std": 0.00043318069527635886
+        "test-RMSE-mean": 1.048375567266127,
+        "test-RMSE-std": 0.0008253479767112257,
+        "train-RMSE-mean": 1.0472803152612191,
+        "train-RMSE-std": 0.00041710764266078326
     },
     {
         "booster": 32,
         "iterations": 31,
-        "test-RMSE-mean": 1.0485053689608752,
-        "test-RMSE-std": 0.0008702324061773179,
-        "train-RMSE-mean": 1.0475488106633544,
-        "train-RMSE-std": 0.0004109609550014829
+        "test-RMSE-mean": 1.0483620608081532,
+        "test-RMSE-std": 0.0008538208843370954,
+        "train-RMSE-mean": 1.0472575120777745,
+        "train-RMSE-std": 0.00037890467659249964
     },
     {
         "booster": 33,
         "iterations": 32,
-        "test-RMSE-mean": 1.0484208990196637,
-        "test-RMSE-std": 0.0008258193908407774,
-        "train-RMSE-mean": 1.0474286571430582,
-        "train-RMSE-std": 0.0005164830866519322
+        "test-RMSE-mean": 1.0483314401803958,
+        "test-RMSE-std": 0.0008415233935714906,
+        "train-RMSE-mean": 1.0472225715698322,
+        "train-RMSE-std": 0.0004272167693064732
     },
     {
         "booster": 34,
         "iterations": 33,
-        "test-RMSE-mean": 1.0484155700340834,
-        "test-RMSE-std": 0.000827434620796162,
-        "train-RMSE-mean": 1.0474153291423423,
-        "train-RMSE-std": 0.0005205997804704687
+        "test-RMSE-mean": 1.0483259852626554,
+        "test-RMSE-std": 0.0008450824042615052,
+        "train-RMSE-mean": 1.0472044473216762,
+        "train-RMSE-std": 0.0004140899197136292
     },
     {
         "booster": 35,
         "iterations": 34,
-        "test-RMSE-mean": 1.0483909781845537,
-        "test-RMSE-std": 0.0008288316837818454,
-        "train-RMSE-mean": 1.0473802151840466,
-        "train-RMSE-std": 0.0005676240910896025
+        "test-RMSE-mean": 1.0483193686784058,
+        "test-RMSE-std": 0.0008394594305572825,
+        "train-RMSE-mean": 1.0471913752547028,
+        "train-RMSE-std": 0.0004264199283221437
     },
     {
         "booster": 36,
         "iterations": 35,
-        "test-RMSE-mean": 1.0482939078714952,
-        "test-RMSE-std": 0.0008929780527652247,
-        "train-RMSE-mean": 1.0472360365435107,
-        "train-RMSE-std": 0.000560661408176161
+        "test-RMSE-mean": 1.0483033033834104,
+        "test-RMSE-std": 0.0008475998683232447,
+        "train-RMSE-mean": 1.047167869730033,
+        "train-RMSE-std": 0.00040262947882144793
     },
     {
         "booster": 37,
         "iterations": 36,
-        "test-RMSE-mean": 1.0482101443362146,
-        "test-RMSE-std": 0.0008642028978116026,
-        "train-RMSE-mean": 1.0471440117893338,
-        "train-RMSE-std": 0.0004997796252952233
+        "test-RMSE-mean": 1.0482689522702109,
+        "test-RMSE-std": 0.0008389586656409323,
+        "train-RMSE-mean": 1.0471215386933628,
+        "train-RMSE-std": 0.00047581655003624805
     },
     {
         "booster": 38,
         "iterations": 37,
-        "test-RMSE-mean": 1.0482106660299455,
-        "test-RMSE-std": 0.0008642465828796627,
-        "train-RMSE-mean": 1.0471341447602471,
-        "train-RMSE-std": 0.0005160978094293391
+        "test-RMSE-mean": 1.048221845093197,
+        "test-RMSE-std": 0.0008068155617441172,
+        "train-RMSE-mean": 1.0470655238420616,
+        "train-RMSE-std": 0.0004596053771227332
     },
     {
         "booster": 39,
         "iterations": 38,
-        "test-RMSE-mean": 1.048159301320639,
-        "test-RMSE-std": 0.0008621774978214556,
-        "train-RMSE-mean": 1.0470563326706679,
-        "train-RMSE-std": 0.00042659883340783275
+        "test-RMSE-mean": 1.048179046123106,
+        "test-RMSE-std": 0.0008537430738920804,
+        "train-RMSE-mean": 1.04698075351594,
+        "train-RMSE-std": 0.00040294570726355234
     },
     {
         "booster": 40,
         "iterations": 39,
-        "test-RMSE-mean": 1.0481369970264474,
-        "test-RMSE-std": 0.0008516572430653883,
-        "train-RMSE-mean": 1.0470176098817063,
-        "train-RMSE-std": 0.00041866245246976867
+        "test-RMSE-mean": 1.0481599469927534,
+        "test-RMSE-std": 0.0008435565691236646,
+        "train-RMSE-mean": 1.046955470371241,
+        "train-RMSE-std": 0.00040074368393729776
     },
     {
         "booster": 41,
         "iterations": 40,
-        "test-RMSE-mean": 1.0481348952115188,
-        "test-RMSE-std": 0.0008552703801843307,
-        "train-RMSE-mean": 1.0470107599773564,
-        "train-RMSE-std": 0.0004110327019390265
+        "test-RMSE-mean": 1.0481091511895366,
+        "test-RMSE-std": 0.0008219839433897245,
+        "train-RMSE-mean": 1.0468811211372107,
+        "train-RMSE-std": 0.0003977119408152881
     },
     {
         "booster": 42,
         "iterations": 41,
-        "test-RMSE-mean": 1.0481350442826916,
-        "test-RMSE-std": 0.0008552751896069526,
-        "train-RMSE-mean": 1.0470093548548856,
-        "train-RMSE-std": 0.000410494654895238
+        "test-RMSE-mean": 1.0481092008603077,
+        "test-RMSE-std": 0.0008220188315038349,
+        "train-RMSE-mean": 1.046880362647687,
+        "train-RMSE-std": 0.000397011199197996
     },
     {
         "booster": 43,
         "iterations": 42,
-        "test-RMSE-mean": 1.0480788199843178,
-        "test-RMSE-std": 0.0009061539234769512,
-        "train-RMSE-mean": 1.0469346203766001,
-        "train-RMSE-std": 0.0003778203452494572
+        "test-RMSE-mean": 1.048108567778866,
+        "test-RMSE-std": 0.0008212212968961276,
+        "train-RMSE-mean": 1.0468779993470683,
+        "train-RMSE-std": 0.00039742621885610814
     },
     {
         "booster": 44,
         "iterations": 43,
-        "test-RMSE-mean": 1.048077963047905,
-        "test-RMSE-std": 0.0009057386636666194,
-        "train-RMSE-mean": 1.0469310014719677,
-        "train-RMSE-std": 0.0003767850339436188
+        "test-RMSE-mean": 1.0480760614182518,
+        "test-RMSE-std": 0.0007919703845321342,
+        "train-RMSE-mean": 1.0468231110972,
+        "train-RMSE-std": 0.0004692495509300119
     },
     {
         "booster": 45,
         "iterations": 44,
-        "test-RMSE-mean": 1.0480314564308577,
-        "test-RMSE-std": 0.0008939016177664622,
-        "train-RMSE-mean": 1.0468533905560722,
-        "train-RMSE-std": 0.0003317684720198512
+        "test-RMSE-mean": 1.0480760240383422,
+        "test-RMSE-std": 0.000792151064319035,
+        "train-RMSE-mean": 1.0468225265283635,
+        "train-RMSE-std": 0.0004691451978163528
     },
     {
         "booster": 46,
         "iterations": 45,
-        "test-RMSE-mean": 1.0480316303922945,
-        "test-RMSE-std": 0.000893866089558839,
-        "train-RMSE-mean": 1.0468533034785188,
-        "train-RMSE-std": 0.000331812155688663
+        "test-RMSE-mean": 1.0480481514608972,
+        "test-RMSE-std": 0.0007817337007101864,
+        "train-RMSE-mean": 1.0467818975101448,
+        "train-RMSE-std": 0.0005137221938067923
     },
     {
         "booster": 47,
         "iterations": 46,
-        "test-RMSE-mean": 1.0480316304523796,
-        "test-RMSE-std": 0.0008937780253416696,
-        "train-RMSE-mean": 1.0468519727677013,
-        "train-RMSE-std": 0.0003311672019274789
+        "test-RMSE-mean": 1.0480482012657,
+        "test-RMSE-std": 0.0007815505937049886,
+        "train-RMSE-mean": 1.0467790610597536,
+        "train-RMSE-std": 0.0005146724612239493
     },
     {
         "booster": 48,
         "iterations": 47,
-        "test-RMSE-mean": 1.0480317795199672,
-        "test-RMSE-std": 0.0008938094110892964,
-        "train-RMSE-mean": 1.0468519478977936,
-        "train-RMSE-std": 0.00033114245792852017
+        "test-RMSE-mean": 1.0480481018538597,
+        "test-RMSE-std": 0.0007815853452857473,
+        "train-RMSE-mean": 1.0467785636066531,
+        "train-RMSE-std": 0.0005144053106157949
     },
     {
         "booster": 49,
         "iterations": 48,
-        "test-RMSE-mean": 1.0480286366301645,
-        "test-RMSE-std": 0.0008932115176080684,
-        "train-RMSE-mean": 1.04684028174971,
-        "train-RMSE-std": 0.0003278042883869278
+        "test-RMSE-mean": 1.0480319400060143,
+        "test-RMSE-std": 0.000778635743344061,
+        "train-RMSE-mean": 1.046747623315248,
+        "train-RMSE-std": 0.0005549968615458218
     },
     {
         "booster": 50,
         "iterations": 49,
-        "test-RMSE-mean": 1.048027854601807,
-        "test-RMSE-std": 0.0008921967742122514,
-        "train-RMSE-mean": 1.0468265733384912,
-        "train-RMSE-std": 0.00033334302787673266
+        "test-RMSE-mean": 1.0480000105406477,
+        "test-RMSE-std": 0.0007558715740422374,
+        "train-RMSE-mean": 1.046706193423247,
+        "train-RMSE-std": 0.0005971541004336683
     },
     {
         "booster": 51,
         "iterations": 50,
-        "test-RMSE-mean": 1.0480278794613447,
-        "test-RMSE-std": 0.0008921802117750284,
-        "train-RMSE-mean": 1.046826498692323,
-        "train-RMSE-std": 0.00033340523113170367
+        "test-RMSE-mean": 1.048001525869044,
+        "test-RMSE-std": 0.000756658902531599,
+        "train-RMSE-mean": 1.0466950501100227,
+        "train-RMSE-std": 0.0005909387060489018
     },
     {
         "booster": 52,
         "iterations": 51,
-        "test-RMSE-mean": 1.048027842211314,
-        "test-RMSE-std": 0.0008921473838131995,
-        "train-RMSE-mean": 1.046826448930163,
-        "train-RMSE-std": 0.0003334390217068175
+        "test-RMSE-mean": 1.0479949202530539,
+        "test-RMSE-std": 0.0007707535238634066,
+        "train-RMSE-mean": 1.0466757426195734,
+        "train-RMSE-std": 0.000563909454489882
     },
     {
         "booster": 53,
         "iterations": 52,
-        "test-RMSE-mean": 1.0480345146370875,
-        "test-RMSE-std": 0.0008911341585746335,
-        "train-RMSE-mean": 1.0468156417483114,
-        "train-RMSE-std": 0.0003261666319636501
+        "test-RMSE-mean": 1.047956454550488,
+        "test-RMSE-std": 0.0007470352272275616,
+        "train-RMSE-mean": 1.0466146702527355,
+        "train-RMSE-std": 0.000648246118800039
     },
     {
         "booster": 54,
         "iterations": 53,
-        "test-RMSE-mean": 1.0480344152359997,
-        "test-RMSE-std": 0.0008911469218877154,
-        "train-RMSE-mean": 1.046815567131188,
-        "train-RMSE-std": 0.00032611055614949425
+        "test-RMSE-mean": 1.0479563178673494,
+        "test-RMSE-std": 0.0007470499539586358,
+        "train-RMSE-mean": 1.046614620525218,
+        "train-RMSE-std": 0.0006481732541058242
     },
     {
         "booster": 55,
         "iterations": 54,
-        "test-RMSE-mean": 1.0480343655840099,
-        "test-RMSE-std": 0.0008910819186104284,
-        "train-RMSE-mean": 1.0468151443046014,
-        "train-RMSE-std": 0.00032577702534545693
+        "test-RMSE-mean": 1.0479560942391453,
+        "test-RMSE-std": 0.0007470124126565167,
+        "train-RMSE-mean": 1.0466135505837046,
+        "train-RMSE-std": 0.00064821990627278
     },
     {
         "booster": 56,
         "iterations": 55,
-        "test-RMSE-mean": 1.0480343780022132,
-        "test-RMSE-std": 0.0008910905168475707,
-        "train-RMSE-mean": 1.0468150821087685,
-        "train-RMSE-std": 0.00032578996085485027
+        "test-RMSE-mean": 1.0479529079209753,
+        "test-RMSE-std": 0.0007566276375452851,
+        "train-RMSE-mean": 1.0466037342057941,
+        "train-RMSE-std": 0.0006491226328256287
     },
     {
         "booster": 57,
         "iterations": 56,
-        "test-RMSE-mean": 1.0480343779976358,
-        "test-RMSE-std": 0.0008910972462737467,
-        "train-RMSE-mean": 1.0468143856185994,
-        "train-RMSE-std": 0.00032551936815090134
+        "test-RMSE-mean": 1.0479557402713862,
+        "test-RMSE-std": 0.0007575788608657333,
+        "train-RMSE-mean": 1.0465920205820147,
+        "train-RMSE-std": 0.0006621814224283989
     },
     {
         "booster": 58,
         "iterations": 57,
-        "test-RMSE-mean": 1.0480346511522463,
-        "test-RMSE-std": 0.0008913537382809196,
-        "train-RMSE-mean": 1.0468131541415207,
-        "train-RMSE-std": 0.00032576758177493517
+        "test-RMSE-mean": 1.0479557278237444,
+        "test-RMSE-std": 0.0007576180377641008,
+        "train-RMSE-mean": 1.0465917469865231,
+        "train-RMSE-std": 0.0006619633338580752
     },
     {
         "booster": 59,
         "iterations": 58,
-        "test-RMSE-mean": 1.0480033666790358,
-        "test-RMSE-std": 0.0008544401721135739,
-        "train-RMSE-mean": 1.0467744629048301,
-        "train-RMSE-std": 0.00035144399311677
+        "test-RMSE-mean": 1.0479578027909546,
+        "test-RMSE-std": 0.0007576233847513476,
+        "train-RMSE-mean": 1.046579959855276,
+        "train-RMSE-std": 0.0006722979829587135
     },
     {
         "booster": 60,
         "iterations": 59,
-        "test-RMSE-mean": 1.0480033914938385,
-        "test-RMSE-std": 0.0008544923533078736,
-        "train-RMSE-mean": 1.0467738285441603,
-        "train-RMSE-std": 0.00035133673514820896
+        "test-RMSE-mean": 1.047952242019663,
+        "test-RMSE-std": 0.0007478337841472213,
+        "train-RMSE-mean": 1.0465439940735721,
+        "train-RMSE-std": 0.0006421904591082043
     },
     {
         "booster": 61,
         "iterations": 60,
-        "test-RMSE-mean": 1.0480034039351682,
-        "test-RMSE-std": 0.0008544664273503331,
-        "train-RMSE-mean": 1.0467737663448384,
-        "train-RMSE-std": 0.0003513525802588808
+        "test-RMSE-mean": 1.0479505897206116,
+        "test-RMSE-std": 0.0007474296700495248,
+        "train-RMSE-mean": 1.0465312342611515,
+        "train-RMSE-std": 0.0006308963506117015
     },
     {
         "booster": 62,
         "iterations": 61,
-        "test-RMSE-mean": 1.0480002954154284,
-        "test-RMSE-std": 0.0008581539110194324,
-        "train-RMSE-mean": 1.0467642414609746,
-        "train-RMSE-std": 0.00033828359145715266
+        "test-RMSE-mean": 1.04794302418384,
+        "test-RMSE-std": 0.0007450722234450013,
+        "train-RMSE-mean": 1.0465179878241593,
+        "train-RMSE-std": 0.0006476259264759747
     },
     {
         "booster": 63,
         "iterations": 62,
-        "test-RMSE-mean": 1.0480003451164768,
-        "test-RMSE-std": 0.0008581489858191336,
-        "train-RMSE-mean": 1.0467639926050563,
-        "train-RMSE-std": 0.0003385671795729831
+        "test-RMSE-mean": 1.0479463659970063,
+        "test-RMSE-std": 0.000746025861121578,
+        "train-RMSE-mean": 1.0465119996466077,
+        "train-RMSE-std": 0.0006547222614619154
     },
     {
         "booster": 64,
         "iterations": 63,
-        "test-RMSE-mean": 1.0480020965896064,
-        "test-RMSE-std": 0.0008587190961766125,
-        "train-RMSE-mean": 1.0467537146780541,
-        "train-RMSE-std": 0.0003505490237586549
+        "test-RMSE-mean": 1.0479385146029165,
+        "test-RMSE-std": 0.0007437476886759333,
+        "train-RMSE-mean": 1.0464604504443669,
+        "train-RMSE-std": 0.0006551374913881405
     },
     {
         "booster": 65,
         "iterations": 64,
-        "test-RMSE-mean": 1.048001090433549,
-        "test-RMSE-std": 0.000858377897740353,
-        "train-RMSE-mean": 1.0467472573788226,
-        "train-RMSE-std": 0.0003553957528256281
+        "test-RMSE-mean": 1.047938415232621,
+        "test-RMSE-std": 0.0007436927090447747,
+        "train-RMSE-mean": 1.0464590439328112,
+        "train-RMSE-std": 0.0006560975795311433
     },
     {
         "booster": 66,
         "iterations": 65,
-        "test-RMSE-mean": 1.047980066518167,
-        "test-RMSE-std": 0.0008416047998736102,
-        "train-RMSE-mean": 1.0466958811406006,
-        "train-RMSE-std": 0.0003574125218541376
+        "test-RMSE-mean": 1.0479235588624953,
+        "test-RMSE-std": 0.0007361478811481202,
+        "train-RMSE-mean": 1.0464414510974414,
+        "train-RMSE-std": 0.0006778182656120679
     },
     {
         "booster": 67,
         "iterations": 66,
-        "test-RMSE-mean": 1.0479826875560008,
-        "test-RMSE-std": 0.000842491025113982,
-        "train-RMSE-mean": 1.0466870576232377,
-        "train-RMSE-std": 0.00037022629747891523
+        "test-RMSE-mean": 1.0479206644798773,
+        "test-RMSE-std": 0.0007348449830803821,
+        "train-RMSE-mean": 1.0464208167274376,
+        "train-RMSE-std": 0.0006607944861929467
     },
     {
         "booster": 68,
         "iterations": 67,
-        "test-RMSE-mean": 1.0479884973116622,
-        "test-RMSE-std": 0.000830820962738991,
-        "train-RMSE-mean": 1.046660481627073,
-        "train-RMSE-std": 0.0003380246233214767
+        "test-RMSE-mean": 1.0479097202047065,
+        "test-RMSE-std": 0.0007302686378421237,
+        "train-RMSE-mean": 1.0463849785703339,
+        "train-RMSE-std": 0.0006379466038809758
     },
     {
         "booster": 69,
         "iterations": 68,
-        "test-RMSE-mean": 1.047989157010319,
-        "test-RMSE-std": 0.0008289341558485707,
-        "train-RMSE-mean": 1.0466358943530465,
-        "train-RMSE-std": 0.00030717489188150106
+        "test-RMSE-mean": 1.0479085401044272,
+        "test-RMSE-std": 0.0007296841851737558,
+        "train-RMSE-mean": 1.046376324273544,
+        "train-RMSE-std": 0.0006499997954773722
     },
     {
         "booster": 70,
         "iterations": 69,
-        "test-RMSE-mean": 1.047976155640331,
-        "test-RMSE-std": 0.0008562887308754596,
-        "train-RMSE-mean": 1.0466150612931941,
-        "train-RMSE-std": 0.0002839804350692052
+        "test-RMSE-mean": 1.047915547131487,
+        "test-RMSE-std": 0.000731398588916322,
+        "train-RMSE-mean": 1.0463557296506454,
+        "train-RMSE-std": 0.0006746393470447706
     },
     {
         "booster": 71,
         "iterations": 70,
-        "test-RMSE-mean": 1.0479760438637387,
-        "test-RMSE-std": 0.0008562182163930025,
-        "train-RMSE-mean": 1.0465989689129183,
-        "train-RMSE-std": 0.0003111211241959534
+        "test-RMSE-mean": 1.0479254514125704,
+        "test-RMSE-std": 0.0007291819851290584,
+        "train-RMSE-mean": 1.0463090325115374,
+        "train-RMSE-std": 0.0006866902237130729
     },
     {
         "booster": 72,
         "iterations": 71,
-        "test-RMSE-mean": 1.0479592942889109,
-        "test-RMSE-std": 0.0008575742103986721,
-        "train-RMSE-mean": 1.0465779361857672,
-        "train-RMSE-std": 0.000287657508151221
+        "test-RMSE-mean": 1.047856513898306,
+        "test-RMSE-std": 0.0008891926739048601,
+        "train-RMSE-mean": 1.0462046492560824,
+        "train-RMSE-std": 0.0005968667749974302
     },
     {
         "booster": 73,
         "iterations": 72,
-        "test-RMSE-mean": 1.047959916380637,
-        "test-RMSE-std": 0.000856282776777229,
-        "train-RMSE-mean": 1.0465755105926104,
-        "train-RMSE-std": 0.000285506458158818
+        "test-RMSE-mean": 1.047853284065618,
+        "test-RMSE-std": 0.0008877566995000783,
+        "train-RMSE-mean": 1.0461665284368442,
+        "train-RMSE-std": 0.0006464922034031873
     },
     {
         "booster": 74,
         "iterations": 73,
-        "test-RMSE-mean": 1.0479599039388208,
-        "test-RMSE-std": 0.0008563086023541525,
-        "train-RMSE-mean": 1.0465752866215168,
-        "train-RMSE-std": 0.0002856274305469647
+        "test-RMSE-mean": 1.0478532467921327,
+        "test-RMSE-std": 0.0008877491570566118,
+        "train-RMSE-mean": 1.0461656073682888,
+        "train-RMSE-std": 0.0006465869425598642
     },
     {
         "booster": 75,
         "iterations": 74,
-        "test-RMSE-mean": 1.0479590221440358,
-        "test-RMSE-std": 0.0008557332988838489,
-        "train-RMSE-mean": 1.0465743534977563,
-        "train-RMSE-std": 0.0002857207711173353
+        "test-RMSE-mean": 1.0478463708360304,
+        "test-RMSE-std": 0.0008755955785446376,
+        "train-RMSE-mean": 1.0461323384029115,
+        "train-RMSE-std": 0.0006201118745322443
     },
     {
         "booster": 76,
         "iterations": 75,
-        "test-RMSE-mean": 1.0479591463062672,
-        "test-RMSE-std": 0.0008558667924539732,
-        "train-RMSE-mean": 1.0465714420383998,
-        "train-RMSE-std": 0.0002865047941367587
+        "test-RMSE-mean": 1.0478457741247618,
+        "test-RMSE-std": 0.0008759689007899742,
+        "train-RMSE-mean": 1.0460964513203113,
+        "train-RMSE-std": 0.0006259925968684795
     },
     {
         "booster": 77,
         "iterations": 76,
-        "test-RMSE-mean": 1.0479308089760633,
-        "test-RMSE-std": 0.0009048587186211875,
-        "train-RMSE-mean": 1.0465329000070276,
-        "train-RMSE-std": 0.00027631024385000246
+        "test-RMSE-mean": 1.047841353264452,
+        "test-RMSE-std": 0.0008716105220819122,
+        "train-RMSE-mean": 1.046079538776869,
+        "train-RMSE-std": 0.0006451040348024764
     },
     {
         "booster": 78,
         "iterations": 77,
-        "test-RMSE-mean": 1.0479289079551077,
-        "test-RMSE-std": 0.0009047884300843237,
-        "train-RMSE-mean": 1.0465246600949587,
-        "train-RMSE-std": 0.00029177216623633935
+        "test-RMSE-mean": 1.0478320189670822,
+        "test-RMSE-std": 0.0008931351860581673,
+        "train-RMSE-mean": 1.0460587985151124,
+        "train-RMSE-std": 0.0006254656128254953
     },
     {
         "booster": 79,
         "iterations": 78,
-        "test-RMSE-mean": 1.0479384583521099,
-        "test-RMSE-std": 0.0009114479801107384,
-        "train-RMSE-mean": 1.0464988111921119,
-        "train-RMSE-std": 0.00032000682868683894
+        "test-RMSE-mean": 1.0478317331901823,
+        "test-RMSE-std": 0.0008930889691241849,
+        "train-RMSE-mean": 1.046057802027592,
+        "train-RMSE-std": 0.0006268976556415882
     },
     {
         "booster": 80,
         "iterations": 79,
-        "test-RMSE-mean": 1.0479147189894973,
-        "test-RMSE-std": 0.0009035924799822732,
-        "train-RMSE-mean": 1.0464684106181674,
-        "train-RMSE-std": 0.0003800958533680823
+        "test-RMSE-mean": 1.0478317207232737,
+        "test-RMSE-std": 0.0008931482963739387,
+        "train-RMSE-mean": 1.0460576775878894,
+        "train-RMSE-std": 0.0006268234380230436
     },
     {
         "booster": 81,
         "iterations": 80,
-        "test-RMSE-mean": 1.0479153019250371,
-        "test-RMSE-std": 0.0009051298423174915,
-        "train-RMSE-mean": 1.0464594246959584,
-        "train-RMSE-std": 0.00038791376353966057
+        "test-RMSE-mean": 1.0478317207020749,
+        "test-RMSE-std": 0.0008931793835797046,
+        "train-RMSE-mean": 1.04605722925259,
+        "train-RMSE-std": 0.0006272908624126185
     },
     {
         "booster": 82,
         "iterations": 81,
-        "test-RMSE-mean": 1.0479152646667642,
-        "test-RMSE-std": 0.0009051036210455401,
-        "train-RMSE-mean": 1.046459262858915,
-        "train-RMSE-std": 0.0003881877378136445
+        "test-RMSE-mean": 1.0478104128435999,
+        "test-RMSE-std": 0.00094109523398857,
+        "train-RMSE-mean": 1.0460065599723563,
+        "train-RMSE-std": 0.0005878932696266961
     },
     {
         "booster": 83,
         "iterations": 82,
-        "test-RMSE-mean": 1.0478874525351958,
-        "test-RMSE-std": 0.0009624097127629522,
-        "train-RMSE-mean": 1.0464306222652893,
-        "train-RMSE-std": 0.00037789517891306015
+        "test-RMSE-mean": 1.0477951594902764,
+        "test-RMSE-std": 0.0009826614031147195,
+        "train-RMSE-mean": 1.0459590079709835,
+        "train-RMSE-std": 0.0005857449200414295
     },
     {
         "booster": 84,
         "iterations": 83,
-        "test-RMSE-mean": 1.0478863468768942,
-        "test-RMSE-std": 0.0009620858400040183,
-        "train-RMSE-mean": 1.0464190806384477,
-        "train-RMSE-std": 0.0004007947097785564
+        "test-RMSE-mean": 1.0477694439871166,
+        "test-RMSE-std": 0.001036166972233922,
+        "train-RMSE-mean": 1.0459316375885697,
+        "train-RMSE-std": 0.000575216944498896
     },
     {
         "booster": 85,
         "iterations": 84,
-        "test-RMSE-mean": 1.0478865453882484,
-        "test-RMSE-std": 0.0009624962874696228,
-        "train-RMSE-mean": 1.046417226404498,
-        "train-RMSE-std": 0.000401417671658881
+        "test-RMSE-mean": 1.0477695185546139,
+        "test-RMSE-std": 0.0010361614854225525,
+        "train-RMSE-mean": 1.0459302937133312,
+        "train-RMSE-std": 0.0005738042763605046
     },
     {
         "booster": 86,
         "iterations": 85,
-        "test-RMSE-mean": 1.0478863339642928,
-        "test-RMSE-std": 0.0009627483715457442,
-        "train-RMSE-mean": 1.0464164176444717,
-        "train-RMSE-std": 0.00040124926342479354
+        "test-RMSE-mean": 1.0477695184382907,
+        "test-RMSE-std": 0.001036308507977977,
+        "train-RMSE-mean": 1.045929646704987,
+        "train-RMSE-std": 0.0005730240481479506
     },
     {
         "booster": 87,
         "iterations": 86,
-        "test-RMSE-mean": 1.047886172526404,
-        "test-RMSE-std": 0.0009626155539093011,
-        "train-RMSE-mean": 1.0464161065895279,
-        "train-RMSE-std": 0.00040116239510103646
+        "test-RMSE-mean": 1.0477694438519545,
+        "test-RMSE-std": 0.0010363378023953364,
+        "train-RMSE-mean": 1.0459287127052292,
+        "train-RMSE-std": 0.0005737545738085282
     },
     {
         "booster": 88,
         "iterations": 87,
-        "test-RMSE-mean": 1.0478866255112822,
-        "test-RMSE-std": 0.0009717839552003479,
-        "train-RMSE-mean": 1.0464037135679323,
-        "train-RMSE-std": 0.0003993842769431402
+        "test-RMSE-mean": 1.047769158176934,
+        "test-RMSE-std": 0.0010361476319691485,
+        "train-RMSE-mean": 1.0459285011022712,
+        "train-RMSE-std": 0.0005736835910053076
     },
     {
         "booster": 89,
         "iterations": 88,
-        "test-RMSE-mean": 1.0478869486445572,
-        "test-RMSE-std": 0.0009716997988425411,
-        "train-RMSE-mean": 1.0464031164736174,
-        "train-RMSE-std": 0.0003987626190953852
+        "test-RMSE-mean": 1.047769145726384,
+        "test-RMSE-std": 0.0010361771506239897,
+        "train-RMSE-mean": 1.0459282273307384,
+        "train-RMSE-std": 0.0005734374919774975
     },
     {
         "booster": 90,
         "iterations": 89,
-        "test-RMSE-mean": 1.047885084835148,
-        "test-RMSE-std": 0.0009716159446482179,
-        "train-RMSE-mean": 1.046394359077041,
-        "train-RMSE-std": 0.00038944417922099993
+        "test-RMSE-mean": 1.0477691581199489,
+        "test-RMSE-std": 0.0010362196599432872,
+        "train-RMSE-mean": 1.0459282148873323,
+        "train-RMSE-std": 0.0005734245789699502
     },
     {
         "booster": 91,
         "iterations": 90,
-        "test-RMSE-mean": 1.047885122050519,
-        "test-RMSE-std": 0.0009716996506979286,
-        "train-RMSE-mean": 1.0463936498786164,
-        "train-RMSE-std": 0.00038916637497220165
+        "test-RMSE-mean": 1.0477691829712965,
+        "test-RMSE-std": 0.0010362235089616653,
+        "train-RMSE-mean": 1.0459279038326676,
+        "train-RMSE-std": 0.0005730319966569829
     },
     {
         "booster": 92,
         "iterations": 91,
-        "test-RMSE-mean": 1.0478423822352474,
-        "test-RMSE-std": 0.0009804813202511458,
-        "train-RMSE-mean": 1.0463326906764427,
-        "train-RMSE-std": 0.00033151507419468187
+        "test-RMSE-mean": 1.0477691705493344,
+        "test-RMSE-std": 0.0010362168931067756,
+        "train-RMSE-mean": 1.0459278664916536,
+        "train-RMSE-std": 0.0005730178345524171
     },
     {
         "booster": 93,
         "iterations": 92,
-        "test-RMSE-mean": 1.0478328005176927,
-        "test-RMSE-std": 0.0009817825513874932,
-        "train-RMSE-mean": 1.046310913439521,
-        "train-RMSE-std": 0.00032977395452176735
+        "test-RMSE-mean": 1.0477644501741206,
+        "test-RMSE-std": 0.0010337238447296548,
+        "train-RMSE-mean": 1.0459128299273746,
+        "train-RMSE-std": 0.0005963272774112292
     },
     {
         "booster": 94,
         "iterations": 93,
-        "test-RMSE-mean": 1.0478333714630061,
-        "test-RMSE-std": 0.0009826771278752782,
-        "train-RMSE-mean": 1.046303882244239,
-        "train-RMSE-std": 0.0003298528091118293
+        "test-RMSE-mean": 1.0477644501441985,
+        "test-RMSE-std": 0.0010337617544082197,
+        "train-RMSE-mean": 1.0459125312834068,
+        "train-RMSE-std": 0.0005960243315230106
     },
     {
         "booster": 95,
         "iterations": 94,
-        "test-RMSE-mean": 1.0478193310256907,
-        "test-RMSE-std": 0.000963897604854253,
-        "train-RMSE-mean": 1.0462660275439641,
-        "train-RMSE-std": 0.0003199590593390316
+        "test-RMSE-mean": 1.0477644998292182,
+        "test-RMSE-std": 0.0010337921465256115,
+        "train-RMSE-mean": 1.0459120706422962,
+        "train-RMSE-std": 0.0005960649550071214
     },
     {
         "booster": 96,
         "iterations": 95,
-        "test-RMSE-mean": 1.0478194803601684,
-        "test-RMSE-std": 0.0009636050454317024,
-        "train-RMSE-mean": 1.046265592117544,
-        "train-RMSE-std": 0.0003193435809593633
+        "test-RMSE-mean": 1.0477645122514554,
+        "test-RMSE-std": 0.0010337984992919668,
+        "train-RMSE-mean": 1.0459119835314286,
+        "train-RMSE-std": 0.0005959904422502196
     },
     {
         "booster": 97,
         "iterations": 96,
-        "test-RMSE-mean": 1.047808951537663,
-        "test-RMSE-std": 0.0009513110756040758,
-        "train-RMSE-mean": 1.0462505577036976,
-        "train-RMSE-std": 0.0003221115922108018
+        "test-RMSE-mean": 1.047758040023142,
+        "test-RMSE-std": 0.0010307664200305308,
+        "train-RMSE-mean": 1.0458840236540472,
+        "train-RMSE-std": 0.0006194573100688716
     },
     {
         "booster": 98,
         "iterations": 97,
-        "test-RMSE-mean": 1.047806492595743,
-        "test-RMSE-std": 0.0009491712658057877,
-        "train-RMSE-mean": 1.0462427539894876,
-        "train-RMSE-std": 0.00032422887981944915
+        "test-RMSE-mean": 1.0477591581339272,
+        "test-RMSE-std": 0.0010312087270133588,
+        "train-RMSE-mean": 1.0458814972352868,
+        "train-RMSE-std": 0.0006176560617895128
     },
     {
         "booster": 99,
         "iterations": 98,
-        "test-RMSE-mean": 1.0478065547440625,
-        "test-RMSE-std": 0.0009491511849940075,
-        "train-RMSE-mean": 1.0462364664062302,
-        "train-RMSE-std": 0.00033484163925706086
+        "test-RMSE-mean": 1.047759083630559,
+        "test-RMSE-std": 0.0010311318525219066,
+        "train-RMSE-mean": 1.0458807500823615,
+        "train-RMSE-std": 0.0006180265874068156
     },
     {
         "booster": 100,
         "iterations": 99,
-        "test-RMSE-mean": 1.047806082829562,
-        "test-RMSE-std": 0.0009487340483235603,
-        "train-RMSE-mean": 1.046233169022038,
-        "train-RMSE-std": 0.00033228333318649413
+        "test-RMSE-mean": 1.0476381875128984,
+        "test-RMSE-std": 0.0009607818143544394,
+        "train-RMSE-mean": 1.045712200470215,
+        "train-RMSE-std": 0.0005608032640074641
     },
     {
         "booster": 101,
         "iterations": 100,
-        "test-RMSE-mean": 1.0478061821731441,
-        "test-RMSE-std": 0.0009488313468694358,
-        "train-RMSE-mean": 1.0462258398486057,
-        "train-RMSE-std": 0.00032745816499350826
+        "test-RMSE-mean": 1.0476244719283005,
+        "test-RMSE-std": 0.000952781202431641,
+        "train-RMSE-mean": 1.0456977633817908,
+        "train-RMSE-std": 0.0005444463783075944
     },
     {
         "booster": 102,
         "iterations": 101,
-        "test-RMSE-mean": 1.0477218855027863,
-        "test-RMSE-std": 0.000881385145438803,
-        "train-RMSE-mean": 1.0461270055374488,
-        "train-RMSE-std": 0.00032626724214836856
+        "test-RMSE-mean": 1.047622620441519,
+        "test-RMSE-std": 0.0009521998069405099,
+        "train-RMSE-mean": 1.0456713480690636,
+        "train-RMSE-std": 0.0005841374630099655
     },
     {
         "booster": 103,
         "iterations": 102,
-        "test-RMSE-mean": 1.0477218606065923,
-        "test-RMSE-std": 0.0008814455886265453,
-        "train-RMSE-mean": 1.0461263582219644,
-        "train-RMSE-std": 0.00032661441972799577
+        "test-RMSE-mean": 1.047612395959859,
+        "test-RMSE-std": 0.000945877839568291,
+        "train-RMSE-mean": 1.045589281614599,
+        "train-RMSE-std": 0.0005496279044969805
     },
     {
         "booster": 104,
         "iterations": 103,
-        "test-RMSE-mean": 1.0477218730244993,
-        "test-RMSE-std": 0.0008814602244815193,
-        "train-RMSE-mean": 1.0461258851854118,
-        "train-RMSE-std": 0.00032686013505430677
+        "test-RMSE-mean": 1.0476131289844521,
+        "test-RMSE-std": 0.0009462785041599356,
+        "train-RMSE-mean": 1.045566175343765,
+        "train-RMSE-std": 0.0005768515597444577
     },
     {
         "booster": 105,
         "iterations": 104,
-        "test-RMSE-mean": 1.0477114742227334,
-        "test-RMSE-std": 0.0008765690882715091,
-        "train-RMSE-mean": 1.0461146160402797,
-        "train-RMSE-std": 0.00034554949890945076
+        "test-RMSE-mean": 1.0475784025058084,
+        "test-RMSE-std": 0.0009277122701659524,
+        "train-RMSE-mean": 1.0455232954884983,
+        "train-RMSE-std": 0.0005526301166518794
     },
     {
         "booster": 106,
         "iterations": 105,
-        "test-RMSE-mean": 1.047710045597425,
-        "test-RMSE-std": 0.0008756991788374502,
-        "train-RMSE-mean": 1.046106997689155,
-        "train-RMSE-std": 0.0003487521481888599
+        "test-RMSE-mean": 1.0475757434099668,
+        "test-RMSE-std": 0.0009265656044552041,
+        "train-RMSE-mean": 1.0455189524773658,
+        "train-RMSE-std": 0.0005592617508213257
     },
     {
         "booster": 107,
         "iterations": 106,
-        "test-RMSE-mean": 1.0477115854218435,
-        "test-RMSE-std": 0.0008775423878174,
-        "train-RMSE-mean": 1.0460774062796674,
-        "train-RMSE-std": 0.0003656265239225544
+        "test-RMSE-mean": 1.0475757806929744,
+        "test-RMSE-std": 0.000926573327568975,
+        "train-RMSE-mean": 1.04551406232719,
+        "train-RMSE-std": 0.0005638375911862978
     },
     {
         "booster": 108,
         "iterations": 107,
-        "test-RMSE-mean": 1.0477061813256092,
-        "test-RMSE-std": 0.0008744846885926344,
-        "train-RMSE-mean": 1.0460641583601413,
-        "train-RMSE-std": 0.0003793678228950164
+        "test-RMSE-mean": 1.0475783396707878,
+        "test-RMSE-std": 0.0009286824866114534,
+        "train-RMSE-mean": 1.0454919397893,
+        "train-RMSE-std": 0.0005870589905549262
     },
     {
         "booster": 109,
         "iterations": 108,
-        "test-RMSE-mean": 1.0477062310402459,
-        "test-RMSE-std": 0.0008744804005367479,
-        "train-RMSE-mean": 1.0460503631148996,
-        "train-RMSE-std": 0.0003908359414765639
+        "test-RMSE-mean": 1.0475834587096589,
+        "test-RMSE-std": 0.0009313383571416328,
+        "train-RMSE-mean": 1.0454806935789698,
+        "train-RMSE-std": 0.0005869450956202749
     },
     {
         "booster": 110,
         "iterations": 109,
-        "test-RMSE-mean": 1.0477058465011957,
-        "test-RMSE-std": 0.0008733905767025138,
-        "train-RMSE-mean": 1.0460225998027353,
-        "train-RMSE-std": 0.0004064484286712741
+        "test-RMSE-mean": 1.0475844035089996,
+        "test-RMSE-std": 0.000931105767484209,
+        "train-RMSE-mean": 1.045434908765288,
+        "train-RMSE-std": 0.0005761916064913679
     },
     {
         "booster": 111,
         "iterations": 110,
-        "test-RMSE-mean": 1.0477067657841037,
-        "test-RMSE-std": 0.0008739674001684418,
-        "train-RMSE-mean": 1.0460206079373433,
-        "train-RMSE-std": 0.0004070658075135584
+        "test-RMSE-mean": 1.0475749223910156,
+        "test-RMSE-std": 0.0009275151327939054,
+        "train-RMSE-mean": 1.0454205384855326,
+        "train-RMSE-std": 0.0005976343492247861
     },
     {
         "booster": 112,
         "iterations": 111,
-        "test-RMSE-mean": 1.0477034612374962,
-        "test-RMSE-std": 0.0008720325658157664,
-        "train-RMSE-mean": 1.046012926337443,
-        "train-RMSE-std": 0.0004108197783585124
+        "test-RMSE-mean": 1.047568326744319,
+        "test-RMSE-std": 0.000938728378399162,
+        "train-RMSE-mean": 1.0454097629846106,
+        "train-RMSE-std": 0.0005878082102152095
     },
     {
         "booster": 113,
         "iterations": 112,
-        "test-RMSE-mean": 1.0477033121695623,
-        "test-RMSE-std": 0.0008719307566779072,
-        "train-RMSE-mean": 1.0460121793309907,
-        "train-RMSE-std": 0.00041120944295856593
+        "test-RMSE-mean": 1.0475352117790275,
+        "test-RMSE-std": 0.0009241266604116227,
+        "train-RMSE-mean": 1.0453625491502112,
+        "train-RMSE-std": 0.0005621536027613033
     },
     {
         "booster": 114,
         "iterations": 113,
-        "test-RMSE-mean": 1.0477033245748815,
-        "test-RMSE-std": 0.0008719647887043861,
-        "train-RMSE-mean": 1.046012042379616,
-        "train-RMSE-std": 0.00041128126709232205
+        "test-RMSE-mean": 1.0475353855370462,
+        "test-RMSE-std": 0.0009244972187573804,
+        "train-RMSE-mean": 1.0453607175870707,
+        "train-RMSE-std": 0.0005634492118027983
     },
     {
         "booster": 115,
         "iterations": 114,
-        "test-RMSE-mean": 1.0477033245748815,
-        "test-RMSE-std": 0.0008719647887043861,
-        "train-RMSE-mean": 1.0460119801261532,
-        "train-RMSE-std": 0.0004113229121104788
+        "test-RMSE-mean": 1.047535869919909,
+        "test-RMSE-std": 0.0009250435614392009,
+        "train-RMSE-mean": 1.0453603811366814,
+        "train-RMSE-std": 0.0005637806964815239
     },
     {
         "booster": 116,
         "iterations": 115,
-        "test-RMSE-mean": 1.0477033742471522,
-        "test-RMSE-std": 0.0008720243196219363,
-        "train-RMSE-mean": 1.0460112829051174,
-        "train-RMSE-std": 0.00041173189679990986
+        "test-RMSE-mean": 1.0475342550432136,
+        "test-RMSE-std": 0.0009235987534004183,
+        "train-RMSE-mean": 1.045346218225638,
+        "train-RMSE-std": 0.0005792412676513701
     },
     {
         "booster": 117,
         "iterations": 116,
-        "test-RMSE-mean": 1.0476789860870508,
-        "test-RMSE-std": 0.0008595565300231931,
-        "train-RMSE-mean": 1.04597272061306,
-        "train-RMSE-std": 0.0004419770644549358
+        "test-RMSE-mean": 1.0475431149031422,
+        "test-RMSE-std": 0.0009273915179326955,
+        "train-RMSE-mean": 1.0453184089892533,
+        "train-RMSE-std": 0.0006217363216471432
     },
     {
         "booster": 118,
         "iterations": 117,
-        "test-RMSE-mean": 1.0476839930015511,
-        "test-RMSE-std": 0.00086208926877339,
-        "train-RMSE-mean": 1.0459425222227823,
-        "train-RMSE-std": 0.00047130967065924266
+        "test-RMSE-mean": 1.047543574746155,
+        "test-RMSE-std": 0.0009274795911393892,
+        "train-RMSE-mean": 1.045316678307397,
+        "train-RMSE-std": 0.0006201586390441186
     },
     {
         "booster": 119,
         "iterations": 118,
-        "test-RMSE-mean": 1.0476882546810713,
-        "test-RMSE-std": 0.0008638901822972287,
-        "train-RMSE-mean": 1.0459276397001787,
-        "train-RMSE-std": 0.0004876211986812982
+        "test-RMSE-mean": 1.0475411268777117,
+        "test-RMSE-std": 0.0009263221004363488,
+        "train-RMSE-mean": 1.0452967882165203,
+        "train-RMSE-std": 0.0006271447144619945
     },
     {
         "booster": 120,
         "iterations": 119,
-        "test-RMSE-mean": 1.0476879813176017,
-        "test-RMSE-std": 0.0008638052795247581,
-        "train-RMSE-mean": 1.0459267180851695,
-        "train-RMSE-std": 0.0004886468384943054
+        "test-RMSE-mean": 1.0475408908522015,
+        "test-RMSE-std": 0.0009261204312811938,
+        "train-RMSE-mean": 1.0452955989909936,
+        "train-RMSE-std": 0.0006263535947146731
     },
     {
         "booster": 121,
         "iterations": 120,
-        "test-RMSE-mean": 1.047693224382539,
-        "test-RMSE-std": 0.0008662355713263557,
-        "train-RMSE-mean": 1.045900850126151,
-        "train-RMSE-std": 0.0005169486527772859
+        "test-RMSE-mean": 1.0475415880370482,
+        "test-RMSE-std": 0.0009245490922915499,
+        "train-RMSE-mean": 1.0452843200471944,
+        "train-RMSE-std": 0.0006120033439964452
     },
     {
         "booster": 122,
         "iterations": 121,
-        "test-RMSE-mean": 1.0476921434595279,
-        "test-RMSE-std": 0.0008657486017368831,
-        "train-RMSE-mean": 1.045898321634379,
-        "train-RMSE-std": 0.0005201290573853897
+        "test-RMSE-mean": 1.0475416252942602,
+        "test-RMSE-std": 0.0009245950869742014,
+        "train-RMSE-mean": 1.045282209111615,
+        "train-RMSE-std": 0.000610969763822038
     },
     {
         "booster": 123,
         "iterations": 122,
-        "test-RMSE-mean": 1.0476829214779515,
-        "test-RMSE-std": 0.0008847681601850241,
-        "train-RMSE-mean": 1.045884272841856,
-        "train-RMSE-std": 0.0005029977577817549
+        "test-RMSE-mean": 1.047533783791927,
+        "test-RMSE-std": 0.0009220547040505514,
+        "train-RMSE-mean": 1.0452728185092952,
+        "train-RMSE-std": 0.0006070229270448493
     },
     {
         "booster": 124,
         "iterations": 123,
-        "test-RMSE-mean": 1.047677601512555,
-        "test-RMSE-std": 0.0008857651350485993,
-        "train-RMSE-mean": 1.0458639122989,
-        "train-RMSE-std": 0.0004839518379881213
+        "test-RMSE-mean": 1.0475366914445081,
+        "test-RMSE-std": 0.0009234181249581072,
+        "train-RMSE-mean": 1.0452583291967206,
+        "train-RMSE-std": 0.0006242027049340309
     },
     {
         "booster": 125,
         "iterations": 124,
-        "test-RMSE-mean": 1.0476773775125072,
-        "test-RMSE-std": 0.0008861951785099139,
-        "train-RMSE-mean": 1.0458632899734313,
-        "train-RMSE-std": 0.000483501917746635
+        "test-RMSE-mean": 1.0475366044942853,
+        "test-RMSE-std": 0.0009233338030448517,
+        "train-RMSE-mean": 1.0452567645866249,
+        "train-RMSE-std": 0.0006268124397278179
     },
     {
         "booster": 126,
         "iterations": 125,
-        "test-RMSE-mean": 1.0476775266653213,
-        "test-RMSE-std": 0.0008861753742644396,
-        "train-RMSE-mean": 1.0458619076100146,
-        "train-RMSE-std": 0.000484663123153456
+        "test-RMSE-mean": 1.0475363684084844,
+        "test-RMSE-std": 0.0009232155517957515,
+        "train-RMSE-mean": 1.0452469715924197,
+        "train-RMSE-std": 0.0006431143707870306
     },
     {
         "booster": 127,
         "iterations": 126,
-        "test-RMSE-mean": 1.0476776137210912,
-        "test-RMSE-std": 0.000886089968929149,
-        "train-RMSE-mean": 1.045859478727639,
-        "train-RMSE-std": 0.000487774134168169
+        "test-RMSE-mean": 1.047541028030969,
+        "test-RMSE-std": 0.0009254842116672665,
+        "train-RMSE-mean": 1.0452138238738984,
+        "train-RMSE-std": 0.0006892851703708581
     },
     {
         "booster": 128,
         "iterations": 127,
-        "test-RMSE-mean": 1.0476775764327129,
-        "test-RMSE-std": 0.0008860951867224523,
-        "train-RMSE-mean": 1.0458592546930072,
-        "train-RMSE-std": 0.00048760424642063345
+        "test-RMSE-mean": 1.0475408665022066,
+        "test-RMSE-std": 0.0009253993322826844,
+        "train-RMSE-mean": 1.0452123900048893,
+        "train-RMSE-std": 0.0006916438153981385
     },
     {
         "booster": 129,
         "iterations": 128,
-        "test-RMSE-mean": 1.0476756519914325,
-        "test-RMSE-std": 0.0008832168903799761,
-        "train-RMSE-mean": 1.0458343916269937,
-        "train-RMSE-std": 0.0004539734706736245
+        "test-RMSE-mean": 1.0475408792580274,
+        "test-RMSE-std": 0.0009249380511409779,
+        "train-RMSE-mean": 1.0451796163867808,
+        "train-RMSE-std": 0.0007095975224498386
     },
     {
         "booster": 130,
         "iterations": 129,
-        "test-RMSE-mean": 1.0476758882082469,
-        "test-RMSE-std": 0.0008830996980658637,
-        "train-RMSE-mean": 1.045832224991403,
-        "train-RMSE-std": 0.00045483907175871075
+        "test-RMSE-mean": 1.0475406430631047,
+        "test-RMSE-std": 0.0009249758578661077,
+        "train-RMSE-mean": 1.0451780898335028,
+        "train-RMSE-std": 0.0007104234277481246
     },
     {
         "booster": 131,
         "iterations": 130,
-        "test-RMSE-mean": 1.047681652573075,
-        "test-RMSE-std": 0.000868028237580452,
-        "train-RMSE-mean": 1.0458111433524162,
-        "train-RMSE-std": 0.00042747794142999944
+        "test-RMSE-mean": 1.047547352715243,
+        "test-RMSE-std": 0.0009284749724773944,
+        "train-RMSE-mean": 1.0451576028477665,
+        "train-RMSE-std": 0.0007432869096286363
     },
     {
         "booster": 132,
         "iterations": 131,
-        "test-RMSE-mean": 1.047684175620265,
-        "test-RMSE-std": 0.0008678492709963334,
-        "train-RMSE-mean": 1.0458031028812622,
-        "train-RMSE-std": 0.0004195790415525899
+        "test-RMSE-mean": 1.0475453143229034,
+        "test-RMSE-std": 0.0009283319244903317,
+        "train-RMSE-mean": 1.045130708523041,
+        "train-RMSE-std": 0.0007373216955213768
     },
     {
         "booster": 133,
         "iterations": 132,
-        "test-RMSE-mean": 1.0476750435657183,
-        "test-RMSE-std": 0.0008637415486353267,
-        "train-RMSE-mean": 1.0457828110574625,
-        "train-RMSE-std": 0.00044868569858939466
+        "test-RMSE-mean": 1.047555292742937,
+        "test-RMSE-std": 0.0009321377262122388,
+        "train-RMSE-mean": 1.0450959236596167,
+        "train-RMSE-std": 0.0007482062320688805
     },
     {
         "booster": 134,
         "iterations": 133,
-        "test-RMSE-mean": 1.047677402992689,
-        "test-RMSE-std": 0.0008666928243557515,
-        "train-RMSE-mean": 1.045766337437041,
-        "train-RMSE-std": 0.00045182525644109513
+        "test-RMSE-mean": 1.0475546838457581,
+        "test-RMSE-std": 0.0009319130059126742,
+        "train-RMSE-mean": 1.0450932689471604,
+        "train-RMSE-std": 0.0007498552679962281
     },
     {
         "booster": 135,
         "iterations": 134,
-        "test-RMSE-mean": 1.0476774154028534,
-        "test-RMSE-std": 0.0008667202044039652,
-        "train-RMSE-mean": 1.0457659887267399,
-        "train-RMSE-std": 0.0004520633950096825
+        "test-RMSE-mean": 1.0475577148325852,
+        "test-RMSE-std": 0.0009345306745340168,
+        "train-RMSE-mean": 1.0450888816979647,
+        "train-RMSE-std": 0.0007527529734510372
     },
     {
         "booster": 136,
         "iterations": 135,
-        "test-RMSE-mean": 1.0476773159556338,
-        "test-RMSE-std": 0.0008667518379583769,
-        "train-RMSE-mean": 1.045763373048278,
-        "train-RMSE-std": 0.0004548452414438772
+        "test-RMSE-mean": 1.0475548316388374,
+        "test-RMSE-std": 0.0009338273352054993,
+        "train-RMSE-mean": 1.045074495677143,
+        "train-RMSE-std": 0.0007452503762163774
     },
     {
         "booster": 137,
         "iterations": 136,
-        "test-RMSE-mean": 1.0476740096955102,
-        "test-RMSE-std": 0.0008672515483641895,
-        "train-RMSE-mean": 1.0457507240379225,
-        "train-RMSE-std": 0.000451050848959872
+        "test-RMSE-mean": 1.0475566211429397,
+        "test-RMSE-std": 0.0009343555629136725,
+        "train-RMSE-mean": 1.0450693816018866,
+        "train-RMSE-std": 0.0007444523295294209
     },
     {
         "booster": 138,
         "iterations": 137,
-        "test-RMSE-mean": 1.0476772895314421,
-        "test-RMSE-std": 0.0008691171651840983,
-        "train-RMSE-mean": 1.0457379930527084,
-        "train-RMSE-std": 0.00046755493529745495
+        "test-RMSE-mean": 1.0475568323653492,
+        "test-RMSE-std": 0.0009344715589227399,
+        "train-RMSE-mean": 1.0450517458175248,
+        "train-RMSE-std": 0.0007757063258835007
     },
     {
         "booster": 139,
         "iterations": 138,
-        "test-RMSE-mean": 1.0476773516451383,
-        "test-RMSE-std": 0.0008691589535346848,
-        "train-RMSE-mean": 1.0457378063481446,
-        "train-RMSE-std": 0.0004673718675748655
+        "test-RMSE-mean": 1.047555900489475,
+        "test-RMSE-std": 0.0009339765020367293,
+        "train-RMSE-mean": 1.0450402134367895,
+        "train-RMSE-std": 0.0007669168438174875
     },
     {
         "booster": 140,
         "iterations": 139,
-        "test-RMSE-mean": 1.0476759104574034,
-        "test-RMSE-std": 0.0008684137245021405,
-        "train-RMSE-mean": 1.0457304083346004,
-        "train-RMSE-std": 0.0004726380091334766
+        "test-RMSE-mean": 1.047552707383486,
+        "test-RMSE-std": 0.0009320978995854184,
+        "train-RMSE-mean": 1.0450119799890083,
+        "train-RMSE-std": 0.0007553733511297815
     },
     {
         "booster": 141,
         "iterations": 140,
-        "test-RMSE-mean": 1.047673388224457,
-        "test-RMSE-std": 0.0008673340036898162,
-        "train-RMSE-mean": 1.0457242668494913,
-        "train-RMSE-std": 0.000480631651208017
+        "test-RMSE-mean": 1.0475596786704062,
+        "test-RMSE-std": 0.0009346059478779661,
+        "train-RMSE-mean": 1.0449938889004498,
+        "train-RMSE-std": 0.0007537011851827878
     },
     {
         "booster": 142,
         "iterations": 141,
-        "test-RMSE-mean": 1.0476807110619375,
-        "test-RMSE-std": 0.0008634369930678368,
-        "train-RMSE-mean": 1.0456949980181438,
-        "train-RMSE-std": 0.0005003579977795321
+        "test-RMSE-mean": 1.0475640766258807,
+        "test-RMSE-std": 0.0009376030827496054,
+        "train-RMSE-mean": 1.0449790029749286,
+        "train-RMSE-std": 0.0007573492902469193
     },
     {
         "booster": 143,
         "iterations": 142,
-        "test-RMSE-mean": 1.047661199637778,
-        "test-RMSE-std": 0.0008987423145680309,
-        "train-RMSE-mean": 1.0456697900067076,
-        "train-RMSE-std": 0.00048096127060049185
+        "test-RMSE-mean": 1.047530386175798,
+        "test-RMSE-std": 0.0009103262123334541,
+        "train-RMSE-mean": 1.0449040808440622,
+        "train-RMSE-std": 0.0008215537303928843
     },
     {
         "booster": 144,
         "iterations": 143,
-        "test-RMSE-mean": 1.0476606032122162,
-        "test-RMSE-std": 0.0008985360885337899,
-        "train-RMSE-mean": 1.0456625819194652,
-        "train-RMSE-std": 0.000493027658795203
+        "test-RMSE-mean": 1.0475299885529665,
+        "test-RMSE-std": 0.0009101274327547486,
+        "train-RMSE-mean": 1.0448997150585702,
+        "train-RMSE-std": 0.0008185286743702357
     },
     {
         "booster": 145,
         "iterations": 144,
-        "test-RMSE-mean": 1.0476643676519266,
-        "test-RMSE-std": 0.0009005513279203178,
-        "train-RMSE-mean": 1.0456514411450777,
-        "train-RMSE-std": 0.0004988084412685431
+        "test-RMSE-mean": 1.0475315045611808,
+        "test-RMSE-std": 0.0009107815706454683,
+        "train-RMSE-mean": 1.044894002196762,
+        "train-RMSE-std": 0.00081745787337165
     },
     {
         "booster": 146,
         "iterations": 145,
-        "test-RMSE-mean": 1.0476644049898358,
-        "test-RMSE-std": 0.000900474846968171,
-        "train-RMSE-mean": 1.045651297865597,
-        "train-RMSE-std": 0.0004990108874630322
+        "test-RMSE-mean": 1.047532498718496,
+        "test-RMSE-std": 0.0009111315657493591,
+        "train-RMSE-mean": 1.0448882801923243,
+        "train-RMSE-std": 0.0008209814199900196
     },
     {
         "booster": 147,
         "iterations": 146,
-        "test-RMSE-mean": 1.047663944949796,
-        "test-RMSE-std": 0.0009007477664422833,
-        "train-RMSE-mean": 1.0456492932029746,
-        "train-RMSE-std": 0.0004985645475389066
+        "test-RMSE-mean": 1.0475326850856355,
+        "test-RMSE-std": 0.0009112507057700864,
+        "train-RMSE-mean": 1.0448881492410913,
+        "train-RMSE-std": 0.0008211498751176975
     },
     {
         "booster": 148,
         "iterations": 147,
-        "test-RMSE-mean": 1.0476581562884228,
-        "test-RMSE-std": 0.0009143387931055538,
-        "train-RMSE-mean": 1.0456415067522975,
-        "train-RMSE-std": 0.0004918376913911021
+        "test-RMSE-mean": 1.0475364743672955,
+        "test-RMSE-std": 0.0009139225005845393,
+        "train-RMSE-mean": 1.0448703756946744,
+        "train-RMSE-std": 0.0008459276245682631
     },
     {
         "booster": 149,
         "iterations": 148,
-        "test-RMSE-mean": 1.0476564409678035,
-        "test-RMSE-std": 0.0009146028341547563,
-        "train-RMSE-mean": 1.0456252814296603,
-        "train-RMSE-std": 0.0004739321027252817
+        "test-RMSE-mean": 1.0475344708256806,
+        "test-RMSE-std": 0.000917235630525746,
+        "train-RMSE-mean": 1.0448617320049196,
+        "train-RMSE-std": 0.0008385658736235503
     },
     {
         "booster": 150,
         "iterations": 149,
-        "test-RMSE-mean": 1.0476506480287653,
-        "test-RMSE-std": 0.000916357082232368,
-        "train-RMSE-mean": 1.0456108012360004,
-        "train-RMSE-std": 0.0004673521728337899
+        "test-RMSE-mean": 1.0475360983357063,
+        "test-RMSE-std": 0.0009184000618956673,
+        "train-RMSE-mean": 1.0448366669054001,
+        "train-RMSE-std": 0.0008546064011449142
     },
     {
         "booster": 151,
         "iterations": 150,
-        "test-RMSE-mean": 1.047661416259437,
-        "test-RMSE-std": 0.0009267480803786221,
-        "train-RMSE-mean": 1.045581929454568,
-        "train-RMSE-std": 0.00048297329437533274
+        "test-RMSE-mean": 1.047536210159622,
+        "test-RMSE-std": 0.0009184652618159479,
+        "train-RMSE-mean": 1.0448362927950416,
+        "train-RMSE-std": 0.0008549853662208553
     },
     {
         "booster": 152,
         "iterations": 151,
-        "test-RMSE-mean": 1.0476615902270652,
-        "test-RMSE-std": 0.0009267918883734415,
-        "train-RMSE-mean": 1.0455801288386595,
-        "train-RMSE-std": 0.0004860162022505196
+        "test-RMSE-mean": 1.0475191360138774,
+        "test-RMSE-std": 0.0009116558241588429,
+        "train-RMSE-mean": 1.0448041728117485,
+        "train-RMSE-std": 0.0008715379065472699
     },
     {
         "booster": 153,
         "iterations": 152,
-        "test-RMSE-mean": 1.0476616026072854,
-        "test-RMSE-std": 0.0009268600673852946,
-        "train-RMSE-mean": 1.0455792138287212,
-        "train-RMSE-std": 0.0004852041844292609
+        "test-RMSE-mean": 1.0475047559838147,
+        "test-RMSE-std": 0.0009442421710924226,
+        "train-RMSE-mean": 1.0447915100124905,
+        "train-RMSE-std": 0.0008539747652953585
     },
     {
         "booster": 154,
         "iterations": 153,
-        "test-RMSE-mean": 1.0476636988556653,
-        "test-RMSE-std": 0.0009327211975025886,
-        "train-RMSE-mean": 1.0455563105661763,
-        "train-RMSE-std": 0.0004893099883904516
+        "test-RMSE-mean": 1.0475009913084434,
+        "test-RMSE-std": 0.0009418506791793072,
+        "train-RMSE-mean": 1.0447807741509436,
+        "train-RMSE-std": 0.0008717245035815078
     },
     {
         "booster": 155,
         "iterations": 154,
-        "test-RMSE-mean": 1.0476665315788005,
-        "test-RMSE-std": 0.0009340668110066887,
-        "train-RMSE-mean": 1.0455454264906134,
-        "train-RMSE-std": 0.000504793144330476
+        "test-RMSE-mean": 1.0475166817312602,
+        "test-RMSE-std": 0.0009195751263352508,
+        "train-RMSE-mean": 1.04474977135428,
+        "train-RMSE-std": 0.000835527039299807
     },
     {
         "booster": 156,
         "iterations": 155,
-        "test-RMSE-mean": 1.0476656742673256,
-        "test-RMSE-std": 0.0009337170275960884,
-        "train-RMSE-mean": 1.0455328457635513,
-        "train-RMSE-std": 0.0005268721421847754
+        "test-RMSE-mean": 1.0475227831699176,
+        "test-RMSE-std": 0.0009220888532970909,
+        "train-RMSE-mean": 1.044740286374061,
+        "train-RMSE-std": 0.0008363222158022797
     },
     {
         "booster": 157,
         "iterations": 156,
-        "test-RMSE-mean": 1.0476657860835612,
-        "test-RMSE-std": 0.0009337725324461849,
-        "train-RMSE-mean": 1.0455268324216735,
-        "train-RMSE-std": 0.0005376197178433064
+        "test-RMSE-mean": 1.0475196764284669,
+        "test-RMSE-std": 0.0009209620425511776,
+        "train-RMSE-mean": 1.0447245329114332,
+        "train-RMSE-std": 0.0008262613999870393
     },
     {
         "booster": 158,
         "iterations": 157,
-        "test-RMSE-mean": 1.0476599590262627,
-        "test-RMSE-std": 0.0009311192345600905,
-        "train-RMSE-mean": 1.0455201270853927,
-        "train-RMSE-std": 0.0005499822090990806
+        "test-RMSE-mean": 1.0475192539777192,
+        "test-RMSE-std": 0.000920713692332429,
+        "train-RMSE-mean": 1.0447235354749576,
+        "train-RMSE-std": 0.0008268348572769059
     },
     {
         "booster": 159,
         "iterations": 158,
-        "test-RMSE-mean": 1.0476589901368638,
-        "test-RMSE-std": 0.0009303687037287429,
-        "train-RMSE-mean": 1.0455064501423714,
-        "train-RMSE-std": 0.0005557491531365446
+        "test-RMSE-mean": 1.047528822197434,
+        "test-RMSE-std": 0.000924914854485275,
+        "train-RMSE-mean": 1.0446994347115972,
+        "train-RMSE-std": 0.0008307005848316964
     },
     {
         "booster": 160,
         "iterations": 159,
-        "test-RMSE-mean": 1.0476584434849534,
-        "test-RMSE-std": 0.0009300837896042221,
-        "train-RMSE-mean": 1.0454951458236876,
-        "train-RMSE-std": 0.0005608270745395502
+        "test-RMSE-mean": 1.0475290833790705,
+        "test-RMSE-std": 0.0009247015313243065,
+        "train-RMSE-mean": 1.044697136605141,
+        "train-RMSE-std": 0.0008284164256632531
     },
     {
         "booster": 161,
         "iterations": 160,
-        "test-RMSE-mean": 1.0476585175845288,
-        "test-RMSE-std": 0.0009307474065313295,
-        "train-RMSE-mean": 1.045482316836857,
-        "train-RMSE-std": 0.0005632797606426686
+        "test-RMSE-mean": 1.047529780477443,
+        "test-RMSE-std": 0.0009232615736247671,
+        "train-RMSE-mean": 1.0446956543775738,
+        "train-RMSE-std": 0.0008269040750687318
     },
     {
         "booster": 162,
         "iterations": 161,
-        "test-RMSE-mean": 1.047649492808686,
-        "test-RMSE-std": 0.000915441175429225,
-        "train-RMSE-mean": 1.0454457552978742,
-        "train-RMSE-std": 0.0005799610161248525
+        "test-RMSE-mean": 1.0475169697359876,
+        "test-RMSE-std": 0.0009165652373728361,
+        "train-RMSE-mean": 1.0446527837674204,
+        "train-RMSE-std": 0.0008180199514814948
     },
     {
         "booster": 163,
         "iterations": 162,
-        "test-RMSE-mean": 1.0476494182618512,
-        "test-RMSE-std": 0.0009154056057725406,
-        "train-RMSE-mean": 1.045445400151028,
-        "train-RMSE-std": 0.0005803767351637403
+        "test-RMSE-mean": 1.0475117512822574,
+        "test-RMSE-std": 0.0009133618613627522,
+        "train-RMSE-mean": 1.0446086333403921,
+        "train-RMSE-std": 0.0008196994254724553
     },
     {
         "booster": 164,
         "iterations": 163,
-        "test-RMSE-mean": 1.047649667345655,
-        "test-RMSE-std": 0.0009146735792205678,
-        "train-RMSE-mean": 1.0454440865647532,
-        "train-RMSE-std": 0.0005794799630412369
+        "test-RMSE-mean": 1.047510422329415,
+        "test-RMSE-std": 0.0009118053865761691,
+        "train-RMSE-mean": 1.0445906694530263,
+        "train-RMSE-std": 0.0008228190960273137
     },
     {
         "booster": 165,
         "iterations": 164,
-        "test-RMSE-mean": 1.0476491951920273,
-        "test-RMSE-std": 0.0009144819783393144,
-        "train-RMSE-mean": 1.045443146533513,
-        "train-RMSE-std": 0.0005787822427121417
+        "test-RMSE-mean": 1.047510944122697,
+        "test-RMSE-std": 0.0009122041820702031,
+        "train-RMSE-mean": 1.0445846014026465,
+        "train-RMSE-std": 0.0008288357603546346
     },
     {
         "booster": 166,
         "iterations": 165,
-        "test-RMSE-mean": 1.0476522370888792,
-        "test-RMSE-std": 0.0009189255501714238,
-        "train-RMSE-mean": 1.0454129361672702,
-        "train-RMSE-std": 0.0005803626311943897
+        "test-RMSE-mean": 1.0475025438543086,
+        "test-RMSE-std": 0.000908434150799849,
+        "train-RMSE-mean": 1.0445742144077041,
+        "train-RMSE-std": 0.000824566447770303
     },
     {
         "booster": 167,
         "iterations": 166,
-        "test-RMSE-mean": 1.0476297523468006,
-        "test-RMSE-std": 0.0009206244130049866,
-        "train-RMSE-mean": 1.0453602911658806,
-        "train-RMSE-std": 0.0005701875625631864
+        "test-RMSE-mean": 1.0475024692952841,
+        "test-RMSE-std": 0.0009084008034732464,
+        "train-RMSE-mean": 1.0445725008045421,
+        "train-RMSE-std": 0.0008239896171892392
     },
     {
         "booster": 168,
         "iterations": 167,
-        "test-RMSE-mean": 1.0476282869499092,
-        "test-RMSE-std": 0.0009189038299324901,
-        "train-RMSE-mean": 1.0453578869744569,
-        "train-RMSE-std": 0.0005706751830136087
+        "test-RMSE-mean": 1.0475024444398973,
+        "test-RMSE-std": 0.0009083931141958288,
+        "train-RMSE-mean": 1.044572357442756,
+        "train-RMSE-std": 0.0008240081033138064
     },
     {
         "booster": 169,
         "iterations": 168,
-        "test-RMSE-mean": 1.0476357462821433,
-        "test-RMSE-std": 0.0009159945802586904,
-        "train-RMSE-mean": 1.0453390305456707,
-        "train-RMSE-std": 0.0005662710676236175
+        "test-RMSE-mean": 1.0475024071573356,
+        "test-RMSE-std": 0.0009083808313031988,
+        "train-RMSE-mean": 1.044572332505848,
+        "train-RMSE-std": 0.0008240183240961189
     },
     {
         "booster": 170,
         "iterations": 169,
-        "test-RMSE-mean": 1.0476384090262794,
-        "test-RMSE-std": 0.0009117116818204346,
-        "train-RMSE-mean": 1.0453322889028882,
-        "train-RMSE-std": 0.0005584879681121937
+        "test-RMSE-mean": 1.047501897662232,
+        "test-RMSE-std": 0.0009081648319402167,
+        "train-RMSE-mean": 1.044565365976296,
+        "train-RMSE-std": 0.0008215479345607264
     },
     {
         "booster": 171,
         "iterations": 170,
-        "test-RMSE-mean": 1.0476423457754067,
-        "test-RMSE-std": 0.0009162342787293539,
-        "train-RMSE-mean": 1.0453133342931602,
-        "train-RMSE-std": 0.0005640291242116193
+        "test-RMSE-mean": 1.0475020095010703,
+        "test-RMSE-std": 0.000908214516418938,
+        "train-RMSE-mean": 1.0445651229094863,
+        "train-RMSE-std": 0.000821537118225526
     },
     {
         "booster": 172,
         "iterations": 171,
-        "test-RMSE-mean": 1.047638686399885,
-        "test-RMSE-std": 0.0009238224421064196,
-        "train-RMSE-mean": 1.0453082243330212,
-        "train-RMSE-std": 0.0005560932323412274
+        "test-RMSE-mean": 1.0475036746757207,
+        "test-RMSE-std": 0.0009089250948020003,
+        "train-RMSE-mean": 1.044546197436397,
+        "train-RMSE-std": 0.0008163086347482912
     },
     {
         "booster": 173,
         "iterations": 172,
-        "test-RMSE-mean": 1.04763577937989,
-        "test-RMSE-std": 0.0009219633196430268,
-        "train-RMSE-mean": 1.0453042056267192,
-        "train-RMSE-std": 0.0005595886808250755
+        "test-RMSE-mean": 1.0475036870975445,
+        "test-RMSE-std": 0.0009089373719026498,
+        "train-RMSE-mean": 1.0445458732592658,
+        "train-RMSE-std": 0.0008164254183235133
     },
     {
         "booster": 174,
         "iterations": 173,
-        "test-RMSE-mean": 1.0476322770526512,
-        "test-RMSE-std": 0.000918271118052491,
-        "train-RMSE-mean": 1.04527657414013,
-        "train-RMSE-std": 0.0005798389213246909
+        "test-RMSE-mean": 1.0475036995241778,
+        "test-RMSE-std": 0.0009089427201180261,
+        "train-RMSE-mean": 1.0445456675138043,
+        "train-RMSE-std": 0.0008165276893004769
     },
     {
         "booster": 175,
         "iterations": 174,
-        "test-RMSE-mean": 1.0476334366136792,
-        "test-RMSE-std": 0.0009130060322014865,
-        "train-RMSE-mean": 1.0452707846108082,
-        "train-RMSE-std": 0.0005732372675430749
+        "test-RMSE-mean": 1.0475139512911167,
+        "test-RMSE-std": 0.0009135670513737515,
+        "train-RMSE-mean": 1.0444989472508857,
+        "train-RMSE-std": 0.0008138803336907556
     },
     {
         "booster": 176,
         "iterations": 175,
-        "test-RMSE-mean": 1.0476319073832479,
-        "test-RMSE-std": 0.0009137030002959248,
-        "train-RMSE-mean": 1.0452682250446155,
-        "train-RMSE-std": 0.0005724849844065466
+        "test-RMSE-mean": 1.047513802200814,
+        "test-RMSE-std": 0.0009134632773996705,
+        "train-RMSE-mean": 1.0444977816948247,
+        "train-RMSE-std": 0.0008138396065963673
     },
     {
         "booster": 177,
         "iterations": 176,
-        "test-RMSE-mean": 1.0476332637186054,
-        "test-RMSE-std": 0.0009114150876522684,
-        "train-RMSE-mean": 1.0452580726071148,
-        "train-RMSE-std": 0.0005580654750959612
+        "test-RMSE-mean": 1.0475134667090225,
+        "test-RMSE-std": 0.0009132849904121124,
+        "train-RMSE-mean": 1.0444764007985208,
+        "train-RMSE-std": 0.0008158967212062182
     },
     {
         "booster": 178,
         "iterations": 177,
-        "test-RMSE-mean": 1.0476332757778715,
-        "test-RMSE-std": 0.000911945899737231,
-        "train-RMSE-mean": 1.045256645563869,
-        "train-RMSE-std": 0.0005597250832025893
+        "test-RMSE-mean": 1.0475134170079943,
+        "test-RMSE-std": 0.0009132564691886354,
+        "train-RMSE-mean": 1.0444764070433896,
+        "train-RMSE-std": 0.0008158780275528791
     },
     {
         "booster": 179,
         "iterations": 178,
-        "test-RMSE-mean": 1.0476373006330366,
-        "test-RMSE-std": 0.0009149150627071856,
-        "train-RMSE-mean": 1.0452490186847196,
-        "train-RMSE-std": 0.0005669742030502254
+        "test-RMSE-mean": 1.047513479154318,
+        "test-RMSE-std": 0.0009132633907632537,
+        "train-RMSE-mean": 1.0444697977302366,
+        "train-RMSE-std": 0.0008192541261539682
     },
     {
         "booster": 180,
         "iterations": 179,
-        "test-RMSE-mean": 1.047637039740238,
-        "test-RMSE-std": 0.0009147558725025688,
-        "train-RMSE-mean": 1.0452481900954311,
-        "train-RMSE-std": 0.0005674069956256092
+        "test-RMSE-mean": 1.0475078512947926,
+        "test-RMSE-std": 0.0009088803323891884,
+        "train-RMSE-mean": 1.0444252645103194,
+        "train-RMSE-std": 0.0008517586337407826
     },
     {
         "booster": 181,
         "iterations": 180,
-        "test-RMSE-mean": 1.0476376733781405,
-        "test-RMSE-std": 0.0009150834454244682,
-        "train-RMSE-mean": 1.045245946664353,
-        "train-RMSE-std": 0.0005700220101413618
+        "test-RMSE-mean": 1.0475095907516256,
+        "test-RMSE-std": 0.000910008032111248,
+        "train-RMSE-mean": 1.0444147826771042,
+        "train-RMSE-std": 0.0008662182200170317
     },
     {
         "booster": 182,
         "iterations": 181,
-        "test-RMSE-mean": 1.0476376236875737,
-        "test-RMSE-std": 0.0009150484416281856,
-        "train-RMSE-mean": 1.0452454543648642,
-        "train-RMSE-std": 0.0005705721781279747
+        "test-RMSE-mean": 1.0475097149952532,
+        "test-RMSE-std": 0.0009100931017746429,
+        "train-RMSE-mean": 1.0444130682949433,
+        "train-RMSE-std": 0.0008664491053547582
     },
     {
         "booster": 183,
         "iterations": 182,
-        "test-RMSE-mean": 1.0476427035814395,
-        "test-RMSE-std": 0.0009199802342609172,
-        "train-RMSE-mean": 1.0452271639746464,
-        "train-RMSE-std": 0.0005775328466914314
+        "test-RMSE-mean": 1.0475094416304664,
+        "test-RMSE-std": 0.0009099473623067643,
+        "train-RMSE-mean": 1.0444126880562208,
+        "train-RMSE-std": 0.0008664358355052179
     },
     {
         "booster": 184,
         "iterations": 183,
-        "test-RMSE-mean": 1.0476424044357446,
-        "test-RMSE-std": 0.0009211992356018666,
-        "train-RMSE-mean": 1.0452240077943076,
-        "train-RMSE-std": 0.0005734912148728207
+        "test-RMSE-mean": 1.0475092677312772,
+        "test-RMSE-std": 0.000909767884909922,
+        "train-RMSE-mean": 1.0444113472973222,
+        "train-RMSE-std": 0.0008672507514541027
     },
     {
         "booster": 185,
         "iterations": 184,
-        "test-RMSE-mean": 1.0476365352400618,
-        "test-RMSE-std": 0.0009252174510140947,
-        "train-RMSE-mean": 1.0451988121155598,
-        "train-RMSE-std": 0.0005878834454288494
+        "test-RMSE-mean": 1.0475093050009021,
+        "test-RMSE-std": 0.000909798416474437,
+        "train-RMSE-mean": 1.0444112100103957,
+        "train-RMSE-std": 0.0008674739098486735
     },
     {
         "booster": 186,
         "iterations": 185,
-        "test-RMSE-mean": 1.0476362247967592,
-        "test-RMSE-std": 0.0009248267364211284,
-        "train-RMSE-mean": 1.0451960520741064,
-        "train-RMSE-std": 0.0005893140802221385
+        "test-RMSE-mean": 1.0475102119782247,
+        "test-RMSE-std": 0.000910420920192052,
+        "train-RMSE-mean": 1.0444003406687021,
+        "train-RMSE-std": 0.0008737153180209098
     },
     {
         "booster": 187,
         "iterations": 186,
-        "test-RMSE-mean": 1.0476388214493553,
-        "test-RMSE-std": 0.00092618204115034,
-        "train-RMSE-mean": 1.0451820112291914,
-        "train-RMSE-std": 0.0006047412349462891
+        "test-RMSE-mean": 1.04751201356058,
+        "test-RMSE-std": 0.0009115780223871577,
+        "train-RMSE-mean": 1.044394871546175,
+        "train-RMSE-std": 0.0008770040490162783
     },
     {
         "booster": 188,
         "iterations": 187,
-        "test-RMSE-mean": 1.0476427227525877,
-        "test-RMSE-std": 0.0009280390691468403,
-        "train-RMSE-mean": 1.045161111710834,
-        "train-RMSE-std": 0.0006333244371360818
+        "test-RMSE-mean": 1.0475103735480675,
+        "test-RMSE-std": 0.0009104549145989759,
+        "train-RMSE-mean": 1.0443767542278795,
+        "train-RMSE-std": 0.0008893315182380784
     },
     {
         "booster": 189,
         "iterations": 188,
-        "test-RMSE-mean": 1.0476432446106583,
-        "test-RMSE-std": 0.0009282465454955573,
-        "train-RMSE-mean": 1.0451591419912476,
-        "train-RMSE-std": 0.0006360437146928374
+        "test-RMSE-mean": 1.0475096156456838,
+        "test-RMSE-std": 0.0009099598195236757,
+        "train-RMSE-mean": 1.0443717522412939,
+        "train-RMSE-std": 0.0008929670458484212
     },
     {
         "booster": 190,
         "iterations": 189,
-        "test-RMSE-mean": 1.0476452437949948,
-        "test-RMSE-std": 0.0009308287474612883,
-        "train-RMSE-mean": 1.0451539833064534,
-        "train-RMSE-std": 0.0006380221590346833
+        "test-RMSE-mean": 1.0475129080678336,
+        "test-RMSE-std": 0.0009122531199098585,
+        "train-RMSE-mean": 1.0443478863420905,
+        "train-RMSE-std": 0.0009057837129503091
     },
     {
         "booster": 191,
         "iterations": 190,
-        "test-RMSE-mean": 1.047646944981361,
-        "test-RMSE-std": 0.0009329921987518329,
-        "train-RMSE-mean": 1.0451472480915025,
-        "train-RMSE-std": 0.0006410587853803258
+        "test-RMSE-mean": 1.047512845934181,
+        "test-RMSE-std": 0.000912227954788007,
+        "train-RMSE-mean": 1.0443466887378805,
+        "train-RMSE-std": 0.0009067694888119318
     },
     {
         "booster": 192,
         "iterations": 191,
-        "test-RMSE-mean": 1.0476467959547808,
-        "test-RMSE-std": 0.0009328277003644882,
-        "train-RMSE-mean": 1.0451470487519896,
-        "train-RMSE-std": 0.0006410700757102813
+        "test-RMSE-mean": 1.0475125849871447,
+        "test-RMSE-std": 0.0009121016595293134,
+        "train-RMSE-mean": 1.0443454483098846,
+        "train-RMSE-std": 0.0009065808655757298
     },
     {
         "booster": 193,
         "iterations": 192,
-        "test-RMSE-mean": 1.0476215804779465,
-        "test-RMSE-std": 0.0009115521720533499,
-        "train-RMSE-mean": 1.0451140471624014,
-        "train-RMSE-std": 0.0006386905472979061
+        "test-RMSE-mean": 1.0475124731493433,
+        "test-RMSE-std": 0.0009120523193465229,
+        "train-RMSE-mean": 1.0443447445485845,
+        "train-RMSE-std": 0.0009056049442420554
     },
     {
         "booster": 194,
         "iterations": 193,
-        "test-RMSE-mean": 1.047611247395358,
-        "test-RMSE-std": 0.000900200724060545,
-        "train-RMSE-mean": 1.0450889096171174,
-        "train-RMSE-std": 0.0006546662358062951
+        "test-RMSE-mean": 1.0475144362545392,
+        "test-RMSE-std": 0.0009133021599553179,
+        "train-RMSE-mean": 1.0443372387745984,
+        "train-RMSE-std": 0.0009146096485364979
     },
     {
         "booster": 195,
         "iterations": 194,
-        "test-RMSE-mean": 1.0476136513608207,
-        "test-RMSE-std": 0.0009107168301095798,
-        "train-RMSE-mean": 1.0450691472837499,
-        "train-RMSE-std": 0.0006587746980332566
+        "test-RMSE-mean": 1.0475143119898802,
+        "test-RMSE-std": 0.0009132483469488944,
+        "train-RMSE-mean": 1.0443342647935014,
+        "train-RMSE-std": 0.0009151097728376267
     },
     {
         "booster": 196,
         "iterations": 195,
-        "test-RMSE-mean": 1.0476120983328407,
-        "test-RMSE-std": 0.0009098488857946481,
-        "train-RMSE-mean": 1.0450578111909659,
-        "train-RMSE-std": 0.0006672373835211441
+        "test-RMSE-mean": 1.0475146474600305,
+        "test-RMSE-std": 0.0009134572748562066,
+        "train-RMSE-mean": 1.0443336780974337,
+        "train-RMSE-std": 0.0009161029226807244
     },
     {
         "booster": 197,
         "iterations": 196,
-        "test-RMSE-mean": 1.0476062484305584,
-        "test-RMSE-std": 0.0009037820429908103,
-        "train-RMSE-mean": 1.0450531812173345,
-        "train-RMSE-std": 0.0006697426703193357
+        "test-RMSE-mean": 1.0475118143813744,
+        "test-RMSE-std": 0.0009120019925786976,
+        "train-RMSE-mean": 1.044311277142411,
+        "train-RMSE-std": 0.0009186832878369164
     },
     {
         "booster": 198,
         "iterations": 197,
-        "test-RMSE-mean": 1.0476041986632203,
-        "test-RMSE-std": 0.0009022724955403986,
-        "train-RMSE-mean": 1.0450518413112324,
-        "train-RMSE-std": 0.000670736072167224
+        "test-RMSE-mean": 1.0475176667546182,
+        "test-RMSE-std": 0.0009152381025062846,
+        "train-RMSE-mean": 1.0442612144485022,
+        "train-RMSE-std": 0.0009377489933428201
     },
     {
         "booster": 199,
         "iterations": 198,
-        "test-RMSE-mean": 1.0476096144103841,
-        "test-RMSE-std": 0.0009071210821822658,
-        "train-RMSE-mean": 1.0450155989071295,
-        "train-RMSE-std": 0.0007007428561119483
+        "test-RMSE-mean": 1.0475177413012369,
+        "test-RMSE-std": 0.000915287401262515,
+        "train-RMSE-mean": 1.044260634099287,
+        "train-RMSE-std": 0.0009385048314203843
     },
     {
         "booster": 200,
         "iterations": 199,
-        "test-RMSE-mean": 1.047611020167181,
-        "test-RMSE-std": 0.0009052849076886947,
-        "train-RMSE-mean": 1.0450150012179535,
-        "train-RMSE-std": 0.0007000188449424842
+        "test-RMSE-mean": 1.0475178406626697,
+        "test-RMSE-std": 0.000915401836503386,
+        "train-RMSE-mean": 1.0442577724473963,
+        "train-RMSE-std": 0.0009385382265548557
     }
 ]

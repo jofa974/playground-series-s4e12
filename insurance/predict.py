@@ -59,16 +59,12 @@ def main():
         # Ensure that avg predictions of a model do not use previous model avg preds.
         df_test[f"{model}_preds"] = avg_func(X=df_test[columns])
 
-    feat_cols = get_feat_columns()
-
     data_pipeline = pickle.load(open(ENSEMBLE_DATA_PIPELINE, "rb"))
     df_test = data_pipeline.transform(df_test)
-    for col in feat_cols.categorical:
-        df_test[col] = df_test[col].astype("category")
 
-    df_test = df_test[["xgboost_preds", "catboost_preds"]]
     logger.info(f"Test shape: {df_test.shape=}")
-    X_test = xgb.DMatrix(df_test, enable_categorical=True, feature_names=df_test.columns.to_list())
+    # X_test = xgb.DMatrix(df_test, enable_categorical=True, feature_names=df_test.columns.to_list())
+    X_test = df_test
 
     ensemble_model = pickle.load(ENSEMBLE_MODEL_PATH.open("rb"))
     predictions = np.zeros(len(df_test))

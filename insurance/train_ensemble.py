@@ -14,10 +14,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
     StandardScaler,
 )
+from sklearn.linear_model import Ridge
+from sklearn.metrics import root_mean_squared_error
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, get_folds
+from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
 from insurance.train_catboost import get_oof_preds as catboost_oof_preds
 from insurance.train_xgboost import get_oof_preds as xgboost_oof_preds
@@ -241,45 +243,68 @@ def main(prep_data_path: Path):
         feature_names=X_train.columns.to_list(),
     )
 
-    folds = get_folds(df_train=X_train, n_splits=5)
+    n_splits = 5
+    folds = get_folds(df_train=X_train, n_splits=n_splits)
 
     if tune:
         tune_ensemble(dtrain=dtrain)
     else:
-        cv_ensemble_boosters = []
-        history = xgb.cv(
-            xgb_params,
-            dtrain,
-            num_boost_round=40,
-            callbacks=[SaveBestModel(cv_ensemble_boosters)],
-            folds=folds,
-            verbose_eval=2,
-        )
+        # ensemble_regressors = []
+        # history = xgb.cv(
+        #     xgb_params,
+        #     dtrain,
+        #     num_boost_round=40,
+        #     callbacks=[SaveBestModel(ensemble_regressors)],
+        #     folds=folds,
+        #     verbose_eval=2,
+        # )
 
-        history = history.reset_index()
-        history["index"] = history["index"] + 1
-        history = history.rename(columns={"index": "booster"})
+        # history = history.reset_index()
+        # history["index"] = history["index"] + 1
+        # history = history.rename(columns={"index": "booster"})
 
-        plot_train_test(history=history)
+        # plot_train_test(history=history)
+
+        # live_dir = Path("dvclive/ensemble/")
+        # live_dir.mkdir(parents=True, exist_ok=True)
+        # with Live(dir=str(live_dir)) as live:
+        #     live.log_plot(
+        #         "ensemble CV Loss",
+        #         history,
+        #         x="booster",
+        #         y=["train-rmse-mean", "test-rmse-mean"],
+        #         template="linear",
+        #         y_label="Booster",
+        #         x_label="RMSLE",
+        #     )
+
+        #     live.log_metric("ensemble/train-cv-loss", history["train-rmse-mean"].iloc[-1])
+        #     live.log_metric("ensemble/test-cv-loss", history["test-rmse-mean"].iloc[-1])
+
+        ensemble_regressors = []
+        metrics = {"train-rmse-mean": 0.0, "test-rmse-mean": 0.0}
+        for train_idx, val_idx in folds.split(X_train):
+            model = Ridge()
+            X, X_val = X_train.iloc[train_idx], X_train.iloc[val_idx]
+            y, y_val = y_train.iloc[train_idx], y_train.iloc[val_idx]
+
+            model.fit(X=X, y=y)
+            train_preds = model.predict(X=X)
+            train_rmse = root_mean_squared_error(y_true=y, y_pred=train_preds)
+            test_preds = model.predict(X=X_val)
+            test_rmse = root_mean_squared_error(y_true=y_val, y_pred=test_preds)
+            metrics["train-rmse-mean"] += train_rmse / n_splits
+            metrics["test-rmse-mean"] += test_rmse / n_splits
+            ensemble_regressors.append(model)
 
         live_dir = Path("dvclive/ensemble/")
         live_dir.mkdir(parents=True, exist_ok=True)
         with Live(dir=str(live_dir)) as live:
-            live.log_plot(
-                "ensemble CV Loss",
-                history,
-                x="booster",
-                y=["train-rmse-mean", "test-rmse-mean"],
-                template="linear",
-                y_label="Booster",
-                x_label="RMSLE",
-            )
-
-            live.log_metric("ensemble/train-cv-loss", history["train-rmse-mean"].iloc[-1])
-            live.log_metric("ensemble/test-cv-loss", history["test-rmse-mean"].iloc[-1])
+            live.log_metric("ensemble/train-cv-loss", metrics["train-rmse-mean"])
+            live.log_metric("ensemble/test-cv-loss", metrics["test-rmse-mean"])
         pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
         logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
-        pickle.dump(cv_ensemble_boosters, open(MODEL_PATH, "wb"))
+        pickle.dump(ensemble_regressors, open(MODEL_PATH, "wb"))
         logger.info(f"Model saved at {MODEL_PATH}")
 
 
