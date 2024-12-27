@@ -28,7 +28,7 @@ xgb_params = {
     "n_estimators": 1000,
     "learning_rate": 0.01,
     "max_depth": 10,
-    "reg_lambda": 1.17,
+    "reg_lambda": 100,
     "reg_alpha": 0.1,
     "random_state": 42,
     "num_leaves": None,
@@ -155,10 +155,6 @@ def main(prep_data_path: Path):
     df = pd.read_feather(prep_data_path)
 
     X_train = df.drop(columns=[target_column])
-    logger.info(f"Train shape: {X_train.shape=}")
-    X_train = X_train.loc[
-        pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
-    ]
     logger.info(f"Train shape: {X_train.shape=}")
     y_train = df.loc[X_train.index, target_column]
     y_train = np.log1p(y_train)

@@ -200,21 +200,21 @@ stages:
       size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: a1056f8641075af2816bbc8e98130017
-      size: 7656
+      md5: 6a7a70d7162e5ec556d8fa7318de5128
+      size: 7592
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 8c2dc519107127a91917fd044832b8ac
-      size: 6786
+      md5: 3690b67ac89717976e5a04408ddb60d0
+      size: 6616
     outs:
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
-      md5: 8d8abc8de6a7ac207aa23190152cf086
+      md5: 5dfc97bd50022e6a0ce01123924ca860
       size: 10108
     - path: out/models/xgboost_model.pkl
       hash: md5
-      md5: 1de83bb3958612b4479ee6e1cbe9a136
-      size: 111527588
+      md5: 4e2f7ddf6a1715b88409250efa1dd9f1
+      size: 147285005
   train_catboost:
     cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
     deps:
@@ -224,21 +224,21 @@ stages:
       size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: a1056f8641075af2816bbc8e98130017
-      size: 7656
+      md5: 6a7a70d7162e5ec556d8fa7318de5128
+      size: 7592
     - path: insurance/train_catboost.py
       hash: md5
-      md5: d3ea1c5bce52a1f1ee482ea0d288d733
-      size: 4389
+      md5: 56ad223cd23e86f7537d44d0c0a12273
+      size: 4219
     outs:
     - path: out/data_pipeline_train_catboost.pkl
       hash: md5
-      md5: 8d8abc8de6a7ac207aa23190152cf086
+      md5: 5dfc97bd50022e6a0ce01123924ca860
       size: 10108
     - path: out/models/catboost_model.pkl
       hash: md5
-      md5: 7d7c64263e7302233c9345f8efb1235d
-      size: 17529485
+      md5: ff9ad5e76d2c0ada754cc382cd4b8f64
+      size: 3955421
   train_ensemble:
     cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
     deps:
@@ -248,26 +248,26 @@ stages:
       size: 51335522
     - path: insurance/data_pipeline.py
       hash: md5
-      md5: a1056f8641075af2816bbc8e98130017
-      size: 7656
+      md5: 6a7a70d7162e5ec556d8fa7318de5128
+      size: 7592
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: cd1b8df563bafe1534f8c5f8187212fb
-      size: 8823
+      md5: 79e095b4ac14cf4794e57d6869405c95
+      size: 9352
     - path: out/models/catboost_model.pkl
       hash: md5
-      md5: 7d7c64263e7302233c9345f8efb1235d
-      size: 17529485
+      md5: ff9ad5e76d2c0ada754cc382cd4b8f64
+      size: 3955421
     - path: out/models/xgboost_model.pkl
       hash: md5
-      md5: 1de83bb3958612b4479ee6e1cbe9a136
-      size: 111527588
+      md5: 4e2f7ddf6a1715b88409250efa1dd9f1
+      size: 147285005
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 2ca29a976ae480a365d2f6b0c98e37e0
-      size: 10399
+      md5: c527d746afd941e057215cc187e7faf6
+      size: 1944
     - path: out/models/ensemble_model.pkl
       hash: md5
-      md5: f775d32c6c26a5ae9cbf23bae46c7020
-      size: 1363097
+      md5: 8b345ff797a254bab9b063b13277ce58
+      size: 1193094

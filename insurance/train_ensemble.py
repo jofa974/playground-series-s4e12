@@ -9,10 +9,15 @@ import optuna
 import pandas as pd
 import typer
 import xgboost as xgb
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import (
+    StandardScaler,
+)
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, get_folds, make_boosters_pipeline
+from insurance.data_pipeline import get_feat_columns, get_folds
 from insurance.logger import setup_logger
 from insurance.train_catboost import get_oof_preds as catboost_oof_preds
 from insurance.train_xgboost import get_oof_preds as xgboost_oof_preds
@@ -187,6 +192,26 @@ def tune_ensemble(dtrain: xgb.DMatrix):
         print("    {}: {}".format(key, value))
 
 
+def make_ensemble_pipeline() -> Pipeline:
+    num_transformer = Pipeline([("scaler", StandardScaler())])
+    pipeline = Pipeline(
+        [
+            (
+                "num_scaler",
+                ColumnTransformer(
+                    transformers=[
+                        ("num", num_transformer, ["xgboost_preds", "catboost_preds"]),
+                    ],
+                    remainder="drop",
+                    verbose_feature_names_out=False,
+                ),
+            ),
+        ]
+    )
+    pipeline.set_output(transform="pandas")
+    return pipeline
+
+
 def main(prep_data_path: Path):
     target_column = "Premium Amount"
 
@@ -204,14 +229,9 @@ def main(prep_data_path: Path):
         # Ensure that OOF predictions of a model do not use previous model OOF preds.
         X_train[f"{model}_preds"] = oof_func(X_train=X_train[columns])
 
-    feat_cols = get_feat_columns()
-
-    data_pipeline = make_boosters_pipeline()
+    data_pipeline = make_ensemble_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
-    for col in feat_cols.categorical:
-        X_train[col] = X_train[col].astype("category")
 
-    X_train = X_train[["xgboost_preds", "catboost_preds"]]
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
     dtrain = xgb.DMatrix(
@@ -233,6 +253,7 @@ def main(prep_data_path: Path):
             num_boost_round=40,
             callbacks=[SaveBestModel(cv_ensemble_boosters)],
             folds=folds,
+            verbose_eval=2,
         )
 
         history = history.reset_index()

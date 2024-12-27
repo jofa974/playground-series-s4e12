@@ -23,7 +23,7 @@ logger = setup_logger(log_file=log_file, name="catboost trainer")
 
 catboost_params = {
     "loss_function": "RMSE",
-    "iterations": 1000,
+    "iterations": 200,
     "learning_rate": 0.5,
     "devices": [0],
     "task_type": "GPU",
@@ -79,10 +79,6 @@ def main(prep_data_path: Path):
     df = pd.read_feather(prep_data_path)
 
     X_train = df.drop(columns=[target_column])
-    logger.info(f"Train shape: {X_train.shape=}")
-    X_train = X_train.loc[
-        pd.to_datetime(X_train["Policy Start Date"], format="%Y%m%d").dt.year >= 2020
-    ]
     logger.info(f"Train shape: {X_train.shape=}")
     y_train = df.loc[X_train.index, target_column]
     y_train = np.log1p(y_train)
