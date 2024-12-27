@@ -46,7 +46,7 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
         X_train[col] = X_train[col].astype("category")
 
     oof_preds = np.zeros(len(X_train))
-    folds = get_folds(df_train=X_train)
+    folds = get_folds()
     splits = folds.split(X_train)
     for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
@@ -152,7 +152,7 @@ def main(prep_data_path: Path):
         data=X_train, label=y_train, cat_features=feat_cols.categorical, has_header=True
     )
 
-    folds = get_folds(df_train=X_train, n_splits=5)
+    folds = get_folds(n_splits=5)
 
     tune = False
     if tune:

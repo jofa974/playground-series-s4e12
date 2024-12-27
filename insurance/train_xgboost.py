@@ -113,7 +113,7 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
         X_train[col] = X_train[col].astype("category")
 
     oof_preds = np.zeros(len(X_train))
-    folds = get_folds(df_train=X_train)
+    folds = get_folds(n_splits=5)
     splits = folds.split(X_train)
     for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
@@ -175,7 +175,7 @@ def main(prep_data_path: Path):
         feature_names=X_train.columns.to_list(),
     )
 
-    folds = get_folds(df_train=X_train, n_splits=5)
+    folds = get_folds(n_splits=5)
 
     lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
     cv_boosters = []
