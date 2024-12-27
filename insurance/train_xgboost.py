@@ -1,27 +1,20 @@
 import pickle
 from datetime import datetime
 from pathlib import Path
+from typing import Annotated
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import typer
 import xgboost as xgb
 
 from dvclive import Live
-from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, make_boosters_pipeline, get_folds
+from insurance.common import OUT_PATH, OOF_PREDS_PATH
+from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
 from insurance.logger import setup_logger
-from sklearn.model_selection import KFold
-from sklearn.metrics import mean_squared_log_error, root_mean_squared_error
 
-MODEL_PATH = OUT_PATH / "models/xgboost_model.pkl"
-MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
-
+logger = setup_logger(name="xgboost")
 DATA_PIPELINE_PATH = OUT_PATH / "data_pipeline_train_xgboost.pkl"
-
-log_file = datetime.now().strftime("xgboost_train_log_%Y-%m-%d_%H-%M-%S.log")
-logger = setup_logger(log_file=log_file, name="xgboost trainer")
 
 
 xgb_params = {
@@ -42,57 +35,6 @@ xgb_params = {
 }
 
 
-def custom_learning_rate(current_iter):
-    base_learning_rate = 0.3
-    lr = base_learning_rate * np.power(0.95, current_iter)
-    return lr if lr > 1e-3 else 1e-3
-
-
-def plot_train_test(history: pd.DataFrame):
-    # Plotting
-    fig, ax = plt.subplots()
-
-    ax.plot(history["booster"], history["train-rmse-mean"], label="Train RMSE Mean")
-    ax.plot(history["booster"], history["test-rmse-mean"], label="Test RMSE Mean")
-
-    # Adding labels, title, and legend
-    ax.set_xlabel("Booster")
-    ax.set_ylabel("RMSE Mean")
-    ax.set_title("Train and Test RMSE Mean vs Booster")
-    plt.legend()
-    plt.grid(True)
-
-    last_booster = history["booster"].iloc[-1]
-    train_rmse_last = history["train-rmse-mean"].iloc[-1]
-    test_rmse_last = history["test-rmse-mean"].iloc[-1]
-
-    ax.text(
-        last_booster,
-        train_rmse_last,
-        f"{train_rmse_last:.6f}",
-        fontsize=10,
-        ha="left",
-        va="bottom",
-        color="blue",
-        bbox=dict(facecolor="white", alpha=0.8),
-    )
-    ax.text(
-        last_booster,
-        test_rmse_last,
-        f"{test_rmse_last:.6f}",
-        fontsize=10,
-        ha="left",
-        va="bottom",
-        color="orange",
-        bbox=dict(facecolor="white", alpha=0.8),
-    )
-    plt.draw()
-
-    fig_path = OUT_PATH / "xgboost_training.png"
-    fig.savefig(fig_path, dpi=300)
-    logger.info(f"Training loss saved at {fig_path}")
-
-
 class SaveBestModel(xgb.callback.TrainingCallback):
     def __init__(self, cvboosters):
         self._cvboosters = cvboosters
@@ -102,15 +44,9 @@ class SaveBestModel(xgb.callback.TrainingCallback):
         return model
 
 
-def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
+def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     X_train = X_train.copy()
-    models = pickle.load(MODEL_PATH.open("rb"))
-
-    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
-    X_train = data_pipeline.transform(X_train)
-    feat_cols = get_feat_columns()
-    for col in feat_cols.categorical:
-        X_train[col] = X_train[col].astype("category")
+    models = pickle.load(model_path.open("rb"))
 
     oof_preds = np.zeros(len(X_train))
     folds = get_folds(n_splits=5)
@@ -126,9 +62,9 @@ def get_oof_preds(X_train: pd.DataFrame) -> np.ndarray[np.float64]:
     return oof_preds
 
 
-def get_avg_preds(X: pd.DataFrame) -> np.ndarray[np.float64]:
+def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     X = X.copy()
-    models = pickle.load(MODEL_PATH.open("rb"))
+    models = pickle.load(model_path.open("rb"))
 
     data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
     X = data_pipeline.transform(X)
@@ -138,7 +74,7 @@ def get_avg_preds(X: pd.DataFrame) -> np.ndarray[np.float64]:
 
     preds = np.zeros(len(X))
     for i, model in enumerate(models):
-        logger.info(f"Predicting on Test Data -- {i+1}/{len(models)}")
+        print(f"Predicting on Test Data -- {i+1}/{len(models)}")
         data = xgb.DMatrix(
             data=X,
             enable_categorical=True,
@@ -149,24 +85,31 @@ def get_avg_preds(X: pd.DataFrame) -> np.ndarray[np.float64]:
     return preds
 
 
-def main(prep_data_path: Path):
+def main(
+    input_data_path: Annotated[Path, typer.Option(help="Input data path")],
+    layer: Annotated[int, typer.Option(help="Stack layer number")],
+):
     target_column = "Premium Amount"
 
-    df = pd.read_feather(prep_data_path)
+    df = pd.read_feather(input_data_path)
 
     X_train = df.drop(columns=[target_column])
     logger.info(f"Train shape: {X_train.shape=}")
-    y_train = df.loc[X_train.index, target_column]
+    y_train = df[target_column]
     y_train = np.log1p(y_train)
 
-    feat_cols = get_feat_columns()
-
-    data_pipeline = make_boosters_pipeline()
-    X_train = data_pipeline.fit_transform(X_train)
-    for col in feat_cols.categorical:
-        X_train[col] = X_train[col].astype("category")
+    if layer == 0:
+        logger.info("Transforming data...")
+        feat_cols = get_feat_columns()
+        data_pipeline = make_pipeline()
+        X_train = data_pipeline.fit_transform(X_train)
+        for col in feat_cols.categorical:
+            X_train[col] = X_train[col].astype("category")
+        pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
+        logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
 
     logger.info(f"Train shape: {X_train.shape=}")
+    logger.info(f"Columns: {X_train.columns=}")
 
     dtrain = xgb.DMatrix(
         X_train,
@@ -177,30 +120,21 @@ def main(prep_data_path: Path):
 
     folds = get_folds(n_splits=5)
 
-    lr_scheduler = xgb.callback.LearningRateScheduler(custom_learning_rate)
     cv_boosters = []
     history = xgb.cv(
         xgb_params,
         dtrain,
-        num_boost_round=1000,
-        early_stopping_rounds=50,
-        # callbacks=[lr_scheduler, SaveBestModel(cv_boosters)],
+        num_boost_round=500,
+        early_stopping_rounds=10,
         callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
         verbose_eval=True,
     )
-
-    history = history.reset_index()
-    history["index"] = history["index"] + 1
-    history = history.rename(columns={"index": "booster"})
-
-    plot_train_test(history=history)
-
-    live_dir = Path("dvclive/xgboost/")
+    live_dir = Path(f"dvclive/xgboost_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
     with Live(dir=str(live_dir)) as live:
         live.log_plot(
-            "XGBoost CV Loss",
+            f"XGBoost CV Loss Layer {layer}",
             history,
             x="booster",
             y=["train-rmse-mean", "test-rmse-mean"],
@@ -209,12 +143,20 @@ def main(prep_data_path: Path):
             x_label="RMSLE",
         )
 
-        live.log_metric("xgboost/train-cv-loss", history["train-rmse-mean"].iloc[-1])
-        live.log_metric("xgboost/test-cv-loss", history["test-rmse-mean"].iloc[-1])
-    pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
-    logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
-    pickle.dump(cv_boosters, open(MODEL_PATH, "wb"))
-    logger.info(f"Model saved at {MODEL_PATH}")
+        live.log_metric(f"xgboost_layer_{layer}/train-cv-loss", history["train-rmse-mean"].iloc[-1])
+        live.log_metric(f"xgboost_layer_{layer}/test-cv-loss", history["test-rmse-mean"].iloc[-1])
+
+    model_path = OUT_PATH / f"models/xgboost_model_layer_{layer}.pkl"
+    model_path.parent.mkdir(parents=True, exist_ok=True)
+    pickle.dump(cv_boosters, open(model_path, "wb"))
+    logger.info(f"Model saved at {model_path}")
+
+    preds = get_oof_preds(X_train=X_train, model_path=model_path)
+    X_train[f"xgboost_layer_{layer}"] = preds
+    X_train[target_column] = df[target_column]
+
+    OOF_PREDS_PATH.mkdir(parents=True, exist_ok=True)
+    X_train.to_feather(OOF_PREDS_PATH / f"xgboost_layer_{layer}.feather")
 
 
 if __name__ == "__main__":

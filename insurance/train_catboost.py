@@ -11,7 +11,7 @@ import typer
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, get_folds, make_boosters_pipeline
+from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
 from insurance.logger import setup_logger
 
 MODEL_PATH = OUT_PATH / "models/catboost_model.pkl"
@@ -142,7 +142,7 @@ def main(prep_data_path: Path):
 
     feat_cols = get_feat_columns()
 
-    data_pipeline = make_boosters_pipeline()
+    data_pipeline = make_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")

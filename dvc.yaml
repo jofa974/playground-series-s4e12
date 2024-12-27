@@ -15,47 +15,67 @@ stages:
     outs:
     - data/prepared/prepared_data.feather
 
-  train_xgboost:
-    cmd: poetry run python insurance/train_xgboost.py data/prepared/prepared_data.feather
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/data_pipeline.py
-    - insurance/train_xgboost.py
-    outs:
-    - out/data_pipeline_train_xgboost.pkl
-    - out/models/xgboost_model.pkl
 
-  train_catboost:
-    cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/data_pipeline.py
-    - insurance/train_catboost.py
-    outs:
-    - out/data_pipeline_train_catboost.pkl
-    - out/models/catboost_model.pkl
+  train_layer_0:
+    foreach:
+    - xgboost
+    do:
+      cmd: poetry run python insurance/train_${item}.py --input-data-path data/prepared/prepared_data.feather
+        --layer 0
+      deps:
+      - data/prepared/prepared_data.feather
+      - insurance/data_pipeline.py
+      - insurance/train_${item}.py
+      outs:
+      - out/data_pipeline_train_${item}.pkl
+      - out/models/${item}_model_layer_0.pkl
+      - data/oof/${item}_layer_0.feather
 
-  train_lgbm:
-    cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/data_pipeline.py
-    - insurance/train_lgbm.py
-    outs:
-    - out/data_pipeline_train_lgbm.pkl
-    - out/models/lgbm_model.pkl
+  train_layer_1:
+    foreach:
+    - xgboost
+    do:
+      cmd: poetry run python insurance/train_${item}.py --input-data-path data/oof/${item}_layer_0.feather
+        --layer 1
+      deps:
+      - data/oof/${item}_layer_0.feather
+      - insurance/train_${item}.py
+      outs:
+      - out/models/${item}_model_layer_1.pkl
+      - data/oof/${item}_layer_1.feather
 
-  train_ensemble:
-    cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
-    deps:
-    - data/prepared/prepared_data.feather
-    - insurance/data_pipeline.py
-    - insurance/train_ensemble.py
-    - out/models/xgboost_model.pkl
-    - out/models/catboost_model.pkl
-    outs:
-    - out/data_pipeline_train_ensemble.pkl
-    - out/models/ensemble_model.pkl
+
+  # train_catboost:
+  #   cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
+  #   deps:
+  #   - data/prepared/prepared_data.feather
+  #   - insurance/data_pipeline.py
+  #   - insurance/train_catboost.py
+  #   outs:
+  #   - out/data_pipeline_train_catboost.pkl
+  #   - out/models/catboost_model.pkl
+
+  # train_lgbm:
+  #   cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
+  #   deps:
+  #   - data/prepared/prepared_data.feather
+  #   - insurance/data_pipeline.py
+  #   - insurance/train_lgbm.py
+  #   outs:
+  #   - out/data_pipeline_train_lgbm.pkl
+  #   - out/models/lgbm_model.pkl
+
+  # train_ensemble:
+  #   cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
+  #   deps:
+  #   - data/prepared/prepared_data.feather
+  #   - insurance/data_pipeline.py
+  #   - insurance/train_ensemble.py
+  #   - out/models/xgboost_model.pkl
+  #   - out/models/catboost_model.pkl
+  #   outs:
+  #   - out/data_pipeline_train_ensemble.pkl
+  #   - out/models/ensemble_model.pkl
 
   # train:
   #   foreach:
@@ -84,6 +104,8 @@ metrics:
 - dvclive/catboost/metrics.json
 - dvclive/lgbm/metrics.json
 - dvclive/ensemble/metrics.json
+- dvclive/xgboost_layer_0/metrics.json
+- dvclive/xgboost_layer_1/metrics.json
 plots:
 - dvclive/plots/metrics:
     x: step
@@ -126,3 +148,23 @@ plots:
     y_label: Booster
 - dvclive/ensemble/plots/metrics:
     x: step
+- dvclive/xgboost_layer_0/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/xgboost_layer_1/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster

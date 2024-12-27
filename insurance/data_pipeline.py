@@ -183,7 +183,7 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
         return {"requires_fit": True}
 
 
-def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeline:
+def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
     if feat_cols is None:
         feat_cols = get_feat_columns()
 
@@ -242,10 +242,6 @@ def make_pipeline(feat_cols: Features | None = None, *, do_scale=True) -> Pipeli
     )
     pipeline.set_output(transform="pandas")
     return pipeline
-
-
-def make_boosters_pipeline(feat_cols: Features | None = None) -> Pipeline:
-    return make_pipeline(feat_cols=feat_cols, do_scale=False)
 
 
 def get_folds(n_splits: int = 5):

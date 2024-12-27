@@ -10,7 +10,7 @@ import lightgbm as lgb
 
 from dvclive import Live
 from insurance.common import OUT_PATH
-from insurance.data_pipeline import get_feat_columns, make_boosters_pipeline, get_folds
+from insurance.data_pipeline import get_feat_columns, make_pipeline, get_folds
 from insurance.logger import setup_logger
 from sklearn.model_selection import KFold
 from sklearn.metrics import mean_squared_log_error, root_mean_squared_error
@@ -90,7 +90,7 @@ def main(prep_data_path: Path):
 
     feat_cols = get_feat_columns()
 
-    data_pipeline = make_boosters_pipeline()
+    data_pipeline = make_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
     for col in feat_cols.categorical:
         X_train[col] = X_train[col].astype("category")
