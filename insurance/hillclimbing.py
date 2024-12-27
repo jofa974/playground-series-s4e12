@@ -23,31 +23,38 @@ logger = setup_logger(log_file=log_file, name="hill climbing")
 
 
 # Combine predictions using hill climbing
-def hill_climbing(models, true_labels, steps=2000, learning_rate=10):
+def hill_climbing(models, true_targets, max_iters=2000, step_size=0.01):
     n_models = len(models)
-    weights = np.ones(n_models) / n_models  # Start with equal weights
+    # Initialize weights randomly (normalized to sum to 1)
+    weights = np.random.dirichlet(np.ones(n_models), size=1)[0]
     best_loss = float("inf")
     best_weights = weights.copy()
 
-    for step in tqdm(range(steps)):
-        # Generate neighbor weights
-        new_weights = weights + np.random.uniform(-learning_rate, learning_rate, n_models)
-        new_weights = np.clip(new_weights, -10, 10)  # Keep weights between 0 and 1
-        new_weights /= new_weights.sum()  # Normalize to sum to 1
+    for iteration in range(max_iters):
+        # Combine predictions using current weights
+        combined_preds = sum(w * model for w, model in zip(weights, models))
+        loss = root_mean_squared_error(true_targets, combined_preds)
 
-        # Combine predictions
-        combined_preds = sum(w * p for w, p in zip(new_weights, models))
-        loss = root_mean_squared_error(true_labels, combined_preds)
-
-        # Update if better
+        # Check if the current solution is better
         if loss < best_loss:
-            best_step = step
             best_loss = loss
-            best_weights = new_weights
+            best_weights = weights.copy()
 
-        if step % 100 == 0:
-            print(f" Best loss {best_loss:.8f}")
-            print(f" Best step {best_step}")
+        # Generate new weights (small random perturbations)
+        new_weights = weights + np.random.uniform(-step_size, step_size, n_models)
+        new_weights = np.clip(new_weights, 0, 1)  # Ensure weights are between 0 and 1
+        new_weights /= new_weights.sum()  # Normalize weights to sum to 1
+
+        # Combine predictions using new weights
+        new_combined_preds = sum(w * model for w, model in zip(new_weights, models))
+        new_loss = root_mean_squared_error(true_targets, new_combined_preds)
+
+        # Move to the new weights if they improve the loss
+        if new_loss < best_loss:
+            weights = new_weights.copy()
+
+        if iteration % 100 == 0:
+            print(f"{best_loss=}")
 
     return best_weights, best_loss
 
@@ -73,7 +80,7 @@ def main(prep_data_path: Path = Path("data/prepared/prepared_data.feather")):
     logger.info(f"Columns: {X_train.columns}")
 
     models = X_train.to_numpy().T
-    weights, loss = hill_climbing(models=models, true_labels=y_train)
+    weights, loss = hill_climbing(models=models, true_targets=y_train)
     print(f"Optimal Weights: {weights}, Loss: {loss}")
 
 
