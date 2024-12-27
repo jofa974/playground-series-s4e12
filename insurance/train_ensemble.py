@@ -149,22 +149,22 @@ def make_ensemble_pipeline() -> Pipeline:
     imputer = Pipeline([("imputer", SimpleImputer(strategy="median"))])
     pipeline = Pipeline(
         [
-            (
-                "claims_imputer",
-                ColumnTransformer(
-                    transformers=[
-                        (
-                            "impute",
-                            imputer,
-                            [
-                                "Previous Claims",
-                            ],
-                        ),
-                    ],
-                    remainder="passthrough",
-                    verbose_feature_names_out=False,
-                ),
-            ),
+            # (
+            #     "claims_imputer",
+            #     ColumnTransformer(
+            #         transformers=[
+            #             (
+            #                 "impute",
+            #                 imputer,
+            #                 [
+            #                     "Previous Claims",
+            #                 ],
+            #             ),
+            #         ],
+            #         remainder="passthrough",
+            #         verbose_feature_names_out=False,
+            #     ),
+            # ),
             (
                 "num_scaler",
                 ColumnTransformer(
@@ -172,7 +172,7 @@ def make_ensemble_pipeline() -> Pipeline:
                         (
                             "num",
                             num_transformer,
-                            ["xgboost_preds", "catboost_preds", "lgbm_preds", "Previous Claims"],
+                            ["xgboost_preds", "catboost_preds", "lgbm_preds"],
                         ),
                     ],
                     remainder="passthrough",
@@ -202,7 +202,7 @@ def main(prep_data_path: Path):
 
     data_pipeline = make_ensemble_pipeline()
     X_train = data_pipeline.fit_transform(X_train)
-    X_train = X_train[["xgboost_preds", "catboost_preds", "lgbm_preds", "Previous Claims"]]
+    X_train = X_train[["xgboost_preds", "catboost_preds", "lgbm_preds"]]
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")

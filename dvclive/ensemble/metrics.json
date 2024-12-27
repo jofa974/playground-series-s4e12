@@ -1,6 +1,6 @@
 {
     "ensemble": {
-        "train-cv-loss": 1.0453857089887093,
-        "test-cv-loss": 1.0453928826156116
+        "train-cv-loss": 1.045386767717589,
+        "test-cv-loss": 1.045393074137739
     }
 }

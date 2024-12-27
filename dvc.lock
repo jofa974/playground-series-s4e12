@@ -252,8 +252,8 @@ stages:
       size: 7931
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: f19133545f701324b255a8327b7d6f45
-      size: 7990
+      md5: 86dfe93befa38512c71dad4067f68ae5
+      size: 7984
     - path: out/models/catboost_model.pkl
       hash: md5
       md5: 60e20b164c1bd71dad9117e0f1083ad1
@@ -265,12 +265,12 @@ stages:
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 624edf2315f716bc88c20d6aef1c41f0
-      size: 3301
+      md5: 4b65aca8fc8814f36eaec2b7271ffe89
+      size: 2298
     - path: out/models/ensemble_model.pkl
       hash: md5
-      md5: f11a7dd6b5a16343ea56b68777860fa8
-      size: 1193
+      md5: 4744f7bc287ae2685ff32b8399a7ce87
+      size: 1188
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:

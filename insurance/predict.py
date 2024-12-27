@@ -63,7 +63,6 @@ def main():
     df_test = data_pipeline.transform(df_test)
 
     logger.info(f"Test shape: {df_test.shape=}")
-    # X_test = xgb.DMatrix(df_test, enable_categorical=True, feature_names=df_test.columns.to_list())
     X_test = df_test
 
     ensemble_model = pickle.load(ENSEMBLE_MODEL_PATH.open("rb"))
