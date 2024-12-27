@@ -39,16 +39,16 @@ xgb_params = {
     "random_state": 42,
     "eval_metric": "rmse",
     "tree_method": "auto",
-    "alpha": 0.012278360049275504,
-    "booster": "gbtree",
+    "alpha": 70.72114131472235,
+    "booster": "dart",
     "gamma": 3e-06,
     "grow_policy": "depthwise",
     "eta": 0.2,
-    "lambda": 189.5759434037735,
-    "subsample": 0.9756296886302929,
-    "colsample_bytree": 0.9555993163831182,
-    "max_depth": 10,
-    "min_child_weight": 8,
+    "lambda": 0.11693648443440109,
+    "subsample": 0.8659541126403374,
+    "colsample_bytree": 0.36987128854262097,
+    "max_depth": 3,
+    "min_child_weight": 3,
 }
 
 
@@ -133,11 +133,11 @@ def tune_ensemble(dtrain: xgb.DMatrix):
         param.update(
             {
                 # # defines booster, gblinear for linear functions.
-                # "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
+                "booster": trial.suggest_categorical("booster", ["gbtree", "dart"]),
                 # L2 regularization weight.
-                "lambda": trial.suggest_float("lambda", 10, 200),
+                "lambda": trial.suggest_float("lambda", 1.0e-1, 200, log=True),
                 # L1 regularization weight.
-                "alpha": trial.suggest_float("alpha", 1e-3, 0.2, log=True),
+                "alpha": trial.suggest_float("alpha", 1e-3, 100, log=True),
                 # sampling ratio for training data.
                 "subsample": trial.suggest_float("subsample", 0.2, 1.0),
                 # # sampling according to each tree.

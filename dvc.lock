@@ -204,8 +204,8 @@ stages:
       size: 7592
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 3690b67ac89717976e5a04408ddb60d0
-      size: 6616
+      md5: 19228de0680165234559bd8d828c9642
+      size: 6618
     outs:
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
@@ -252,8 +252,8 @@ stages:
       size: 7592
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: 79e095b4ac14cf4794e57d6869405c95
-      size: 9352
+      md5: 6b41e0c9a6dc6e7f2aff593ae3d4311e
+      size: 9361
     - path: out/models/catboost_model.pkl
       hash: md5
       md5: ff9ad5e76d2c0ada754cc382cd4b8f64
@@ -269,5 +269,5 @@ stages:
       size: 1944
     - path: out/models/ensemble_model.pkl
       hash: md5
-      md5: 8b345ff797a254bab9b063b13277ce58
-      size: 1193094
+      md5: df1e2ce71f0038cb327ba6a0c1a64cbc
+      size: 225427
