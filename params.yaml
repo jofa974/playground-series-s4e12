@@ -1,28 +1,55 @@
 data:
   random_state: 42
 
-train:
-  random_state: 42 
-  n_splits: 5
+layer_0:
   xgboost:
+    n_estimators: 1000
+    learning_rate: 0.01
+    max_depth: 10
+    reg_lambda: 100
+    reg_alpha: 0.1
     random_state: 42
-    device: cuda
+    # num_leaves: None
+    min_child_weight: 1
     objective: reg:squarederror
     eval_metric: rmse
-    num_boost_round: 400,
-    booster: gbtree
-    lambda: 0.4104749889610154
-    alpha: 5.561529990659439e-07
-    subsample: 0.9814736188143719
-    colsample_bytree: 0.7240915982708991
-    max_depth: 7
-    min_child_weight: 9
-    eta: 0.4324358241129275
-    gamma: 2.865477838059048e-06
-    grow_policy: depthwise
-  basic:
+    device: cuda
+    tree_method: hist
+    verbosity: 0
+    enable_categorical: True
+  catboost:
+    loss_function: RMSE
+    iterations: 200
+    learning_rate: 0.5
+    task_type: GPU
+    depth: 10
+    boosting_type: Ordered
+    bootstrap_type: Bernoulli
+    subsample: 0.8106434906203719
+  lgbm:
+    objective: regression
+    metric: rmse
+    feature_pre_filter: False
+    lambda_l1: 1.6575159147685196e-08
+    lambda_l2: 0.0017415507514917511
+    num_leaves: 67
+    feature_fraction: 1.0
+    bagging_fraction: 1.0
+    bagging_freq: 0
+    min_child_samples: 20
 
-torch_imputer:
-  epochs: 50
-  lr: 1e-3
-  batch_size: 2048
+layer_1:
+  xgboost:
+    random_state: 12
+    objective: reg:squarederror
+    eval_metric: rmse
+    device: cuda
+    verbosity: 0
+    enable_categorical: True
+  catboost:
+    loss_function: RMSE
+    task_type: GPU
+  lgbm: 
+    objective: regression
+    metric: rmse
+    feature_pre_filter: False

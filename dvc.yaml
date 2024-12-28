@@ -17,36 +17,30 @@ stages:
 
 
   train_layer_0:
-    foreach:
-    - xgboost
-    - catboost
-    - lgbm
+    foreach: ${layer_0}
     do:
-      cmd: poetry run python insurance/train_${item}.py --layer 0 --layer 0
+      cmd: poetry run python insurance/train_${key}.py --layer 0 --model-name ${key}
       deps:
       - data/prepared/prepared_data.feather
       - insurance/data_pipeline.py
-      - insurance/train_${item}.py
+      - insurance/train_${key}.py
       outs:
-      - out/data_pipeline_train_${item}.pkl
-      - out/models/${item}_model_layer_0.pkl
-      - data/oof/${item}_layer_0.feather
+      - out/data_pipeline_train_${key}.pkl
+      - out/models/${key}_model_layer_0.pkl
+      - data/oof/${key}_layer_0.feather
 
   train_layer_1:
-    foreach:
-    - xgboost
-    - catboost
-    - lgbm
+    foreach: ${layer_1}
     do:
-      cmd: poetry run python insurance/train_${item}.py --layer 1
+      cmd: poetry run python insurance/train_${key}.py --layer 1 --model-name ${key}
       deps:
       - data/oof/xgboost_layer_0.feather
       - data/oof/catboost_layer_0.feather
       - data/oof/lgbm_layer_0.feather
-      - insurance/train_${item}.py
+      - insurance/train_${key}.py
       outs:
-      - out/models/${item}_model_layer_1.pkl
-      - data/oof/${item}_layer_1.feather
+      - out/models/${key}_model_layer_1.pkl
+      - data/oof/${key}_layer_1.feather
 
   train_ensemble:
     cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
@@ -61,14 +55,34 @@ stages:
 
 
 metrics:
-- dvclive/lgbm_layer_0/metrics.json
-- dvclive/catboost_layer_0/metrics.json
-- dvclive/lgbm_layer_1/metrics.json
-- dvclive/catboost_layer_1/metrics.json
-- dvclive/ensemble/metrics.json
 - dvclive/xgboost_layer_0/metrics.json
+- dvclive/catboost_layer_0/metrics.json
+- dvclive/lgbm_layer_0/metrics.json
 - dvclive/xgboost_layer_1/metrics.json
+- dvclive/catboost_layer_1/metrics.json
+- dvclive/lgbm_layer_1/metrics.json
+- dvclive/ensemble/metrics.json
 plots:
+- dvclive/xgboost_layer_0/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/catboost_layer_0/plots/metrics:
+    x: step
+- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss.json:
+    template: linear
+    x: booster
+    y:
+    - train-RMSE-mean
+    - test-RMSE-mean
+    x_label: RMSLE
+    y_label: Booster
 - dvclive/lgbm_layer_0/plots/metrics:
     x: step
 - dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss.json:
@@ -78,9 +92,19 @@ plots:
     - valid rmse-mean
     x_label: RMSLE
     y_label: Booster
-- dvclive/catboost_layer_0/plots/metrics:
+- dvclive/xgboost_layer_1/plots/metrics:
     x: step
-- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss.json:
+- dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/catboost_layer_1/plots/metrics:
+    x: step
+- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss.json:
     template: linear
     x: booster
     y:
@@ -97,35 +121,5 @@ plots:
     - valid rmse-mean
     x_label: RMSLE
     y_label: Booster
-- dvclive/catboost_layer_1/plots/metrics:
-    x: step
-- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss.json:
-    template: linear
-    x: booster
-    y:
-    - train-RMSE-mean
-    - test-RMSE-mean
-    x_label: RMSLE
-    y_label: Booster
 - dvclive/ensemble/plots/metrics:
     x: step
-- dvclive/xgboost_layer_0/plots/metrics:
-    x: step
-- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/xgboost_layer_1/plots/metrics:
-    x: step
-- dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
-    x_label: RMSLE
-    y_label: Booster

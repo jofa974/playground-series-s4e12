@@ -1,42 +1,42 @@
 [
     {
         "valid rmse-mean": 1.0865421344062693,
-        "valid rmse-stdv": 0.0006443491247427892,
+        "valid rmse-stdv": 0.0006443491247427702,
         "x": 0
     },
     {
         "valid rmse-mean": 1.0789702883927927,
-        "valid rmse-stdv": 0.0006472257746642051,
+        "valid rmse-stdv": 0.0006472257746641449,
         "x": 1
     },
     {
-        "valid rmse-mean": 1.072800308060713,
-        "valid rmse-stdv": 0.0006626544829978907,
+        "valid rmse-mean": 1.0728003080607127,
+        "valid rmse-stdv": 0.0006626544829978339,
         "x": 2
     },
     {
         "valid rmse-mean": 1.067765873369542,
-        "valid rmse-stdv": 0.0006705499326777148,
+        "valid rmse-stdv": 0.0006705499326776763,
         "x": 3
     },
     {
         "valid rmse-mean": 1.0636743533591069,
-        "valid rmse-stdv": 0.0006831168715665915,
+        "valid rmse-stdv": 0.000683116871566652,
         "x": 4
     },
     {
         "valid rmse-mean": 1.060338919035598,
-        "valid rmse-stdv": 0.0006879620197486825,
+        "valid rmse-stdv": 0.0006879620197486876,
         "x": 5
     },
     {
-        "valid rmse-mean": 1.0576385348064092,
-        "valid rmse-stdv": 0.0007015106301610722,
+        "valid rmse-mean": 1.057638534806409,
+        "valid rmse-stdv": 0.0007015106301611483,
         "x": 6
     },
     {
         "valid rmse-mean": 1.0554468517738893,
-        "valid rmse-stdv": 0.0007063183572751499,
+        "valid rmse-stdv": 0.0007063183572751635,
         "x": 7
     },
     {
@@ -46,22 +46,22 @@
     },
     {
         "valid rmse-mean": 1.052216907575809,
-        "valid rmse-stdv": 0.0007354447565062492,
+        "valid rmse-stdv": 0.0007354447565062856,
         "x": 9
     },
     {
         "valid rmse-mean": 1.051046798564096,
-        "valid rmse-stdv": 0.0007476416733536249,
+        "valid rmse-stdv": 0.0007476416733536652,
         "x": 10
     },
     {
         "valid rmse-mean": 1.050104374616414,
-        "valid rmse-stdv": 0.0007566996128473031,
+        "valid rmse-stdv": 0.0007566996128472715,
         "x": 11
     },
     {
-        "valid rmse-mean": 1.0493422849334106,
-        "valid rmse-stdv": 0.0007521222711893916,
+        "valid rmse-mean": 1.0493422849334109,
+        "valid rmse-stdv": 0.0007521222711895454,
         "x": 12
     },
     {
@@ -71,22 +71,22 @@
     },
     {
         "valid rmse-mean": 1.0481983194958233,
-        "valid rmse-stdv": 0.0007961978032768287,
+        "valid rmse-stdv": 0.0007961978032768574,
         "x": 14
     },
     {
-        "valid rmse-mean": 1.0477930778519495,
-        "valid rmse-stdv": 0.000794906130080923,
+        "valid rmse-mean": 1.0477930778519498,
+        "valid rmse-stdv": 0.0007949061300808684,
         "x": 15
     },
     {
         "valid rmse-mean": 1.0474461379002196,
-        "valid rmse-stdv": 0.0007939259572860098,
+        "valid rmse-stdv": 0.0007939259572861167,
         "x": 16
     },
     {
-        "valid rmse-mean": 1.0471715189445894,
-        "valid rmse-stdv": 0.0008057482270796819,
+        "valid rmse-mean": 1.0471715189445892,
+        "valid rmse-stdv": 0.0008057482270796548,
         "x": 17
     },
     {
@@ -106,7 +106,7 @@
     },
     {
         "valid rmse-mean": 1.0464401874026743,
-        "valid rmse-stdv": 0.0007967965825339968,
+        "valid rmse-stdv": 0.0007967965825339703,
         "x": 21
     },
     {
@@ -115,28 +115,28 @@
         "x": 22
     },
     {
-        "valid rmse-mean": 1.0462151747546358,
-        "valid rmse-stdv": 0.0008025327096736401,
+        "valid rmse-mean": 1.0462151747546355,
+        "valid rmse-stdv": 0.0008025327096736132,
         "x": 23
     },
     {
         "valid rmse-mean": 1.0461456021033448,
-        "valid rmse-stdv": 0.0007974919152178053,
+        "valid rmse-stdv": 0.0007974919152176852,
         "x": 24
     },
     {
         "valid rmse-mean": 1.046080527566859,
-        "valid rmse-stdv": 0.0008112101410828547,
+        "valid rmse-stdv": 0.000811210141082937,
         "x": 25
     },
     {
         "valid rmse-mean": 1.0460347082903219,
-        "valid rmse-stdv": 0.0008137049359998069,
+        "valid rmse-stdv": 0.0008137049359998185,
         "x": 26
     },
     {
         "valid rmse-mean": 1.045996638333519,
-        "valid rmse-stdv": 0.0008170813544436721,
+        "valid rmse-stdv": 0.0008170813544435893,
         "x": 27
     },
     {
@@ -146,57 +146,57 @@
     },
     {
         "valid rmse-mean": 1.045934230759782,
-        "valid rmse-stdv": 0.0008224026386841837,
+        "valid rmse-stdv": 0.0008224026386841297,
         "x": 29
     },
     {
         "valid rmse-mean": 1.0458973186852571,
-        "valid rmse-stdv": 0.0008195600876690984,
+        "valid rmse-stdv": 0.000819560087669063,
         "x": 30
     },
     {
-        "valid rmse-mean": 1.0458717249822047,
-        "valid rmse-stdv": 0.000816066265059977,
+        "valid rmse-mean": 1.045871724982205,
+        "valid rmse-stdv": 0.0008160662650599973,
         "x": 31
     },
     {
         "valid rmse-mean": 1.045848739032314,
-        "valid rmse-stdv": 0.0008175381550925627,
+        "valid rmse-stdv": 0.0008175381550926162,
         "x": 32
     },
     {
         "valid rmse-mean": 1.045819218277733,
-        "valid rmse-stdv": 0.0008163875612938933,
+        "valid rmse-stdv": 0.0008163875612939316,
         "x": 33
     },
     {
         "valid rmse-mean": 1.04581112122769,
-        "valid rmse-stdv": 0.0008112272789777981,
+        "valid rmse-stdv": 0.0008112272789778072,
         "x": 34
     },
     {
         "valid rmse-mean": 1.0457999780150418,
-        "valid rmse-stdv": 0.0008056979815559507,
+        "valid rmse-stdv": 0.0008056979815559596,
         "x": 35
     },
     {
         "valid rmse-mean": 1.0457756426335625,
-        "valid rmse-stdv": 0.0008062378337164063,
+        "valid rmse-stdv": 0.0008062378337163756,
         "x": 36
     },
     {
-        "valid rmse-mean": 1.0457711208943197,
-        "valid rmse-stdv": 0.0008082846407957738,
+        "valid rmse-mean": 1.0457711208943195,
+        "valid rmse-stdv": 0.0008082846407957519,
         "x": 37
     },
     {
         "valid rmse-mean": 1.0457535747527067,
-        "valid rmse-stdv": 0.0008227148872650527,
+        "valid rmse-stdv": 0.0008227148872650833,
         "x": 38
     },
     {
-        "valid rmse-mean": 1.0457435926367842,
-        "valid rmse-stdv": 0.0008281147469116791,
+        "valid rmse-mean": 1.045743592636784,
+        "valid rmse-stdv": 0.0008281147469116508,
         "x": 39
     },
     {
@@ -206,42 +206,42 @@
     },
     {
         "valid rmse-mean": 1.04573606105498,
-        "valid rmse-stdv": 0.0008225469172731835,
+        "valid rmse-stdv": 0.0008225469172731588,
         "x": 41
     },
     {
         "valid rmse-mean": 1.0457308762334363,
-        "valid rmse-stdv": 0.0008271562169049746,
+        "valid rmse-stdv": 0.000827156216904965,
         "x": 42
     },
     {
         "valid rmse-mean": 1.045724416312018,
-        "valid rmse-stdv": 0.0008306498798316759,
+        "valid rmse-stdv": 0.0008306498798317449,
         "x": 43
     },
     {
         "valid rmse-mean": 1.045718804647458,
-        "valid rmse-stdv": 0.0008329721655781469,
+        "valid rmse-stdv": 0.0008329721655782066,
         "x": 44
     },
     {
         "valid rmse-mean": 1.0457125546012094,
-        "valid rmse-stdv": 0.0008310156374924865,
+        "valid rmse-stdv": 0.0008310156374925089,
         "x": 45
     },
     {
-        "valid rmse-mean": 1.045710573225559,
-        "valid rmse-stdv": 0.0008251457435931081,
+        "valid rmse-mean": 1.0457105732255587,
+        "valid rmse-stdv": 0.0008251457435930465,
         "x": 46
     },
     {
-        "valid rmse-mean": 1.0457038798711733,
-        "valid rmse-stdv": 0.0008178613366230957,
+        "valid rmse-mean": 1.045703879871173,
+        "valid rmse-stdv": 0.0008178613366230745,
         "x": 47
     },
     {
         "valid rmse-mean": 1.0456981766676345,
-        "valid rmse-stdv": 0.0008195960392449158,
+        "valid rmse-stdv": 0.0008195960392448335,
         "x": 48
     },
     {
@@ -250,13 +250,13 @@
         "x": 49
     },
     {
-        "valid rmse-mean": 1.0456842840599836,
-        "valid rmse-stdv": 0.0008144269139280601,
+        "valid rmse-mean": 1.0456842840599834,
+        "valid rmse-stdv": 0.0008144269139280285,
         "x": 50
     },
     {
-        "valid rmse-mean": 1.0456811061837934,
-        "valid rmse-stdv": 0.0008105162397822009,
+        "valid rmse-mean": 1.0456811061837936,
+        "valid rmse-stdv": 0.0008105162397822403,
         "x": 51
     },
     {
@@ -266,7 +266,7 @@
     },
     {
         "valid rmse-mean": 1.045674075725422,
-        "valid rmse-stdv": 0.0008078902824301375,
+        "valid rmse-stdv": 0.0008078902824301595,
         "x": 53
     },
     {
@@ -276,12 +276,12 @@
     },
     {
         "valid rmse-mean": 1.0456734391355564,
-        "valid rmse-stdv": 0.0007973618626878099,
+        "valid rmse-stdv": 0.0007973618626878498,
         "x": 55
     },
     {
         "valid rmse-mean": 1.0456775488513101,
-        "valid rmse-stdv": 0.0007962284588181261,
+        "valid rmse-stdv": 0.0007962284588181376,
         "x": 56
     },
     {
@@ -306,7 +306,7 @@
     },
     {
         "valid rmse-mean": 1.0456955658292952,
-        "valid rmse-stdv": 0.0007970541088323559,
+        "valid rmse-stdv": 0.0007970541088323221,
         "x": 61
     },
     {
@@ -321,22 +321,22 @@
     },
     {
         "valid rmse-mean": 1.045694328702925,
-        "valid rmse-stdv": 0.0008064177989341668,
+        "valid rmse-stdv": 0.0008064177989342179,
         "x": 64
     },
     {
         "valid rmse-mean": 1.045702210024103,
-        "valid rmse-stdv": 0.0008079561606429311,
+        "valid rmse-stdv": 0.0008079561606430361,
         "x": 65
     },
     {
         "valid rmse-mean": 1.0457096987512264,
-        "valid rmse-stdv": 0.0008089813515460585,
+        "valid rmse-stdv": 0.0008089813515459771,
         "x": 66
     },
     {
         "valid rmse-mean": 1.0457168119795228,
-        "valid rmse-stdv": 0.0008078186053476822,
+        "valid rmse-stdv": 0.0008078186053477223,
         "x": 67
     },
     {
@@ -351,22 +351,22 @@
     },
     {
         "valid rmse-mean": 1.0457185696491904,
-        "valid rmse-stdv": 0.0008067341106302641,
+        "valid rmse-stdv": 0.0008067341106302097,
         "x": 70
     },
     {
         "valid rmse-mean": 1.0457160941726393,
-        "valid rmse-stdv": 0.0008063435644504531,
+        "valid rmse-stdv": 0.000806343564450534,
         "x": 71
     },
     {
         "valid rmse-mean": 1.045711941271977,
-        "valid rmse-stdv": 0.0008050532307405649,
+        "valid rmse-stdv": 0.0008050532307406457,
         "x": 72
     },
     {
-        "valid rmse-mean": 1.045718838278986,
-        "valid rmse-stdv": 0.0008066454153945054,
+        "valid rmse-mean": 1.0457188382789857,
+        "valid rmse-stdv": 0.000806645415394519,
         "x": 73
     },
     {
@@ -375,63 +375,63 @@
         "x": 74
     },
     {
-        "valid rmse-mean": 1.045699598822648,
-        "valid rmse-stdv": 0.0008306975607968822,
+        "valid rmse-mean": 1.0456995988226483,
+        "valid rmse-stdv": 0.0008306975607968438,
         "x": 75
     },
     {
         "valid rmse-mean": 1.045702551657444,
-        "valid rmse-stdv": 0.0008296854906567141,
+        "valid rmse-stdv": 0.0008296854906566721,
         "x": 76
     },
     {
         "valid rmse-mean": 1.0456973368921592,
-        "valid rmse-stdv": 0.0008410944010296989,
+        "valid rmse-stdv": 0.0008410944010297225,
         "x": 77
     },
     {
         "valid rmse-mean": 1.0457043748403492,
-        "valid rmse-stdv": 0.0008397694093719517,
+        "valid rmse-stdv": 0.0008397694093719378,
         "x": 78
     },
     {
         "valid rmse-mean": 1.0457112542348383,
-        "valid rmse-stdv": 0.0008392262117319145,
+        "valid rmse-stdv": 0.0008392262117319006,
         "x": 79
     },
     {
         "valid rmse-mean": 1.0457148079353338,
-        "valid rmse-stdv": 0.0008469188069160909,
+        "valid rmse-stdv": 0.0008469188069160371,
         "x": 80
     },
     {
         "valid rmse-mean": 1.0457164879038299,
-        "valid rmse-stdv": 0.0008506263330504278,
+        "valid rmse-stdv": 0.0008506263330503468,
         "x": 81
     },
     {
         "valid rmse-mean": 1.0457127596763882,
-        "valid rmse-stdv": 0.000852923754234561,
+        "valid rmse-stdv": 0.000852923754234602,
         "x": 82
     },
     {
         "valid rmse-mean": 1.0457165382433498,
-        "valid rmse-stdv": 0.0008537256329039392,
+        "valid rmse-stdv": 0.0008537256329039798,
         "x": 83
     },
     {
         "valid rmse-mean": 1.0457213648705603,
-        "valid rmse-stdv": 0.0008537659205495318,
+        "valid rmse-stdv": 0.000853765920549562,
         "x": 84
     },
     {
         "valid rmse-mean": 1.0457274695871617,
-        "valid rmse-stdv": 0.0008493360945921163,
+        "valid rmse-stdv": 0.0008493360945921396,
         "x": 85
     },
     {
         "valid rmse-mean": 1.0457316776500458,
-        "valid rmse-stdv": 0.0008427775097356307,
+        "valid rmse-stdv": 0.0008427775097357248,
         "x": 86
     },
     {
@@ -441,12 +441,12 @@
     },
     {
         "valid rmse-mean": 1.0457421135303338,
-        "valid rmse-stdv": 0.0008414616459404903,
+        "valid rmse-stdv": 0.0008414616459404372,
         "x": 88
     },
     {
         "valid rmse-mean": 1.0457477842501082,
-        "valid rmse-stdv": 0.0008388703759238783,
+        "valid rmse-stdv": 0.0008388703759239196,
         "x": 89
     },
     {
@@ -456,12 +456,12 @@
     },
     {
         "valid rmse-mean": 1.0457523140972758,
-        "valid rmse-stdv": 0.0008452251419190925,
+        "valid rmse-stdv": 0.0008452251419190788,
         "x": 91
     },
     {
         "valid rmse-mean": 1.0457594528606093,
-        "valid rmse-stdv": 0.0008442005829405213,
+        "valid rmse-stdv": 0.0008442005829404902,
         "x": 92
     },
     {
@@ -481,22 +481,22 @@
     },
     {
         "valid rmse-mean": 1.0457682695079114,
-        "valid rmse-stdv": 0.0008506304230308881,
+        "valid rmse-stdv": 0.0008506304230310083,
         "x": 96
     },
     {
         "valid rmse-mean": 1.0457681735381326,
-        "valid rmse-stdv": 0.0008515548211713406,
+        "valid rmse-stdv": 0.0008515548211713172,
         "x": 97
     },
     {
         "valid rmse-mean": 1.0457705417479695,
-        "valid rmse-stdv": 0.0008510944961803318,
+        "valid rmse-stdv": 0.0008510944961804131,
         "x": 98
     },
     {
         "valid rmse-mean": 1.04577611268622,
-        "valid rmse-stdv": 0.0008519672258206933,
+        "valid rmse-stdv": 0.0008519672258207068,
         "x": 99
     }
 ]
