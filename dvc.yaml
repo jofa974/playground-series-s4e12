@@ -22,8 +22,7 @@ stages:
     - catboost
     - lgbm
     do:
-      cmd: poetry run python insurance/train_${item}.py --input-data-path data/prepared/prepared_data.feather
-        --layer 0
+      cmd: poetry run python insurance/train_${item}.py --layer 0 --layer 0
       deps:
       - data/prepared/prepared_data.feather
       - insurance/data_pipeline.py
@@ -39,10 +38,11 @@ stages:
     - catboost
     - lgbm
     do:
-      cmd: poetry run python insurance/train_${item}.py --input-data-path data/oof/${item}_layer_0.feather
-        --layer 1
+      cmd: poetry run python insurance/train_${item}.py --layer 1
       deps:
-      - data/oof/${item}_layer_0.feather
+      - data/oof/xgboost_layer_0.feather
+      - data/oof/catboost_layer_0.feather
+      - data/oof/lgbm_layer_0.feather
       - insurance/train_${item}.py
       outs:
       - out/models/${item}_model_layer_1.pkl
@@ -108,8 +108,12 @@ metrics:
 - dvclive/catboost/metrics.json
 - dvclive/lgbm/metrics.json
 - dvclive/ensemble/metrics.json
+- dvclive/lgbm_layer_0/metrics.json
 - dvclive/xgboost_layer_0/metrics.json
+- dvclive/catboost_layer_0/metrics.json
+- dvclive/lgbm_layer_1/metrics.json
 - dvclive/xgboost_layer_1/metrics.json
+- dvclive/catboost_layer_1/metrics.json
 plots:
 - dvclive/plots/metrics:
     x: step
@@ -152,6 +156,15 @@ plots:
     y_label: Booster
 - dvclive/ensemble/plots/metrics:
     x: step
+- dvclive/lgbm_layer_0/plots/metrics:
+    x: step
+- dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss.json:
+    template: linear
+    x: x
+    y:
+    - valid rmse-mean
+    x_label: RMSLE
+    y_label: Booster
 - dvclive/xgboost_layer_0/plots/metrics:
     x: step
 - dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
@@ -162,6 +175,25 @@ plots:
     - test-rmse-mean
     x_label: RMSLE
     y_label: Booster
+- dvclive/catboost_layer_0/plots/metrics:
+    x: step
+- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss.json:
+    template: linear
+    x: booster
+    y:
+    - train-RMSE-mean
+    - test-RMSE-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/lgbm_layer_1/plots/metrics:
+    x: step
+- dvclive/lgbm_layer_1/plots/custom/LGBM CV Loss.json:
+    template: linear
+    x: x
+    y:
+    - valid rmse-mean
+    x_label: RMSLE
+    y_label: Booster
 - dvclive/xgboost_layer_1/plots/metrics:
     x: step
 - dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
@@ -170,5 +202,15 @@ plots:
     y:
     - train-rmse-mean
     - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/catboost_layer_1/plots/metrics:
+    x: step
+- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss.json:
+    template: linear
+    x: booster
+    y:
+    - train-RMSE-mean
+    - test-RMSE-mean
     x_label: RMSLE
     y_label: Booster

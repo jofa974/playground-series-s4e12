@@ -12,3 +12,7 @@
 /lgbm_model.pkl
 /xgboost_model_layer_0.pkl
 /xgboost_model_layer_1.pkl
+/lgbm_model_layer_0.pkl
+/catboost_model_layer_0.pkl
+/lgbm_model_layer_1.pkl
+/catboost_model_layer_1.pkl

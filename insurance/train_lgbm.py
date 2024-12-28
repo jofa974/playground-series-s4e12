@@ -8,7 +8,7 @@ import pandas as pd
 import typer
 
 from dvclive import Live
-from insurance.common import OOF_PREDS_PATH, OUT_PATH, TARGET_COLUMN
+from insurance.common import OOF_PREDS_PATH, OUT_PATH, TARGET_COLUMN, PREP_DATA_PATH
 from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
 from insurance.logger import setup_logger
 
@@ -59,25 +59,37 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
 
 
 def main(
-    input_data_path: Annotated[Path, typer.Option(help="Input data path")],
     layer: Annotated[int, typer.Option(help="Stack layer number")],
 ):
-    df = pd.read_feather(input_data_path)
-
-    X_train = df.drop(columns=[TARGET_COLUMN])
-    logger.info(f"Train shape: {X_train.shape=}")
-    y_train = df.loc[X_train.index, TARGET_COLUMN]
-    y_train = np.log1p(y_train)
-
+    feat_cols = get_feat_columns()
     if layer == 0:
+        df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
         logger.info("Transforming data...")
         feat_cols = get_feat_columns()
         data_pipeline = make_pipeline()
-        X_train = data_pipeline.fit_transform(X_train)
+        df = data_pipeline.fit_transform(df)
         for col in feat_cols.categorical:
-            X_train[col] = X_train[col].astype("category")
+            df[col] = df[col].astype("category")
         pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
         logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
+    else:
+        df = pd.concat(
+            [
+                pd.read_feather(OOF_PREDS_PATH / f"xgboost_layer_{layer-1}.feather"),
+                pd.read_feather(OOF_PREDS_PATH / f"catboost_layer_{layer-1}.feather")[
+                    f"catboost_layer_{layer-1}"
+                ],
+                pd.read_feather(OOF_PREDS_PATH / f"lgbm_layer_{layer-1}.feather")[
+                    f"lgbm_layer_{layer-1}"
+                ],
+            ],
+            axis=1,
+        )
+
+    X_train = df.drop(columns=[TARGET_COLUMN])
+    logger.info(f"Train shape: {X_train.shape=}")
+    y_train = df[TARGET_COLUMN]
+    y_train = np.log1p(y_train)
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns=}")

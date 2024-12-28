@@ -296,8 +296,7 @@ stages:
       md5: fa3ab5071b8343ee2b08651f1d35f928
       size: 3094715
   train_layer_0@xgboost:
-    cmd: poetry run python insurance/train_xgboost.py --input-data-path data/prepared/prepared_data.feather
-      --layer 0
+    cmd: poetry run python insurance/train_xgboost.py --layer 0 --layer 0
     deps:
     - path: data/prepared/prepared_data.feather
       hash: md5
@@ -309,8 +308,8 @@ stages:
       size: 7774
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 2894a9d87459ae649a413f645e52cb3d
-      size: 5054
+      md5: 9be5e504773cb7b4fd1533f6653ed722
+      size: 5463
     outs:
     - path: data/oof/xgboost_layer_0.feather
       hash: md5
@@ -318,30 +317,149 @@ stages:
       size: 141123570
     - path: out/data_pipeline_train_xgboost.pkl
       hash: md5
-      md5: 288caf55440aa23caea534b6500dec9b
-      size: 10389
+      md5: cbd30f7b691d5d3743f607ebc5d73bc8
+      size: 10424
     - path: out/models/xgboost_model_layer_0.pkl
       hash: md5
       md5: bcf0923533d0f4e0a769814394c7c774
       size: 141993568
   train_layer_1@xgboost:
-    cmd: poetry run python insurance/train_xgboost.py --input-data-path data/oof/xgboost_layer_0.feather
-      --layer 1
+    cmd: poetry run python insurance/train_xgboost.py --layer 1
     deps:
+    - path: data/oof/catboost_layer_0.feather
+      hash: md5
+      md5: 4219588a5170ec9df78f55e0f8dd5518
+      size: 144531722
+    - path: data/oof/lgbm_layer_0.feather
+      hash: md5
+      md5: 728d534c51a243977d826e4365ffe3a2
+      size: 144531698
     - path: data/oof/xgboost_layer_0.feather
       hash: md5
       md5: cccf8e8b906be2cbafbdc4cdc24e6c29
       size: 141123570
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 2894a9d87459ae649a413f645e52cb3d
-      size: 5054
+      md5: 9be5e504773cb7b4fd1533f6653ed722
+      size: 5463
     outs:
     - path: data/oof/xgboost_layer_1.feather
       hash: md5
-      md5: 36fa3915563e7090e6244abff863a644
-      size: 147303938
+      md5: f95f513ba43e00ea822e6419cdca1157
+      size: 166505058
     - path: out/models/xgboost_model_layer_1.pkl
       hash: md5
-      md5: 07310c6a6a0500fa9dfdbd24ddc26d6f
-      size: 88756838
+      md5: 3575c8a3023cba1f18e5af3d3d31ec92
+      size: 80546058
+  train_layer_0@catboost:
+    cmd: poetry run python insurance/train_catboost.py --layer 0 --layer 0
+    deps:
+    - path: data/prepared/prepared_data.feather
+      hash: md5
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: 897e1f4a9ef10c76b81702a02a199e7e
+      size: 7774
+    - path: insurance/train_catboost.py
+      hash: md5
+      md5: a6fa58ee643ba2add78c266d1549bfdf
+      size: 6456
+    outs:
+    - path: data/oof/catboost_layer_0.feather
+      hash: md5
+      md5: 4219588a5170ec9df78f55e0f8dd5518
+      size: 144531722
+    - path: out/data_pipeline_train_catboost.pkl
+      hash: md5
+      md5: cbd30f7b691d5d3743f607ebc5d73bc8
+      size: 10424
+    - path: out/models/catboost_model_layer_0.pkl
+      hash: md5
+      md5: 0a0fb7f3b1fad21887b59523b5883621
+      size: 5921913
+  train_layer_0@lgbm:
+    cmd: poetry run python insurance/train_lgbm.py --layer 0 --layer 0
+    deps:
+    - path: data/prepared/prepared_data.feather
+      hash: md5
+      md5: 6f2ff9d50624a8441f17f3daf678d382
+      size: 51335522
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: 897e1f4a9ef10c76b81702a02a199e7e
+      size: 7774
+    - path: insurance/train_lgbm.py
+      hash: md5
+      md5: eb099ff095766890eac7727aa950c00d
+      size: 4715
+    outs:
+    - path: data/oof/lgbm_layer_0.feather
+      hash: md5
+      md5: 728d534c51a243977d826e4365ffe3a2
+      size: 144531698
+    - path: out/data_pipeline_train_lgbm.pkl
+      hash: md5
+      md5: cbd30f7b691d5d3743f607ebc5d73bc8
+      size: 10424
+    - path: out/models/lgbm_model_layer_0.pkl
+      hash: md5
+      md5: 0c821bf8bce53f17fb3f83952c6507a2
+      size: 3094718
+  train_layer_1@lgbm:
+    cmd: poetry run python insurance/train_lgbm.py --layer 1
+    deps:
+    - path: data/oof/catboost_layer_0.feather
+      hash: md5
+      md5: 4219588a5170ec9df78f55e0f8dd5518
+      size: 144531722
+    - path: data/oof/lgbm_layer_0.feather
+      hash: md5
+      md5: 728d534c51a243977d826e4365ffe3a2
+      size: 144531698
+    - path: data/oof/xgboost_layer_0.feather
+      hash: md5
+      md5: cccf8e8b906be2cbafbdc4cdc24e6c29
+      size: 141123570
+    - path: insurance/train_lgbm.py
+      hash: md5
+      md5: eb099ff095766890eac7727aa950c00d
+      size: 4715
+    outs:
+    - path: data/oof/lgbm_layer_1.feather
+      hash: md5
+      md5: 8a30e5fb8af345892d78a4b429aa5133
+      size: 169930538
+    - path: out/models/lgbm_model_layer_1.pkl
+      hash: md5
+      md5: 4c8f4c2b7930bd06c5d5b2c1c850484d
+      size: 3041894
+  train_layer_1@catboost:
+    cmd: poetry run python insurance/train_catboost.py --layer 1
+    deps:
+    - path: data/oof/catboost_layer_0.feather
+      hash: md5
+      md5: 4219588a5170ec9df78f55e0f8dd5518
+      size: 144531722
+    - path: data/oof/lgbm_layer_0.feather
+      hash: md5
+      md5: 728d534c51a243977d826e4365ffe3a2
+      size: 144531698
+    - path: data/oof/xgboost_layer_0.feather
+      hash: md5
+      md5: cccf8e8b906be2cbafbdc4cdc24e6c29
+      size: 141123570
+    - path: insurance/train_catboost.py
+      hash: md5
+      md5: a6fa58ee643ba2add78c266d1549bfdf
+      size: 6456
+    outs:
+    - path: data/oof/catboost_layer_1.feather
+      hash: md5
+      md5: 29e22e632842e58035567c6bb1e3e745
+      size: 169930562
+    - path: out/models/catboost_model_layer_1.pkl
+      hash: md5
+      md5: 4f1b30ed397693c31caccf20d6eff1b4
+      size: 9309141

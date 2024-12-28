@@ -1,5 +1,10 @@
 __pycache__
+
 /*.log
-notebooks/AutogluonModels
+
 catboost_info
+
 out/*.png
+
+notebooks/AutogluonModels
+notebooks/*.ipynb
