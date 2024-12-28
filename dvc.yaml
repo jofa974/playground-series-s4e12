@@ -48,114 +48,27 @@ stages:
       - out/models/${item}_model_layer_1.pkl
       - data/oof/${item}_layer_1.feather
 
-
-  # train_catboost:
-  #   cmd: poetry run python insurance/train_catboost.py data/prepared/prepared_data.feather
-  #   deps:
-  #   - data/prepared/prepared_data.feather
-  #   - insurance/data_pipeline.py
-  #   - insurance/train_catboost.py
-  #   outs:
-  #   - out/data_pipeline_train_catboost.pkl
-  #   - out/models/catboost_model.pkl
-
-  # train_lgbm:
-  #   cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
-  #   deps:
-  #   - data/prepared/prepared_data.feather
-  #   - insurance/data_pipeline.py
-  #   - insurance/train_lgbm.py
-  #   outs:
-  #   - out/data_pipeline_train_lgbm.pkl
-  #   - out/models/lgbm_model.pkl
-
-  # train_ensemble:
-  #   cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
-  #   deps:
-  #   - data/prepared/prepared_data.feather
-  #   - insurance/data_pipeline.py
-  #   - insurance/train_ensemble.py
-  #   - out/models/xgboost_model.pkl
-  #   - out/models/catboost_model.pkl
-  #   outs:
-  #   - out/data_pipeline_train_ensemble.pkl
-  #   - out/models/ensemble_model.pkl
-
-  # train:
-  #   foreach:
-  #   - xgboost
-  #   do:
-  #     cmd: poetry run python insurance/train_${item}.py
-  #     deps:
-  #     - insurance/train_${item}.py
-  #     - data/prepared/prepared_imputed_data.feather
-  #     - insurance/data_pipeline.py
-  #     outs:
-  #     - out/models/model_${item}.pkl
-  #     - out/models/data_pipeline_${item}.pkl
-  #     params:
-  #     - train.random_state
-  #     - train.n_splits
-  #     - train.${item}
-  #     frozen: true
+  train_ensemble:
+    cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
+    deps:
+    - data/oof/xgboost_layer_1.feather
+    - data/oof/catboost_layer_1.feather
+    - data/oof/lgbm_layer_1.feather
+    - insurance/train_ensemble.py
+    outs:
+    - out/data_pipeline_train_ensemble.pkl
 
 
 
 metrics:
-- out/metrics.json
-- dvclive/metrics.json
-- dvclive/xgboost/metrics.json
-- dvclive/catboost/metrics.json
-- dvclive/lgbm/metrics.json
-- dvclive/ensemble/metrics.json
 - dvclive/lgbm_layer_0/metrics.json
-- dvclive/xgboost_layer_0/metrics.json
 - dvclive/catboost_layer_0/metrics.json
 - dvclive/lgbm_layer_1/metrics.json
-- dvclive/xgboost_layer_1/metrics.json
 - dvclive/catboost_layer_1/metrics.json
+- dvclive/ensemble/metrics.json
+- dvclive/xgboost_layer_0/metrics.json
+- dvclive/xgboost_layer_1/metrics.json
 plots:
-- dvclive/plots/metrics:
-    x: step
-- dvclive/plots/custom/catboost CV Loss.json:
-    template: linear
-    x: booster
-    y:
-    - train-RMSE-mean
-    - test-RMSE-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/xgboost/plots/metrics:
-    x: step
-- dvclive/xgboost/plots/custom/XGBoost CV Loss.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/catboost/plots/metrics:
-    x: step
-- dvclive/catboost/plots/custom/catboost CV Loss.json:
-    template: linear
-    x: booster
-    y:
-    - train-RMSE-mean
-    - test-RMSE-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/lgbm/plots/metrics:
-    x: step
-- dvclive/lgbm/plots/custom/LGBM CV Loss.json:
-    template: linear
-    x: x
-    y:
-    - valid rmse-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/ensemble/plots/metrics:
-    x: step
 - dvclive/lgbm_layer_0/plots/metrics:
     x: step
 - dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss.json:
@@ -163,16 +76,6 @@ plots:
     x: x
     y:
     - valid rmse-mean
-    x_label: RMSLE
-    y_label: Booster
-- dvclive/xgboost_layer_0/plots/metrics:
-    x: step
-- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
     x_label: RMSLE
     y_label: Booster
 - dvclive/catboost_layer_0/plots/metrics:
@@ -194,16 +97,6 @@ plots:
     - valid rmse-mean
     x_label: RMSLE
     y_label: Booster
-- dvclive/xgboost_layer_1/plots/metrics:
-    x: step
-- dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
-    x_label: RMSLE
-    y_label: Booster
 - dvclive/catboost_layer_1/plots/metrics:
     x: step
 - dvclive/catboost_layer_1/plots/custom/Catboost CV Loss.json:
@@ -212,5 +105,27 @@ plots:
     y:
     - train-RMSE-mean
     - test-RMSE-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/ensemble/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: RMSLE
+    y_label: Booster
+- dvclive/xgboost_layer_1/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_1/plots/custom/XGBoost CV Loss Layer 1.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
     x_label: RMSLE
     y_label: Booster

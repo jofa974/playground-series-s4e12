@@ -240,37 +240,29 @@ stages:
       md5: 60e20b164c1bd71dad9117e0f1083ad1
       size: 4706669
   train_ensemble:
-    cmd: poetry run python insurance/train_ensemble.py data/prepared/prepared_data.feather
+    cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
     deps:
-    - path: data/prepared/prepared_data.feather
+    - path: data/oof/catboost_layer_1.feather
       hash: md5
-      md5: 6f2ff9d50624a8441f17f3daf678d382
-      size: 51335522
-    - path: insurance/data_pipeline.py
+      md5: 29e22e632842e58035567c6bb1e3e745
+      size: 169930562
+    - path: data/oof/lgbm_layer_1.feather
       hash: md5
-      md5: 897e1f4a9ef10c76b81702a02a199e7e
-      size: 7774
+      md5: 8a30e5fb8af345892d78a4b429aa5133
+      size: 169930538
+    - path: data/oof/xgboost_layer_1.feather
+      hash: md5
+      md5: f95f513ba43e00ea822e6419cdca1157
+      size: 166505058
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: 7c1ba5c69e7a321c16e404c2f708b9fc
-      size: 7870
-    - path: out/models/catboost_model.pkl
-      hash: md5
-      md5: 60e20b164c1bd71dad9117e0f1083ad1
-      size: 4706669
-    - path: out/models/xgboost_model.pkl
-      hash: md5
-      md5: 4cdf9a14bf9c6a64c187a3e2b4cdc744
-      size: 163206875
+      md5: 25dae9feca11b405fc28edb0b595597d
+      size: 6437
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 84dd64529a292710586a570e1d84a440
-      size: 1998
-    - path: out/models/ensemble_model.pkl
-      hash: md5
-      md5: 4744f7bc287ae2685ff32b8399a7ce87
-      size: 1188
+      md5: 329c64b100cb25f08a406402d5c71c41
+      size: 2619
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -308,8 +300,8 @@ stages:
       size: 7774
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 9be5e504773cb7b4fd1533f6653ed722
-      size: 5463
+      md5: 9515158efe086f39457edd1880c18521
+      size: 5432
     outs:
     - path: data/oof/xgboost_layer_0.feather
       hash: md5
@@ -340,8 +332,8 @@ stages:
       size: 141123570
     - path: insurance/train_xgboost.py
       hash: md5
-      md5: 9be5e504773cb7b4fd1533f6653ed722
-      size: 5463
+      md5: 9515158efe086f39457edd1880c18521
+      size: 5432
     outs:
     - path: data/oof/xgboost_layer_1.feather
       hash: md5

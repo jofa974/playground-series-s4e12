@@ -137,7 +137,7 @@ def main(
         early_stopping_rounds=10,
         callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
-        verbose_eval=True,
+        verbose_eval=200,
     )
     live_dir = Path(f"dvclive/xgboost_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
@@ -152,8 +152,8 @@ def main(
             x_label="RMSLE",
         )
 
-        live.log_metric("xgboost_layer/train-cv-loss", history["train-rmse-mean"].iloc[-1])
-        live.log_metric("xgboost_layer/test-cv-loss", history["test-rmse-mean"].iloc[-1])
+        live.log_metric("xgboost/train-cv-loss", history["train-rmse-mean"].iloc[-1])
+        live.log_metric("xgboost/test-cv-loss", history["test-rmse-mean"].iloc[-1])
 
     model_path = OUT_PATH / f"models/xgboost_model_layer_{layer}.pkl"
     model_path.parent.mkdir(parents=True, exist_ok=True)

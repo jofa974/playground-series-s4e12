@@ -1,5 +1,5 @@
 {
-    "xgboost_layer_0": {
+    "xgboost": {
         "train-cv-loss": 1.0294156116996638,
         "test-cv-loss": 1.0457872785993696
     }
