@@ -9,9 +9,10 @@ import typer
 import xgboost as xgb
 
 from dvclive import Live
-from insurance.common import OOF_PREDS_PATH, OUT_PATH, PREP_DATA_PATH, TARGET_COLUMN
-from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
+from insurance.common import OOF_PREDS_PATH, OUT_PATH, TARGET_COLUMN
+from insurance.data_pipeline import get_feat_columns, get_folds
 from insurance.logger import setup_logger
+from insurance.data_booster import get_booster_training_data
 
 logger = setup_logger(name="xgboost")
 DATA_PIPELINE_PATH = OUT_PATH / "data_pipeline_train_xgboost.pkl"
@@ -27,6 +28,7 @@ class SaveBestModel(xgb.callback.TrainingCallback):
 
 
 def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
+    """Assumes data is transformed."""
     X_train = X_train.copy()
     models = pickle.load(model_path.open("rb"))
 
@@ -45,6 +47,7 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
 
 
 def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
+    """Assumes data is transformed."""
     X = X.copy()
     models = pickle.load(model_path.open("rb"))
 
@@ -72,43 +75,11 @@ def main(
     model_name: Annotated[str, typer.Option(help="Model name")],
 ):
     params = dvc.api.params_show()
-    xgb_params = params[f"layer_{layer}"][model_name]
+    params = params[f"layer_{layer}"][model_name]
 
-    logger.info(f"{xgb_params=}")
-    feat_cols = get_feat_columns()
-    if layer == 0:
-        df = pd.read_feather(PREP_DATA_PATH / "prepared_data.feather")
-        logger.info("Transforming data...")
-        feat_cols = get_feat_columns()
-        data_pipeline = make_pipeline()
-        df = data_pipeline.fit_transform(df)
-        for col in feat_cols.categorical:
-            df[col] = df[col].astype("category")
-        pickle.dump(data_pipeline, open(DATA_PIPELINE_PATH, "wb"))
-        logger.info(f"Data pipeline saved at {DATA_PIPELINE_PATH}")
-    else:
-        prev_layer_models = list(params[f"layer_{layer-1}"].keys())
-        df = pd.read_feather(OOF_PREDS_PATH / f"{prev_layer_models[0]}_layer_{layer-1}.feather")
-        prev_oofs = [df]
-        for i in range(1, len(prev_layer_models)):
-            prev_oofs.append(
-                pd.read_feather(OOF_PREDS_PATH / f"{prev_layer_models[i]}_layer_{layer-1}.feather")[
-                    f"{prev_layer_models[i]}_layer_{layer-1}"
-                ],
-            )
-        df = pd.concat(
-            prev_oofs,
-            axis=1,
-        )
+    X_train, y_train = get_booster_training_data(layer=layer, model_name=model_name)
 
-    X_train = df.drop(columns=[TARGET_COLUMN])
-    logger.info(f"Train shape: {X_train.shape=}")
-    y_train = df[TARGET_COLUMN]
-    y_train = np.log1p(y_train)
-
-    logger.info(f"Train shape: {X_train.shape=}")
-    logger.info(f"Columns: {X_train.columns=}")
-
+    logger.info(f"{params=}")
     dtrain = xgb.DMatrix(
         X_train,
         label=y_train,
@@ -120,7 +91,7 @@ def main(
 
     cv_boosters = []
     history = xgb.cv(
-        xgb_params,
+        params,
         dtrain,
         num_boost_round=500,
         early_stopping_rounds=10,
@@ -151,7 +122,7 @@ def main(
 
     preds = get_oof_preds(X_train=X_train, model_path=model_path)
     X_train[f"{model_name}_layer_{layer}"] = preds
-    X_train[TARGET_COLUMN] = df[TARGET_COLUMN]
+    X_train[TARGET_COLUMN] = np.expm1(y_train)
 
     OOF_PREDS_PATH.mkdir(parents=True, exist_ok=True)
     X_train.to_feather(OOF_PREDS_PATH / f"{model_name}_layer_{layer}.feather")

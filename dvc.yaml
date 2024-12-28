@@ -75,7 +75,7 @@ plots:
     y_label: Booster
 - dvclive/catboost_layer_0/plots/metrics:
     x: step
-- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss.json:
+- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss {layer}.json:
     template: linear
     x: booster
     y:
@@ -104,7 +104,7 @@ plots:
     y_label: Booster
 - dvclive/catboost_layer_1/plots/metrics:
     x: step
-- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss.json:
+- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss {layer}.json:
     template: linear
     x: booster
     y:

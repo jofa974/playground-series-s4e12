@@ -1,502 +1,502 @@
 [
     {
-        "valid rmse-mean": 1.0864339380934562,
-        "valid rmse-stdv": 0.0006444640585995641,
+        "valid rmse-mean": 1.0864370438851685,
+        "valid rmse-stdv": 0.0006365740113850435,
         "x": 0
     },
     {
-        "valid rmse-mean": 1.07876085332876,
-        "valid rmse-stdv": 0.0006398176813246593,
+        "valid rmse-mean": 1.078756919263952,
+        "valid rmse-stdv": 0.0006270906219817668,
         "x": 1
     },
     {
-        "valid rmse-mean": 1.0725059504590235,
-        "valid rmse-stdv": 0.0006584055296256769,
+        "valid rmse-mean": 1.0725074285856775,
+        "valid rmse-stdv": 0.0006259939335112911,
         "x": 2
     },
     {
-        "valid rmse-mean": 1.0674142290196134,
-        "valid rmse-stdv": 0.0006752894138919319,
+        "valid rmse-mean": 1.0674170818992157,
+        "valid rmse-stdv": 0.0006423509419285321,
         "x": 3
     },
     {
-        "valid rmse-mean": 1.0632692360879683,
-        "valid rmse-stdv": 0.0007047984323770776,
+        "valid rmse-mean": 1.0632664531480203,
+        "valid rmse-stdv": 0.0006586520468713362,
         "x": 4
     },
     {
-        "valid rmse-mean": 1.0598946755086796,
-        "valid rmse-stdv": 0.0007273155543567808,
+        "valid rmse-mean": 1.0598901056193664,
+        "valid rmse-stdv": 0.0006765719552128869,
         "x": 5
     },
     {
-        "valid rmse-mean": 1.057153400478326,
-        "valid rmse-stdv": 0.0007481561519302526,
+        "valid rmse-mean": 1.057141711756478,
+        "valid rmse-stdv": 0.0006857260751496561,
         "x": 6
     },
     {
-        "valid rmse-mean": 1.0549293216004216,
-        "valid rmse-stdv": 0.0007680661026775991,
+        "valid rmse-mean": 1.0549122449977388,
+        "valid rmse-stdv": 0.0006977704065144044,
         "x": 7
     },
     {
-        "valid rmse-mean": 1.053128869705005,
-        "valid rmse-stdv": 0.0007849019955099052,
+        "valid rmse-mean": 1.053105655689439,
+        "valid rmse-stdv": 0.0007014506156712616,
         "x": 8
     },
     {
-        "valid rmse-mean": 1.0516534388988306,
-        "valid rmse-stdv": 0.0008041889900855726,
+        "valid rmse-mean": 1.0516364064941846,
+        "valid rmse-stdv": 0.0007115246666013237,
         "x": 9
     },
     {
-        "valid rmse-mean": 1.0504607071041527,
-        "valid rmse-stdv": 0.0008103640832230146,
+        "valid rmse-mean": 1.0504489479084493,
+        "valid rmse-stdv": 0.0007213783579272589,
         "x": 10
     },
     {
-        "valid rmse-mean": 1.049496522692478,
-        "valid rmse-stdv": 0.0008229668690009956,
+        "valid rmse-mean": 1.0494820291064506,
+        "valid rmse-stdv": 0.0007292692401367357,
         "x": 11
     },
     {
-        "valid rmse-mean": 1.0487124637888203,
-        "valid rmse-stdv": 0.0008262295803883986,
+        "valid rmse-mean": 1.0487042391774686,
+        "valid rmse-stdv": 0.0007329648658381748,
         "x": 12
     },
     {
-        "valid rmse-mean": 1.0480811635845522,
-        "valid rmse-stdv": 0.0008297151624632918,
+        "valid rmse-mean": 1.0480677508809493,
+        "valid rmse-stdv": 0.000744194137280565,
         "x": 13
     },
     {
-        "valid rmse-mean": 1.047567662682523,
-        "valid rmse-stdv": 0.0008315587744588597,
+        "valid rmse-mean": 1.0475407626544402,
+        "valid rmse-stdv": 0.0007531806758460108,
         "x": 14
     },
     {
-        "valid rmse-mean": 1.047156273090423,
-        "valid rmse-stdv": 0.000836852443358766,
+        "valid rmse-mean": 1.047122636141346,
+        "valid rmse-stdv": 0.0007591805736738277,
         "x": 15
     },
     {
-        "valid rmse-mean": 1.046811406701163,
-        "valid rmse-stdv": 0.0008385537740164384,
+        "valid rmse-mean": 1.0467805859974972,
+        "valid rmse-stdv": 0.0007614506791054366,
         "x": 16
     },
     {
-        "valid rmse-mean": 1.0465362812930714,
-        "valid rmse-stdv": 0.0008366097826808653,
+        "valid rmse-mean": 1.0464997542160728,
+        "valid rmse-stdv": 0.0007646519019427808,
         "x": 17
     },
     {
-        "valid rmse-mean": 1.0463127112037867,
-        "valid rmse-stdv": 0.0008389055375003606,
+        "valid rmse-mean": 1.0462715855584173,
+        "valid rmse-stdv": 0.0007707421727618047,
         "x": 18
     },
     {
-        "valid rmse-mean": 1.0461296757967957,
-        "valid rmse-stdv": 0.0008449698953548166,
+        "valid rmse-mean": 1.0460902629596458,
+        "valid rmse-stdv": 0.0007710445609043744,
         "x": 19
     },
     {
-        "valid rmse-mean": 1.045975038308969,
-        "valid rmse-stdv": 0.0008435043357335275,
+        "valid rmse-mean": 1.045941132314343,
+        "valid rmse-stdv": 0.0007739294164578077,
         "x": 20
     },
     {
-        "valid rmse-mean": 1.0458593552545092,
-        "valid rmse-stdv": 0.0008442335398196693,
+        "valid rmse-mean": 1.045820021719506,
+        "valid rmse-stdv": 0.0007811046956756061,
         "x": 21
     },
     {
-        "valid rmse-mean": 1.0457592953037764,
-        "valid rmse-stdv": 0.0008441316633529739,
+        "valid rmse-mean": 1.0457272322145532,
+        "valid rmse-stdv": 0.0007858711849110073,
         "x": 22
     },
     {
-        "valid rmse-mean": 1.0456884510458817,
-        "valid rmse-stdv": 0.0008476862318363452,
+        "valid rmse-mean": 1.0456503311645218,
+        "valid rmse-stdv": 0.0007880445577246354,
         "x": 23
     },
     {
-        "valid rmse-mean": 1.045624810467799,
-        "valid rmse-stdv": 0.0008454141042026531,
+        "valid rmse-mean": 1.0455856153195786,
+        "valid rmse-stdv": 0.0007813152170164658,
         "x": 24
     },
     {
-        "valid rmse-mean": 1.0455741404883414,
-        "valid rmse-stdv": 0.0008461492322850811,
+        "valid rmse-mean": 1.0455308369211331,
+        "valid rmse-stdv": 0.0007834520156059121,
         "x": 25
     },
     {
-        "valid rmse-mean": 1.0455368971672585,
-        "valid rmse-stdv": 0.0008424751345997469,
+        "valid rmse-mean": 1.0454925782542408,
+        "valid rmse-stdv": 0.0007882736377108548,
         "x": 26
     },
     {
-        "valid rmse-mean": 1.045504148340219,
-        "valid rmse-stdv": 0.0008432435796897035,
+        "valid rmse-mean": 1.0454636011998426,
+        "valid rmse-stdv": 0.0007878478059051993,
         "x": 27
     },
     {
-        "valid rmse-mean": 1.0454770584899982,
-        "valid rmse-stdv": 0.0008439679994915064,
+        "valid rmse-mean": 1.0454404938871062,
+        "valid rmse-stdv": 0.0007910331027092485,
         "x": 28
     },
     {
-        "valid rmse-mean": 1.0454568610983057,
-        "valid rmse-stdv": 0.0008380230414145344,
+        "valid rmse-mean": 1.045414523093468,
+        "valid rmse-stdv": 0.00079931136275322,
         "x": 29
     },
     {
-        "valid rmse-mean": 1.0454410983601068,
-        "valid rmse-stdv": 0.00083699797800935,
+        "valid rmse-mean": 1.045396413719997,
+        "valid rmse-stdv": 0.0007958440700119143,
         "x": 30
     },
     {
-        "valid rmse-mean": 1.0454303956409805,
-        "valid rmse-stdv": 0.0008337926498064117,
+        "valid rmse-mean": 1.045382560473143,
+        "valid rmse-stdv": 0.0007934119203854453,
         "x": 31
     },
     {
-        "valid rmse-mean": 1.045421986925458,
-        "valid rmse-stdv": 0.0008310986071674792,
+        "valid rmse-mean": 1.045369655666975,
+        "valid rmse-stdv": 0.0007886906373917317,
         "x": 32
     },
     {
-        "valid rmse-mean": 1.0454210660541636,
-        "valid rmse-stdv": 0.0008334041682561017,
+        "valid rmse-mean": 1.045362246066901,
+        "valid rmse-stdv": 0.000781967287957027,
         "x": 33
     },
     {
-        "valid rmse-mean": 1.045410833889499,
-        "valid rmse-stdv": 0.0008358517677992326,
+        "valid rmse-mean": 1.0453539160115357,
+        "valid rmse-stdv": 0.0007840185698960562,
         "x": 34
     },
     {
-        "valid rmse-mean": 1.0454089270499853,
-        "valid rmse-stdv": 0.0008305976797747384,
+        "valid rmse-mean": 1.0453504023299343,
+        "valid rmse-stdv": 0.0007810683599861153,
         "x": 35
     },
     {
-        "valid rmse-mean": 1.0454011443014153,
-        "valid rmse-stdv": 0.0008349194588796006,
+        "valid rmse-mean": 1.0453457337338967,
+        "valid rmse-stdv": 0.0007839762816005369,
         "x": 36
     },
     {
-        "valid rmse-mean": 1.0453971340307073,
-        "valid rmse-stdv": 0.0008416562649697063,
+        "valid rmse-mean": 1.0453459199134834,
+        "valid rmse-stdv": 0.0007867937483707561,
         "x": 37
     },
     {
-        "valid rmse-mean": 1.0453961108212908,
-        "valid rmse-stdv": 0.0008428757539534495,
+        "valid rmse-mean": 1.0453393230386698,
+        "valid rmse-stdv": 0.000781544950021925,
         "x": 38
     },
     {
-        "valid rmse-mean": 1.045395280957616,
-        "valid rmse-stdv": 0.0008446781441744843,
+        "valid rmse-mean": 1.0453395241884285,
+        "valid rmse-stdv": 0.000784345115501692,
         "x": 39
     },
     {
-        "valid rmse-mean": 1.0453970115077584,
-        "valid rmse-stdv": 0.0008407733114667859,
+        "valid rmse-mean": 1.0453422541209754,
+        "valid rmse-stdv": 0.000784150226601864,
         "x": 40
     },
     {
-        "valid rmse-mean": 1.0453973409199953,
-        "valid rmse-stdv": 0.0008467651040830406,
+        "valid rmse-mean": 1.0453476056671636,
+        "valid rmse-stdv": 0.000779477380619852,
         "x": 41
     },
     {
-        "valid rmse-mean": 1.045397600988808,
-        "valid rmse-stdv": 0.0008427516720895663,
+        "valid rmse-mean": 1.045343117977418,
+        "valid rmse-stdv": 0.0007819291670970152,
         "x": 42
     },
     {
-        "valid rmse-mean": 1.045400713308593,
-        "valid rmse-stdv": 0.0008454685688438467,
+        "valid rmse-mean": 1.0453488767008303,
+        "valid rmse-stdv": 0.0007870473556630702,
         "x": 43
     },
     {
-        "valid rmse-mean": 1.04540036309463,
-        "valid rmse-stdv": 0.0008416298763644504,
+        "valid rmse-mean": 1.045349835597691,
+        "valid rmse-stdv": 0.0007857771524328139,
         "x": 44
     },
     {
-        "valid rmse-mean": 1.0454035888194944,
-        "valid rmse-stdv": 0.0008411403151544978,
+        "valid rmse-mean": 1.0453518417043903,
+        "valid rmse-stdv": 0.0007827832948415748,
         "x": 45
     },
     {
-        "valid rmse-mean": 1.0454064156270835,
-        "valid rmse-stdv": 0.0008413979853190666,
+        "valid rmse-mean": 1.0453515314971407,
+        "valid rmse-stdv": 0.0007820090730230745,
         "x": 46
     },
     {
-        "valid rmse-mean": 1.0454085151799604,
-        "valid rmse-stdv": 0.0008360954115819912,
+        "valid rmse-mean": 1.0453530670770173,
+        "valid rmse-stdv": 0.0007827650084470401,
         "x": 47
     },
     {
-        "valid rmse-mean": 1.0454095798318632,
-        "valid rmse-stdv": 0.0008390711323261283,
+        "valid rmse-mean": 1.0453500652049352,
+        "valid rmse-stdv": 0.0007833139315975301,
         "x": 48
     },
     {
-        "valid rmse-mean": 1.0454116258226749,
-        "valid rmse-stdv": 0.0008327572165320441,
+        "valid rmse-mean": 1.0453483108419792,
+        "valid rmse-stdv": 0.0007822591278039144,
         "x": 49
     },
     {
-        "valid rmse-mean": 1.045408443669092,
-        "valid rmse-stdv": 0.0008300054791317348,
+        "valid rmse-mean": 1.0453501882484812,
+        "valid rmse-stdv": 0.000782328174106061,
         "x": 50
     },
     {
-        "valid rmse-mean": 1.0454040347368772,
-        "valid rmse-stdv": 0.0008305001984916322,
+        "valid rmse-mean": 1.0453481424736364,
+        "valid rmse-stdv": 0.0007819245121946929,
         "x": 51
     },
     {
-        "valid rmse-mean": 1.0454089172733956,
-        "valid rmse-stdv": 0.000835387359189715,
+        "valid rmse-mean": 1.045351403457015,
+        "valid rmse-stdv": 0.0007830583925468893,
         "x": 52
     },
     {
-        "valid rmse-mean": 1.0454154171255465,
-        "valid rmse-stdv": 0.000837456023441489,
+        "valid rmse-mean": 1.045357933440749,
+        "valid rmse-stdv": 0.0007754750081116001,
         "x": 53
     },
     {
-        "valid rmse-mean": 1.0454221392994676,
-        "valid rmse-stdv": 0.0008352523468004215,
+        "valid rmse-mean": 1.045362094684755,
+        "valid rmse-stdv": 0.0007732253554754756,
         "x": 54
     },
     {
-        "valid rmse-mean": 1.0454249134564395,
-        "valid rmse-stdv": 0.0008361198727445671,
+        "valid rmse-mean": 1.0453648176532195,
+        "valid rmse-stdv": 0.0007714204409979289,
         "x": 55
     },
     {
-        "valid rmse-mean": 1.0454342711808513,
-        "valid rmse-stdv": 0.0008357361186462387,
+        "valid rmse-mean": 1.045372875750449,
+        "valid rmse-stdv": 0.0007650851455768229,
         "x": 56
     },
     {
-        "valid rmse-mean": 1.045437671652451,
-        "valid rmse-stdv": 0.0008301738523087504,
+        "valid rmse-mean": 1.0453733341081661,
+        "valid rmse-stdv": 0.0007633203511458568,
         "x": 57
     },
     {
-        "valid rmse-mean": 1.0454376671723868,
-        "valid rmse-stdv": 0.0008292954839643732,
+        "valid rmse-mean": 1.0453753909474839,
+        "valid rmse-stdv": 0.0007593266012045916,
         "x": 58
     },
     {
-        "valid rmse-mean": 1.0454371041170947,
-        "valid rmse-stdv": 0.0008370255866480197,
+        "valid rmse-mean": 1.0453726737397915,
+        "valid rmse-stdv": 0.0007573271575195485,
         "x": 59
     },
     {
-        "valid rmse-mean": 1.0454427677114053,
-        "valid rmse-stdv": 0.0008432611964417815,
+        "valid rmse-mean": 1.0453746181634513,
+        "valid rmse-stdv": 0.0007599065971728626,
         "x": 60
     },
     {
-        "valid rmse-mean": 1.045448044017703,
-        "valid rmse-stdv": 0.0008399808849235389,
+        "valid rmse-mean": 1.0453783922774558,
+        "valid rmse-stdv": 0.0007507660507376438,
         "x": 61
     },
     {
-        "valid rmse-mean": 1.0454533054227855,
-        "valid rmse-stdv": 0.0008433051572247322,
+        "valid rmse-mean": 1.0453837787978266,
+        "valid rmse-stdv": 0.0007481213841257822,
         "x": 62
     },
     {
-        "valid rmse-mean": 1.0454603612864977,
-        "valid rmse-stdv": 0.0008388261180633774,
+        "valid rmse-mean": 1.0453869037770338,
+        "valid rmse-stdv": 0.0007531368340097251,
         "x": 63
     },
     {
-        "valid rmse-mean": 1.0454641004123362,
-        "valid rmse-stdv": 0.0008357024624203561,
+        "valid rmse-mean": 1.0453903148735695,
+        "valid rmse-stdv": 0.000758879959383619,
         "x": 64
     },
     {
-        "valid rmse-mean": 1.0454663678321185,
-        "valid rmse-stdv": 0.0008352059588336437,
+        "valid rmse-mean": 1.045391533861213,
+        "valid rmse-stdv": 0.0007579357551964441,
         "x": 65
     },
     {
-        "valid rmse-mean": 1.0454734781071129,
-        "valid rmse-stdv": 0.0008368290171720623,
+        "valid rmse-mean": 1.0453957186681884,
+        "valid rmse-stdv": 0.0007571548255868145,
         "x": 66
     },
     {
-        "valid rmse-mean": 1.0454784832283506,
-        "valid rmse-stdv": 0.0008399115897076761,
+        "valid rmse-mean": 1.0453942297344405,
+        "valid rmse-stdv": 0.0007555830097770157,
         "x": 67
     },
     {
-        "valid rmse-mean": 1.0454781241905038,
-        "valid rmse-stdv": 0.0008410499933298987,
+        "valid rmse-mean": 1.045396601037971,
+        "valid rmse-stdv": 0.0007575035972417104,
         "x": 68
     },
     {
-        "valid rmse-mean": 1.0454805008972037,
-        "valid rmse-stdv": 0.0008425352733387512,
+        "valid rmse-mean": 1.045397401484837,
+        "valid rmse-stdv": 0.0007591521937561031,
         "x": 69
     },
     {
-        "valid rmse-mean": 1.0454856304011073,
-        "valid rmse-stdv": 0.000840174875700165,
+        "valid rmse-mean": 1.0453963555967298,
+        "valid rmse-stdv": 0.000758497150956742,
         "x": 70
     },
     {
-        "valid rmse-mean": 1.0454859455497751,
-        "valid rmse-stdv": 0.000839653471938917,
+        "valid rmse-mean": 1.0454036731812923,
+        "valid rmse-stdv": 0.0007564274832680577,
         "x": 71
     },
     {
-        "valid rmse-mean": 1.0454918326111142,
-        "valid rmse-stdv": 0.000839079375805586,
+        "valid rmse-mean": 1.0454009689512112,
+        "valid rmse-stdv": 0.0007569134317482616,
         "x": 72
     },
     {
-        "valid rmse-mean": 1.0454934543998422,
-        "valid rmse-stdv": 0.0008424510013524589,
+        "valid rmse-mean": 1.0454021069934827,
+        "valid rmse-stdv": 0.0007570585149063566,
         "x": 73
     },
     {
-        "valid rmse-mean": 1.0454935833879495,
-        "valid rmse-stdv": 0.000840047532464721,
+        "valid rmse-mean": 1.0454069138017137,
+        "valid rmse-stdv": 0.0007575532082477786,
         "x": 74
     },
     {
-        "valid rmse-mean": 1.0454953082122393,
-        "valid rmse-stdv": 0.0008415144168393572,
+        "valid rmse-mean": 1.0454086087119643,
+        "valid rmse-stdv": 0.0007607354536507149,
         "x": 75
     },
     {
-        "valid rmse-mean": 1.0454980577825723,
-        "valid rmse-stdv": 0.0008388477308182856,
+        "valid rmse-mean": 1.045413057546488,
+        "valid rmse-stdv": 0.0007623978575665886,
         "x": 76
     },
     {
-        "valid rmse-mean": 1.0455023612357135,
-        "valid rmse-stdv": 0.0008436607691399657,
+        "valid rmse-mean": 1.0454128420242221,
+        "valid rmse-stdv": 0.0007655270411027597,
         "x": 77
     },
     {
-        "valid rmse-mean": 1.04550164150036,
-        "valid rmse-stdv": 0.0008466801890772631,
+        "valid rmse-mean": 1.0454145422523902,
+        "valid rmse-stdv": 0.0007665112470526345,
         "x": 78
     },
     {
-        "valid rmse-mean": 1.0455063258474733,
-        "valid rmse-stdv": 0.0008459859455349503,
+        "valid rmse-mean": 1.0454189533342788,
+        "valid rmse-stdv": 0.0007619976093064233,
         "x": 79
     },
     {
-        "valid rmse-mean": 1.0455124913683413,
-        "valid rmse-stdv": 0.0008497419721051833,
+        "valid rmse-mean": 1.0454196527799318,
+        "valid rmse-stdv": 0.0007607238473294197,
         "x": 80
     },
     {
-        "valid rmse-mean": 1.0455148237272265,
-        "valid rmse-stdv": 0.0008481099125287445,
+        "valid rmse-mean": 1.0454242744255666,
+        "valid rmse-stdv": 0.0007564579536415274,
         "x": 81
     },
     {
-        "valid rmse-mean": 1.045515916539595,
-        "valid rmse-stdv": 0.0008501021619782211,
+        "valid rmse-mean": 1.0454263053845874,
+        "valid rmse-stdv": 0.0007527631611361272,
         "x": 82
     },
     {
-        "valid rmse-mean": 1.045519330986031,
-        "valid rmse-stdv": 0.0008517913825250336,
+        "valid rmse-mean": 1.045430336008632,
+        "valid rmse-stdv": 0.0007545840085373272,
         "x": 83
     },
     {
-        "valid rmse-mean": 1.0455238589703588,
-        "valid rmse-stdv": 0.0008473592624208072,
+        "valid rmse-mean": 1.0454367574678725,
+        "valid rmse-stdv": 0.0007577130811182133,
         "x": 84
     },
     {
-        "valid rmse-mean": 1.045526522650741,
-        "valid rmse-stdv": 0.000849902815574,
+        "valid rmse-mean": 1.045441733764872,
+        "valid rmse-stdv": 0.0007556779827931061,
         "x": 85
     },
     {
-        "valid rmse-mean": 1.045526906890379,
-        "valid rmse-stdv": 0.0008479430533441654,
+        "valid rmse-mean": 1.0454413015148778,
+        "valid rmse-stdv": 0.000757341406363603,
         "x": 86
     },
     {
-        "valid rmse-mean": 1.0455305331096798,
-        "valid rmse-stdv": 0.0008490812352424865,
+        "valid rmse-mean": 1.0454414132709098,
+        "valid rmse-stdv": 0.0007545967605865399,
         "x": 87
     },
     {
-        "valid rmse-mean": 1.045530357785923,
-        "valid rmse-stdv": 0.000849849040855207,
+        "valid rmse-mean": 1.0454463232178102,
+        "valid rmse-stdv": 0.0007578520310993545,
         "x": 88
     },
     {
-        "valid rmse-mean": 1.0455315986697096,
-        "valid rmse-stdv": 0.0008523152985651118,
+        "valid rmse-mean": 1.0454496639620483,
+        "valid rmse-stdv": 0.0007565583680438622,
         "x": 89
     },
     {
-        "valid rmse-mean": 1.04553287828627,
-        "valid rmse-stdv": 0.0008523832252873982,
+        "valid rmse-mean": 1.0454517364620326,
+        "valid rmse-stdv": 0.0007571508209660106,
         "x": 90
     },
     {
-        "valid rmse-mean": 1.0455367806201905,
-        "valid rmse-stdv": 0.0008532119394761387,
+        "valid rmse-mean": 1.045454514213865,
+        "valid rmse-stdv": 0.0007580101636313035,
         "x": 91
     },
     {
-        "valid rmse-mean": 1.0455408628432463,
-        "valid rmse-stdv": 0.0008547192066496122,
+        "valid rmse-mean": 1.0454585604296818,
+        "valid rmse-stdv": 0.000755521350757849,
         "x": 92
     },
     {
-        "valid rmse-mean": 1.0455408747776114,
-        "valid rmse-stdv": 0.0008557969079881884,
+        "valid rmse-mean": 1.0454576861973723,
+        "valid rmse-stdv": 0.000750322874224292,
         "x": 93
     },
     {
-        "valid rmse-mean": 1.0455419305864773,
-        "valid rmse-stdv": 0.0008578243895374931,
+        "valid rmse-mean": 1.0454614130690605,
+        "valid rmse-stdv": 0.000749886027546308,
         "x": 94
     },
     {
-        "valid rmse-mean": 1.0455422359631337,
-        "valid rmse-stdv": 0.0008549691751335715,
+        "valid rmse-mean": 1.0454604624251171,
+        "valid rmse-stdv": 0.0007468103733732349,
         "x": 95
     },
     {
-        "valid rmse-mean": 1.0455480861048179,
-        "valid rmse-stdv": 0.000855455976958219,
+        "valid rmse-mean": 1.0454624911637034,
+        "valid rmse-stdv": 0.0007469004456848099,
         "x": 96
     },
     {
-        "valid rmse-mean": 1.045551192677453,
-        "valid rmse-stdv": 0.0008541434029999604,
+        "valid rmse-mean": 1.0454657124033873,
+        "valid rmse-stdv": 0.0007483569953605117,
         "x": 97
     },
     {
-        "valid rmse-mean": 1.045554775376487,
-        "valid rmse-stdv": 0.0008525375019578899,
+        "valid rmse-mean": 1.0454647362565346,
+        "valid rmse-stdv": 0.0007480378066225888,
         "x": 98
     },
     {
-        "valid rmse-mean": 1.0455568404178934,
-        "valid rmse-stdv": 0.0008555479852296879,
+        "valid rmse-mean": 1.045466507242368,
+        "valid rmse-stdv": 0.0007479938413697878,
         "x": 99
     }
 ]
