@@ -13,18 +13,26 @@ stages:
   prepare_basic:
     cmd: poetry run python insurance/prepare_basic.py
     deps:
+    - path: insurance/data_pipeline.py
+      hash: md5
+      md5: 897e1f4a9ef10c76b81702a02a199e7e
+      size: 7774
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: 9e108eb9a1de356116285e1eada7ac45
-      size: 942
+      md5: 75add4a1b7a611bbcda656981c0568a8
+      size: 1622
     params:
       params.yaml:
         data.random_state: 42
     outs:
-    - path: data/prepared/prepared_data.feather
+    - path: data/prepared/test_data.feather
       hash: md5
-      md5: 6f2ff9d50624a8441f17f3daf678d382
-      size: 51335522
+      md5: 3bf13143a4366366d5cdb2f751aa7ce3
+      size: 134937842
+    - path: data/prepared/train_data.feather
+      hash: md5
+      md5: 3bf13143a4366366d5cdb2f751aa7ce3
+      size: 134937842
   train_basic:
     cmd: poetry run python insurance/train_basic.py
     deps:

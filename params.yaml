@@ -53,3 +53,6 @@ layer_1:
     objective: regression
     metric: rmse
     feature_pre_filter: False
+
+ensemble:
+  random_state: 42

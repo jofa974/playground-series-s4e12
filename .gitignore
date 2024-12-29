@@ -8,3 +8,5 @@ out/*.png
 
 notebooks/AutogluonModels
 notebooks/*.ipynb
+
+insurance/__pycache__

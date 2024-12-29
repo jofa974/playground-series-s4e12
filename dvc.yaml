@@ -10,47 +10,51 @@ stages:
     cmd: poetry run python insurance/prepare_basic.py
     deps:
     - insurance/prepare_basic.py
+    - insurance/data_pipeline.py
     params:
     - data.random_state
     outs:
-    - data/prepared/prepared_data.feather
-
+    - data/prepared/train_data.feather
+    - data/prepared/test_data.feather
 
   train_layer_0:
-    foreach: ${layer_0}
-    do:
-      cmd: poetry run python insurance/train_${key}.py --layer 0 --model-name ${key}
-      deps:
-      - data/prepared/prepared_data.feather
-      - insurance/data_pipeline.py
-      - insurance/train_${key}.py
-      outs:
-      - out/data_pipeline_train_${key}.pkl
-      - out/models/${key}_model_layer_0.pkl
-      - data/oof/${key}_layer_0.feather
+    cmd: poetry run python insurance/train_layer.py --layer 0
+    params: 
+    - layer_0
+    deps:
+    - data/prepared/train_data.feather
+    - data/prepared/test_data.feather
+    - insurance/train_layer.py
+    outs:
+    - out/models/models_layer_0.pkl
+    - data/oof/layer_0.feather
+    - data/preds/layer_0.feather
 
   train_layer_1:
-    foreach: ${layer_1}
-    do:
-      cmd: poetry run python insurance/train_${key}.py --layer 1 --model-name ${key}
-      deps:
-      - data/oof/xgboost_layer_0.feather
-      - data/oof/catboost_layer_0.feather
-      - data/oof/lgbm_layer_0.feather
-      - insurance/train_${key}.py
-      outs:
-      - out/models/${key}_model_layer_1.pkl
-      - data/oof/${key}_layer_1.feather
+    cmd: poetry run python insurance/train_layer.py --layer 1
+    params: 
+    - layer_1
+    deps:
+    - data/oof/layer_0.feather
+    - data/preds/layer_0.feather
+    - insurance/train_layer.py
+    outs:
+    - out/models/models_layer_1.pkl
+    - data/oof/layer_1.feather
+    - data/preds/layer_1.feather
 
   train_ensemble:
-    cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
+    cmd: poetry run python insurance/train_ensemble.py
+    params:
+    - ensemble
     deps:
-    - data/oof/xgboost_layer_1.feather
-    - data/oof/catboost_layer_1.feather
-    - data/oof/lgbm_layer_1.feather
+    - data/oof/layer_1.feather
+    - data/preds/layer_1.feather
     - insurance/train_ensemble.py
     outs:
     - out/data_pipeline_train_ensemble.pkl
+    - data/oof/ensemble.feather
+    - data/preds/preds.csv # Final submission to kaggle
 
 
 
