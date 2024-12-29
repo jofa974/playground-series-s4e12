@@ -57,6 +57,7 @@ layer_1:
   catboost:
     type: catboost
     params:
+      iterations: 10
       loss_function: RMSE
       task_type: GPU
   lgbm: 

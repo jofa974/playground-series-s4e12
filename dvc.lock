@@ -256,12 +256,12 @@ stages:
     deps:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: f00ceeceec1739e9a7f137195b0ecea0
-      size: 156389018
+      md5: 311aebc029686810fe0c09439abe4115
+      size: 152656906
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 9d96acc4628218df3462b288a6f4b05d
-      size: 100965610
+      md5: ce04b736dede76fe55c3ab17eae8fd42
+      size: 98828506
     - path: insurance/train_ensemble.py
       hash: md5
       md5: 294024c6e7281ed50439f4936cb526cc
@@ -273,12 +273,12 @@ stages:
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 46caf1965c1c04d4798b1f069d71dc1a
+      md5: e7959f0de05180135d182e488205970d
       size: 2497
     - path: out/preds.csv
       hash: md5
-      md5: ffdb6bc7a185e809a2512f9ad6579660
-      size: 20740406
+      md5: 91970e76ba7c4f6e02db9af8f19e289d
+      size: 20740561
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -532,23 +532,23 @@ stages:
     outs:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: d9ba06027ceb985816d4d1e9cf16e2f9
-      size: 151933698
+      md5: 79b076a43828b8d9640d7f7296d4dd80
+      size: 152032282
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: 997446f9454b0deb70ef402ad07d2395
-      size: 98672130
+      md5: b2ad249a036be031d08e6158a2f1b4f8
+      size: 98793018
   train_layer_1:
     cmd: poetry run python insurance/train_layer.py --layer 1
     deps:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: d9ba06027ceb985816d4d1e9cf16e2f9
-      size: 151933698
+      md5: 79b076a43828b8d9640d7f7296d4dd80
+      size: 152032282
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: 997446f9454b0deb70ef402ad07d2395
-      size: 98672130
+      md5: b2ad249a036be031d08e6158a2f1b4f8
+      size: 98793018
     - path: insurance/train_layer.py
       hash: md5
       md5: 4eec2d907906d71468b361d08d8b2b33
@@ -568,6 +568,7 @@ stages:
           catboost:
             type: catboost
             params:
+              iterations: 10
               loss_function: RMSE
               task_type: GPU
           lgbm:
@@ -579,9 +580,9 @@ stages:
     outs:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: f00ceeceec1739e9a7f137195b0ecea0
-      size: 156389018
+      md5: 311aebc029686810fe0c09439abe4115
+      size: 152656906
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 9d96acc4628218df3462b288a6f4b05d
-      size: 100965610
+      md5: ce04b736dede76fe55c3ab17eae8fd42
+      size: 98828506
