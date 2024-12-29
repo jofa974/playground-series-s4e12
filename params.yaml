@@ -5,7 +5,7 @@ layer_0:
   xgboost:
     type: xgboost
     params:
-      n_estimators: 10
+      n_estimators: 500
       learning_rate: 0.01
       max_depth: 10
       reg_lambda: 100
@@ -23,7 +23,7 @@ layer_0:
     type: catboost
     params:
       loss_function: RMSE
-      iterations: 10
+      iterations: 100
       learning_rate: 0.5
       task_type: GPU
       depth: 10
@@ -57,7 +57,6 @@ layer_1:
   catboost:
     type: catboost
     params:
-      iterations: 10
       loss_function: RMSE
       task_type: GPU
   lgbm: 

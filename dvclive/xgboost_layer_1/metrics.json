@@ -1,6 +1,6 @@
 {
     "xgboost": {
-        "train-cv-loss": 1.04325603893915,
-        "test-cv-loss": 1.0457655210956531
+        "train-cv-loss": 1.0430644105819835,
+        "test-cv-loss": 1.0456042613602
     }
 }
