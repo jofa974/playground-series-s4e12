@@ -16,35 +16,34 @@ stages:
     outs:
     - data/prepared/train_data.feather
     - data/prepared/test_data.feather
+    - out/data_pipeline_train.pkl
 
   train_layer_0:
     cmd: poetry run python insurance/train_layer.py --layer 0
-    params: 
+    params:
     - layer_0
     deps:
     - data/prepared/train_data.feather
     - data/prepared/test_data.feather
     - insurance/train_layer.py
     outs:
-    - out/models/models_layer_0.pkl
     - data/oof/layer_0.feather
     - data/preds/layer_0.feather
 
   train_layer_1:
     cmd: poetry run python insurance/train_layer.py --layer 1
-    params: 
+    params:
     - layer_1
     deps:
     - data/oof/layer_0.feather
     - data/preds/layer_0.feather
     - insurance/train_layer.py
     outs:
-    - out/models/models_layer_1.pkl
     - data/oof/layer_1.feather
     - data/preds/layer_1.feather
 
   train_ensemble:
-    cmd: poetry run python insurance/train_ensemble.py
+    cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
     params:
     - ensemble
     deps:
@@ -53,9 +52,7 @@ stages:
     - insurance/train_ensemble.py
     outs:
     - out/data_pipeline_train_ensemble.pkl
-    - data/oof/ensemble.feather
-    - data/preds/preds.csv # Final submission to kaggle
-
+    - out/preds.csv # Final submission to kaggle
 
 
 metrics:
@@ -79,7 +76,7 @@ plots:
     y_label: Booster
 - dvclive/catboost_layer_0/plots/metrics:
     x: step
-- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss {layer}.json:
+- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss 0.json:
     template: linear
     x: booster
     y:
@@ -89,7 +86,7 @@ plots:
     y_label: Booster
 - dvclive/lgbm_layer_0/plots/metrics:
     x: step
-- dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss.json:
+- dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss 0.json:
     template: linear
     x: x
     y:
@@ -108,7 +105,7 @@ plots:
     y_label: Booster
 - dvclive/catboost_layer_1/plots/metrics:
     x: step
-- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss {layer}.json:
+- dvclive/catboost_layer_1/plots/custom/Catboost CV Loss 1.json:
     template: linear
     x: booster
     y:
@@ -118,7 +115,7 @@ plots:
     y_label: Booster
 - dvclive/lgbm_layer_1/plots/metrics:
     x: step
-- dvclive/lgbm_layer_1/plots/custom/LGBM CV Loss.json:
+- dvclive/lgbm_layer_1/plots/custom/LGBM CV Loss 1.json:
     template: linear
     x: x
     y:

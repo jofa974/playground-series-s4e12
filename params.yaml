@@ -3,56 +3,68 @@ data:
 
 layer_0:
   xgboost:
-    n_estimators: 1000
-    learning_rate: 0.01
-    max_depth: 10
-    reg_lambda: 100
-    reg_alpha: 0.1
-    random_state: 42
-    # num_leaves: None
-    min_child_weight: 1
-    objective: reg:squarederror
-    eval_metric: rmse
-    device: cuda
-    tree_method: hist
-    verbosity: 0
-    enable_categorical: True
+    type: xgboost
+    params:
+      n_estimators: 10
+      learning_rate: 0.01
+      max_depth: 10
+      reg_lambda: 100
+      reg_alpha: 0.1
+      random_state: 42
+      # num_leaves: None
+      min_child_weight: 1
+      objective: reg:squarederror
+      eval_metric: rmse
+      device: cuda
+      tree_method: hist
+      verbosity: 0
+      enable_categorical: True
   catboost:
-    loss_function: RMSE
-    iterations: 200
-    learning_rate: 0.5
-    task_type: GPU
-    depth: 10
-    boosting_type: Ordered
-    bootstrap_type: Bernoulli
-    subsample: 0.8106434906203719
+    type: catboost
+    params:
+      loss_function: RMSE
+      iterations: 10
+      learning_rate: 0.5
+      task_type: GPU
+      depth: 10
+      boosting_type: Ordered
+      bootstrap_type: Bernoulli
+      subsample: 0.8106434906203719
   lgbm:
-    objective: regression
-    metric: rmse
-    feature_pre_filter: False
-    lambda_l1: 1.6575159147685196e-08
-    lambda_l2: 0.0017415507514917511
-    num_leaves: 67
-    feature_fraction: 1.0
-    bagging_fraction: 1.0
-    bagging_freq: 0
-    min_child_samples: 20
+    type: lgbm
+    params:
+      objective: regression
+      metric: rmse
+      feature_pre_filter: False
+      lambda_l1: 1.6575159147685196e-08
+      lambda_l2: 0.0017415507514917511
+      num_leaves: 67
+      feature_fraction: 1.0
+      bagging_fraction: 1.0
+      bagging_freq: 0
+      min_child_samples: 20
 
 layer_1:
   xgboost:
-    random_state: 12
-    objective: reg:squarederror
-    eval_metric: rmse
-    device: cuda
-    verbosity: 0
-    enable_categorical: True
+    type: xgboost
+    params:
+      random_state: 12
+      objective: reg:squarederror
+      eval_metric: rmse
+      device: cuda
+      verbosity: 0
+      enable_categorical: True
   catboost:
-    loss_function: RMSE
-    task_type: GPU
+    type: catboost
+    params:
+      loss_function: RMSE
+      task_type: GPU
   lgbm: 
-    objective: regression
-    metric: rmse
-    feature_pre_filter: False
+    type: lgbm
+    params:
+      objective: regression
+      metric: rmse
+      feature_pre_filter: False
 
 ensemble:
   random_state: 42

@@ -10,3 +10,4 @@ notebooks/AutogluonModels
 notebooks/*.ipynb
 
 insurance/__pycache__
+**/__pycache__

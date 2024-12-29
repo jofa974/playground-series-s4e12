@@ -19,20 +19,24 @@ stages:
       size: 7774
     - path: insurance/prepare_basic.py
       hash: md5
-      md5: 75add4a1b7a611bbcda656981c0568a8
-      size: 1622
+      md5: 956efe1e52a9019804643836f29e5e2b
+      size: 2010
     params:
       params.yaml:
         data.random_state: 42
     outs:
     - path: data/prepared/test_data.feather
       hash: md5
-      md5: 3bf13143a4366366d5cdb2f751aa7ce3
-      size: 134937842
+      md5: 7e920585d8ba5a717c3ab1ae63379145
+      size: 87240074
     - path: data/prepared/train_data.feather
       hash: md5
-      md5: 3bf13143a4366366d5cdb2f751aa7ce3
-      size: 134937842
+      md5: 3a4258a959c0bf5af8bd0871aa9d399d
+      size: 137075906
+    - path: out/data_pipeline_train.pkl
+      hash: md5
+      md5: bfd870491d20b09fe52527ebf5ad0ede
+      size: 8925
   train_basic:
     cmd: poetry run python insurance/train_basic.py
     deps:
@@ -250,27 +254,31 @@ stages:
   train_ensemble:
     cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
     deps:
-    - path: data/oof/catboost_layer_1.feather
+    - path: data/oof/layer_1.feather
       hash: md5
-      md5: 03dffa9720f68ea27ee7b7d72088102f
-      size: 170659138
-    - path: data/oof/lgbm_layer_1.feather
+      md5: f00ceeceec1739e9a7f137195b0ecea0
+      size: 156389018
+    - path: data/preds/layer_1.feather
       hash: md5
-      md5: 5d192e353acddea514ad9bc717448d85
-      size: 170659114
-    - path: data/oof/xgboost_layer_1.feather
-      hash: md5
-      md5: f052c525f9beed50150dfcda73f49414
-      size: 167216986
+      md5: 9d96acc4628218df3462b288a6f4b05d
+      size: 100965610
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: 25dae9feca11b405fc28edb0b595597d
-      size: 6437
+      md5: 294024c6e7281ed50439f4936cb526cc
+      size: 6492
+    params:
+      params.yaml:
+        ensemble:
+          random_state: 42
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 35c143f82ca0a0b7693012bd450b196d
-      size: 2619
+      md5: 46caf1965c1c04d4798b1f069d71dc1a
+      size: 2497
+    - path: out/preds.csv
+      hash: md5
+      md5: ffdb6bc7a185e809a2512f9ad6579660
+      size: 20740406
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -463,3 +471,117 @@ stages:
       hash: md5
       md5: 34b4e4cb196f1d5b72cb947cc36c99ca
       size: 5819441
+  train_layer_0:
+    cmd: poetry run python insurance/train_layer.py --layer 0
+    deps:
+    - path: data/prepared/test_data.feather
+      hash: md5
+      md5: 7e920585d8ba5a717c3ab1ae63379145
+      size: 87240074
+    - path: data/prepared/train_data.feather
+      hash: md5
+      md5: 3a4258a959c0bf5af8bd0871aa9d399d
+      size: 137075906
+    - path: insurance/train_layer.py
+      hash: md5
+      md5: 4eec2d907906d71468b361d08d8b2b33
+      size: 2646
+    params:
+      params.yaml:
+        layer_0:
+          xgboost:
+            type: xgboost
+            params:
+              n_estimators: 10
+              learning_rate: 0.01
+              max_depth: 10
+              reg_lambda: 100
+              reg_alpha: 0.1
+              random_state: 42
+              min_child_weight: 1
+              objective: reg:squarederror
+              eval_metric: rmse
+              device: cuda
+              tree_method: hist
+              verbosity: 0
+              enable_categorical: true
+          catboost:
+            type: catboost
+            params:
+              loss_function: RMSE
+              iterations: 10
+              learning_rate: 0.5
+              task_type: GPU
+              depth: 10
+              boosting_type: Ordered
+              bootstrap_type: Bernoulli
+              subsample: 0.8106434906203719
+          lgbm:
+            type: lgbm
+            params:
+              objective: regression
+              metric: rmse
+              feature_pre_filter: false
+              lambda_l1: 1.6575159147685196e-08
+              lambda_l2: 0.0017415507514917511
+              num_leaves: 67
+              feature_fraction: 1.0
+              bagging_fraction: 1.0
+              bagging_freq: 0
+              min_child_samples: 20
+    outs:
+    - path: data/oof/layer_0.feather
+      hash: md5
+      md5: d9ba06027ceb985816d4d1e9cf16e2f9
+      size: 151933698
+    - path: data/preds/layer_0.feather
+      hash: md5
+      md5: 997446f9454b0deb70ef402ad07d2395
+      size: 98672130
+  train_layer_1:
+    cmd: poetry run python insurance/train_layer.py --layer 1
+    deps:
+    - path: data/oof/layer_0.feather
+      hash: md5
+      md5: d9ba06027ceb985816d4d1e9cf16e2f9
+      size: 151933698
+    - path: data/preds/layer_0.feather
+      hash: md5
+      md5: 997446f9454b0deb70ef402ad07d2395
+      size: 98672130
+    - path: insurance/train_layer.py
+      hash: md5
+      md5: 4eec2d907906d71468b361d08d8b2b33
+      size: 2646
+    params:
+      params.yaml:
+        layer_1:
+          xgboost:
+            type: xgboost
+            params:
+              random_state: 12
+              objective: reg:squarederror
+              eval_metric: rmse
+              device: cuda
+              verbosity: 0
+              enable_categorical: true
+          catboost:
+            type: catboost
+            params:
+              loss_function: RMSE
+              task_type: GPU
+          lgbm:
+            type: lgbm
+            params:
+              objective: regression
+              metric: rmse
+              feature_pre_filter: false
+    outs:
+    - path: data/oof/layer_1.feather
+      hash: md5
+      md5: f00ceeceec1739e9a7f137195b0ecea0
+      size: 156389018
+    - path: data/preds/layer_1.feather
+      hash: md5
+      md5: 9d96acc4628218df3462b288a6f4b05d
+      size: 100965610

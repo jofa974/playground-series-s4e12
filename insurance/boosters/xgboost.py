@@ -1,21 +1,16 @@
 import pickle
 from pathlib import Path
-from typing import Annotated
 
-import dvc.api
 import numpy as np
 import pandas as pd
-import typer
 import xgboost as xgb
 
 from dvclive import Live
-from insurance.common import OOF_PREDS_PATH, OUT_PATH, TARGET_COLUMN
-from insurance.data_pipeline import get_feat_columns, get_folds
+from insurance.common import OUT_PATH, TARGET_COLUMN
+from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
-from insurance.data_booster import get_booster_training_data
 
 logger = setup_logger(name="xgboost")
-DATA_PIPELINE_PATH = OUT_PATH / "data_pipeline_train_xgboost.pkl"
 
 
 class SaveBestModel(xgb.callback.TrainingCallback):
@@ -50,13 +45,6 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
     X = X.copy()
     models = pickle.load(model_path.open("rb"))
-
-    data_pipeline = pickle.load(DATA_PIPELINE_PATH.open("rb"))
-    X = data_pipeline.transform(X)
-    feat_cols = get_feat_columns()
-    for col in feat_cols.categorical:
-        X[col] = X[col].astype("category")
-
     preds = np.zeros(len(X))
     for i, model in enumerate(models):
         print(f"Predicting on Test Data -- {i+1}/{len(models)}")
@@ -70,16 +58,15 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     return preds
 
 
-def main(
-    layer: Annotated[int, typer.Option(help="Stack layer number")],
-    model_name: Annotated[str, typer.Option(help="Model name")],
-):
-    params = dvc.api.params_show()
-    params = params[f"layer_{layer}"][model_name]
+def train(
+    params: dict, model_name: str, layer: int, train_data: pd.DataFrame, test_data: pd.DataFrame
+) -> tuple[np.ndarray]:
+    X_train = train_data.drop(columns=[TARGET_COLUMN])
+    y_train = train_data[TARGET_COLUMN]
 
-    X_train, y_train = get_booster_training_data(layer=layer, model_name=model_name)
+    logger.info(f"Train shape: {X_train.shape=}")
+    logger.info(f"Columns: {X_train.columns=}")
 
-    logger.info(f"{params=}")
     dtrain = xgb.DMatrix(
         X_train,
         label=y_train,
@@ -89,11 +76,12 @@ def main(
 
     folds = get_folds(n_splits=5)
 
+    logger.info(f"{params=}")
     cv_boosters = []
     history = xgb.cv(
         params,
         dtrain,
-        num_boost_round=500,
+        num_boost_round=params.get("n_estimators", 10),
         early_stopping_rounds=10,
         callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
@@ -120,13 +108,7 @@ def main(
     pickle.dump(cv_boosters, open(model_path, "wb"))
     logger.info(f"Model saved at {model_path}")
 
-    preds = get_oof_preds(X_train=X_train, model_path=model_path)
-    X_train[f"{model_name}_layer_{layer}"] = preds
-    X_train[TARGET_COLUMN] = np.expm1(y_train)
+    oof_preds = get_oof_preds(X_train=X_train, model_path=model_path)
+    avg_preds = get_avg_preds(X=test_data, model_path=model_path)
 
-    OOF_PREDS_PATH.mkdir(parents=True, exist_ok=True)
-    X_train.to_feather(OOF_PREDS_PATH / f"{model_name}_layer_{layer}.feather")
-
-
-if __name__ == "__main__":
-    typer.run(main)
+    return oof_preds, avg_preds

@@ -17,7 +17,7 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import root_mean_squared_error
 
 from dvclive import Live
-from insurance.common import OUT_PATH, TARGET_COLUMN, OOF_PREDS_PATH
+from insurance.common import OUT_PATH, TARGET_COLUMN, OOF_PREDS_PATH, PREDS_PATH, RAW_DATA_PATH
 from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
 
@@ -126,30 +126,16 @@ def make_ensemble_pipeline(pred_columns: list[str]) -> Pipeline:
 def main(
     previous_layer: Annotated[int, typer.Option(help="Previous layer number")],
 ):
-    df = pd.concat(
-        [
-            pd.read_feather(OOF_PREDS_PATH / f"xgboost_layer_{previous_layer}.feather"),
-            pd.read_feather(OOF_PREDS_PATH / f"catboost_layer_{previous_layer}.feather")[
-                f"catboost_layer_{previous_layer}"
-            ],
-            pd.read_feather(OOF_PREDS_PATH / f"lgbm_layer_{previous_layer}.feather")[
-                f"lgbm_layer_{previous_layer}"
-            ],
-        ],
-        axis=1,
-    )
+    train_data = pd.read_feather(OOF_PREDS_PATH / f"layer_{previous_layer}.feather")
+    test_data = pd.read_feather(PREDS_PATH / f"layer_{previous_layer}.feather")
 
-    X_train = df.drop(columns=[TARGET_COLUMN])
-    y_train = df[TARGET_COLUMN]
-    y_train = np.log1p(y_train)
+    X_train = train_data.drop(columns=[TARGET_COLUMN])
+    y_train = train_data[TARGET_COLUMN]
 
-    data_pipeline = make_ensemble_pipeline(
-        pred_columns=[
-            f"xgboost_layer_{previous_layer}",
-            f"catboost_layer_{previous_layer}",
-            f"lgbm_layer_{previous_layer}",
-        ]
-    )
+    # Select only predictions of models from last layer
+    pred_columns = [col for col in X_train if "_preds" in col]
+
+    data_pipeline = make_ensemble_pipeline(pred_columns=pred_columns)
     X_train = data_pipeline.fit_transform(X_train)
 
     data_pipeline_path = OUT_PATH / "data_pipeline_train_ensemble.pkl"
@@ -176,10 +162,10 @@ def main(
         model.fit(X=X, y=y)
         train_preds = model.predict(X=X)
         train_rmse = root_mean_squared_error(y_true=y, y_pred=train_preds)
-        test_preds = model.predict(X=X_val)
-        test_rmse = root_mean_squared_error(y_true=y_val, y_pred=test_preds)
+        val_preds = model.predict(X=X_val)
+        val_rmse = root_mean_squared_error(y_true=y_val, y_pred=val_preds)
         metrics["train-rmse-mean"] += train_rmse / n_splits
-        metrics["test-rmse-mean"] += test_rmse / n_splits
+        metrics["test-rmse-mean"] += val_rmse / n_splits
         ensemble_regressors.append(model)
 
     live_dir = Path("dvclive/ensemble/")
@@ -192,6 +178,15 @@ def main(
     model_path.parent.mkdir(parents=True, exist_ok=True)
     pickle.dump(ensemble_regressors, open(model_path, "wb"))
     logger.info(f"Model saved at {model_path}")
+
+    X_test = data_pipeline.transform(test_data)
+    preds = np.expm1(model.predict(X=X_test))
+
+    output = pd.read_csv(RAW_DATA_PATH / "sample_submission.csv")
+    output["Premium Amount"] = preds
+    predictions_path = OUT_PATH / "preds.csv"
+    output.to_csv(predictions_path, index=False)
+    logger.info(f"Final prediction on test set saved at {predictions_path}")
 
 
 if __name__ == "__main__":

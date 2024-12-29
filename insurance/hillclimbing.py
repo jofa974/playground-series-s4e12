@@ -6,9 +6,9 @@ import pandas as pd
 from sklearn.metrics import root_mean_squared_error
 
 from insurance.logger import setup_logger
-from insurance.train_catboost import get_oof_preds as catboost_oof_preds
-from insurance.train_lgbm import get_oof_preds as lgbm_oof_preds
-from insurance.train_xgboost import get_oof_preds as xgboost_oof_preds
+from insurance.boosters.catboost import get_oof_preds as catboost_oof_preds
+from insurance.lgbm import get_oof_preds as lgbm_oof_preds
+from insurance.xgboost import get_oof_preds as xgboost_oof_preds
 from insurance.train_ensemble import make_ensemble_pipeline
 from tqdm import tqdm
 
