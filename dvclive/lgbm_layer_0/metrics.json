@@ -1,5 +1,5 @@
 {
-    "lgbm": {
-        "test-cv-loss": 1.052206274679913
+    "lgbm_simple": {
+        "test-cv-loss": 1.0533389107030073
     }
 }

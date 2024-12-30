@@ -19,6 +19,17 @@ layer_0:
       tree_method: hist
       verbosity: 0
       enable_categorical: True
+  xgboost_simple:
+    type: xgboost
+    params:
+      n_estimators: 50
+      learning_rate: 0.25
+      random_state: 24
+      objective: reg:squarederror
+      eval_metric: rmse
+      device: cuda
+      verbosity: 0
+      enable_categorical: True 
   catboost:
     type: catboost
     params:
@@ -43,6 +54,12 @@ layer_0:
       bagging_fraction: 1.0
       bagging_freq: 0
       min_child_samples: 20
+  lgbm_simple: 
+    type: lgbm
+    params:
+      objective: regression
+      metric: rmse
+      feature_pre_filter: False
 
 layer_1:
   xgboost:

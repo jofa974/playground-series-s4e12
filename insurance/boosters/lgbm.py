@@ -76,7 +76,7 @@ def train(
 
     cv_boosters["x"] = np.arange(num_boost_round)
     datapoints = pd.DataFrame(dict((k, v) for k, v in cv_boosters.items() if k != "cvbooster"))
-    live_dir = Path(f"dvclive/lgbm_layer_{layer}/")
+    live_dir = Path(f"dvclive/{model_name}_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
     with Live(dir=str(live_dir)) as live:
         live.log_plot(

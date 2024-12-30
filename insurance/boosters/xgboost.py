@@ -87,7 +87,7 @@ def train(
         folds=folds,
         verbose_eval=200,
     )
-    live_dir = Path(f"dvclive/xgboost_layer_{layer}/")
+    live_dir = Path(f"dvclive/{model_name}_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
     with Live(dir=str(live_dir)) as live:
         live.log_plot(
