@@ -34,13 +34,17 @@ layer_0:
     type: catboost
     params:
       loss_function: RMSE
-      iterations: 100
-      learning_rate: 0.5
+      early_stopping_rounds: 300
+      iterations: 1000
+      learning_rate: 0.1
       task_type: GPU
-      depth: 10
+      depth: 6
       boosting_type: Ordered
       bootstrap_type: Bernoulli
       subsample: 0.8106434906203719
+      verbose: 200
+      l2_leaf_reg: 0.7
+      random_seed: 42
   lgbm:
     type: lgbm
     params:
@@ -76,6 +80,7 @@ layer_1:
     params:
       loss_function: RMSE
       task_type: GPU
+      random_seed: 12
   lgbm: 
     type: lgbm
     params:

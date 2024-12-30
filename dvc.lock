@@ -256,12 +256,12 @@ stages:
     deps:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: eeef8c3e822ad46268ce27c443c75694
-      size: 166966026
+      md5: 4a87939ddf31bbce13955309dcdd5b4f
+      size: 167219458
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 276764bbd9b57cf671db043fcac97883
-      size: 108134002
+      md5: 629e1d8638ba11ee9d894aa02146b8d6
+      size: 108493610
     - path: insurance/train_ensemble.py
       hash: md5
       md5: 294024c6e7281ed50439f4936cb526cc
@@ -273,12 +273,12 @@ stages:
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 5e69e907af722c4ed130bff51b697a00
+      md5: 9dcf336128ca470d4af41adc3d6dfa44
       size: 2600
     - path: out/preds.csv
       hash: md5
-      md5: 617c384bf5401277ce887d38c272fc22
-      size: 20741329
+      md5: 9c7deaf57a989641a72d7c78646a70b8
+      size: 20740739
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -520,13 +520,17 @@ stages:
             type: catboost
             params:
               loss_function: RMSE
-              iterations: 100
-              learning_rate: 0.5
+              early_stopping_rounds: 300
+              iterations: 1000
+              learning_rate: 0.1
               task_type: GPU
-              depth: 10
+              depth: 6
               boosting_type: Ordered
               bootstrap_type: Bernoulli
               subsample: 0.8106434906203719
+              verbose: 200
+              l2_leaf_reg: 0.7
+              random_seed: 42
           lgbm:
             type: lgbm
             params:
@@ -549,23 +553,23 @@ stages:
     outs:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: 713195b38da970d261ebf752790a7ec8
-      size: 166528234
+      md5: 1484d3dacc7dad78fd55edadbe4ab6e0
+      size: 167144426
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: ad36b4d479226f4c8f8a97a81971b464
-      size: 107618362
+      md5: 2a620690509e63d9660172412d52821d
+      size: 107618402
   train_layer_1:
     cmd: poetry run python insurance/train_layer.py --layer 1
     deps:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: 713195b38da970d261ebf752790a7ec8
-      size: 166528234
+      md5: 1484d3dacc7dad78fd55edadbe4ab6e0
+      size: 167144426
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: ad36b4d479226f4c8f8a97a81971b464
-      size: 107618362
+      md5: 2a620690509e63d9660172412d52821d
+      size: 107618402
     - path: insurance/train_layer.py
       hash: md5
       md5: 4eec2d907906d71468b361d08d8b2b33
@@ -587,6 +591,7 @@ stages:
             params:
               loss_function: RMSE
               task_type: GPU
+              random_seed: 12
           lgbm:
             type: lgbm
             params:
@@ -596,9 +601,9 @@ stages:
     outs:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: eeef8c3e822ad46268ce27c443c75694
-      size: 166966026
+      md5: 4a87939ddf31bbce13955309dcdd5b4f
+      size: 167219458
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 276764bbd9b57cf671db043fcac97883
-      size: 108134002
+      md5: 629e1d8638ba11ee9d894aa02146b8d6
+      size: 108493610

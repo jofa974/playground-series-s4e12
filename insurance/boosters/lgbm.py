@@ -85,8 +85,8 @@ def train(
             x="x",
             y=["valid rmse-mean"],
             template="linear",
-            y_label="Booster",
-            x_label="RMSLE",
+            y_label="RMSLE",
+            x_label="Booster",
         )
 
         live.log_metric(f"{model_name}/test-cv-loss", cv_boosters["valid rmse-mean"][-1])

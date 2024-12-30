@@ -140,8 +140,8 @@ def train(
             x="booster",
             y=["train-RMSE-mean", "test-RMSE-mean"],
             template="linear",
-            y_label="Booster",
-            x_label="RMSLE",
+            y_label="RMSLE",
+            x_label="Booster",
         )
 
         live.log_metric(f"{model_name}/train-cv-loss", history["train-RMSE-mean"].iloc[-1])
