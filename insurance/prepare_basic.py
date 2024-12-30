@@ -1,7 +1,7 @@
 import pandas as pd
 from insurance.logger import setup_logger
 from insurance.common import RAW_DATA_PATH, PREP_DATA_PATH, OUT_PATH, TARGET_COLUMN
-from insurance.data_pipeline import get_feat_columns, make_pipeline
+from insurance.data_pipeline import make_pipeline
 import numpy as np
 import pickle
 
@@ -18,10 +18,10 @@ def main():
         pd.to_datetime(df_train["Policy Start Date"]).dt.strftime("%Y%m%d").astype(np.int64)
     )
     logger.info("Transforming training data...")
-    feat_cols = get_feat_columns()
     data_pipeline = make_pipeline()
     df_train = data_pipeline.fit_transform(df_train)
-    for col in feat_cols.categorical:
+    cat_features = df_train.select_dtypes(exclude="number").columns.tolist()
+    for col in cat_features:
         df_train[col] = df_train[col].astype("category")
 
     df_train[TARGET_COLUMN] = np.log1p(target)
@@ -42,7 +42,7 @@ def main():
     )
     logger.info("Transforming test data...")
     df_test = data_pipeline.transform(df_test)
-    for col in feat_cols.categorical:
+    for col in cat_features:
         df_test[col] = df_test[col].astype("category")
     test_data_path = PREP_DATA_PATH / "test_data.feather"
     df_test.to_feather(test_data_path)

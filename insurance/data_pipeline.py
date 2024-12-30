@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, fields
-
+from datetime import timedelta
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -86,34 +86,54 @@ class DateTransformer(BaseEstimator, TransformerMixin):
         check_is_fitted(self, attributes=["_is_fitted"])
         X = pd.DataFrame(_safe_indexing(X, None))  # Handle different types of inputs safely
 
-        # Convert the date column to datetime
+        for c in X.columns:
+            X[f"is_{c}_na"] = X[c].isna().astype(int)
+
+        feat_cols = get_feat_columns()
+
+        X[feat_cols.categorical] = X[feat_cols.categorical].fillna("None").astype("string")
+        X[feat_cols.numeric] = X[feat_cols.numeric].fillna(-999).astype(float)
+
         X[self.date_column] = pd.to_datetime(X[self.date_column], format=self.date_format)
-        # Extract year, month, day, and dayofweek
         X["year"] = X[self.date_column].dt.year
-        X["month"] = X[self.date_column].dt.month
         X["day"] = X[self.date_column].dt.day
-        X["dayofweek"] = X[self.date_column].dt.dayofweek
-        X["quarter"] = X[self.date_column].dt.quarter
-        X["year_sin"] = np.sin(2 * np.pi * X["year"])
-        X["year_cos"] = np.cos(2 * np.pi * X["year"])
-        X["month_sin"] = np.sin(2 * np.pi * X["month"] / 12)
-        X["month_cos"] = np.cos(2 * np.pi * X["month"] / 12)
-        X["day_sin"] = np.sin(2 * np.pi * X["day"] / 31)
-        X["day_cos"] = np.cos(2 * np.pi * X["day"] / 31)
+        X["month"] = X[self.date_column].dt.month
+        X["day_of_year"] = X[self.date_column].dt.dayofyear
+        X["day_of_week"] = X[self.date_column].dt.weekday
+        X["sin_day_of_week"] = np.sin(2 * np.pi * X["day_of_week"] / 7)
+        X["cos_day_of_week"] = np.cos(2 * np.pi * X["day_of_week"] / 7)
 
-        today = pd.Timestamp.now()
+        X["seconds since 1970"] = X[self.date_column].astype("int64") // 10**9
 
-        X["policy_age"] = (today - X[self.date_column]).dt.days
-        X["policy_age_month"] = X["policy_age"] // 30
-        X["policy_age_years"] = X["policy_age"] // 365
+        X["days_passed"] = (X[self.date_column].max() - X[self.date_column]).dt.days
 
-        X["claim_rate"] = X["Previous Claims"] / X["policy_age"]
-        X["combined_risk"] = X["Health Score"] + X["Credit Score"].fillna(0.0) + X["claim_rate"]
+        policy_starts_min = X[self.date_column].min()  # 2019-08-17
+        year = policy_starts_min.year
 
-        X["n_nan"] = X.isna().sum(axis=1)
+        if policy_starts_min >= pd.Timestamp(f"{year}-01-01"):
+            fiscal_year_start = pd.Timestamp(f"{year}-01-01")
+        else:
+            fiscal_year_start = pd.Timestamp(f"{year-1}-01-01")
 
-        # Drop the original date column
-        X = X.drop(columns=[self.date_column])
+        X["time_from_fiscal_year"] = (X[self.date_column] - fiscal_year_start).dt.days
+        X["seconds_from_fiscal_year"] = (X[self.date_column] - fiscal_year_start).dt.total_seconds()
+
+        new_date = policy_starts_min - timedelta(days=1)
+        X["time_from_first_policy"] = (X[self.date_column] - new_date).dt.days
+
+        X["time_from_first_policy_seconds"] = (X[self.date_column] - new_date).dt.total_seconds()
+
+        X["Days Passed"] = (X[self.date_column].max() - X[self.date_column]).dt.days
+
+        X["claims_vs_duration"] = X["Previous Claims"] / X["Insurance Duration"]
+        X["days_from_2019_crisis"] = (X[self.date_column] - pd.Timestamp("2019-01-01")).dt.days
+        X["revenue_per_dependent"] = X["Annual Income"] / (X["Number of Dependents"] + 1)
+        X["ratio_of_doubts"] = (X["Previous Claims"] + 1) / X["Annual Income"]  # NEW
+
+        X.drop(columns=["time_from_first_policy", self.date_column], inplace=True)
+
+        for col in feat_cols.numeric:
+            X[f"cat_{col}"] = X[col].astype("string")
 
         # Return a pandas DataFrame with consistent column names
         return X
@@ -194,41 +214,7 @@ def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
     )
     columns_engineering = ColumnTransformer(
         transformers=[
-            (
-                "date_transformer",
-                transfo,
-                ["Policy Start Date", "Previous Claims", "Health Score", "Credit Score"],
-            ),
-            ("cat_transfo", FrequencyEncoder(columns=feat_cols.categorical), feat_cols.categorical),
-        ],
-        remainder="passthrough",
-        verbose_feature_names_out=False,
-    )
-
-    num_transformer = Pipeline([("scaler", StandardScaler())])
-    cat_imputer = Pipeline([("imputer", SimpleImputer(strategy="constant", fill_value="unknown"))])
-    preprocessor = ColumnTransformer(
-        transformers=[
-            (
-                "num",
-                num_transformer,
-                feat_cols.numeric
-                + [
-                    "year",
-                    "month",
-                    "day",
-                    "dayofweek",
-                    "quarter",
-                    "policy_age",
-                    "policy_age_month",
-                    "policy_age_years",
-                    "claim_rate",
-                    "combined_risk",
-                    "n_nan",
-                ]
-                + [f"{col}__freq" for col in feat_cols.categorical],
-            ),
-            ("cat", cat_imputer, feat_cols.categorical),
+            ("date_transformer", transfo, feat_cols.names),
         ],
         remainder="passthrough",
         verbose_feature_names_out=False,
@@ -237,7 +223,6 @@ def make_pipeline(feat_cols: Features | None = None) -> Pipeline:
     pipeline = Pipeline(
         [
             ("date_preproc", columns_engineering),
-            ("preprocessor", preprocessor),
         ]
     )
     pipeline.set_output(transform="pandas")

@@ -5,10 +5,11 @@ import catboost as cb
 import numpy as np
 import optuna
 import pandas as pd
+import typer
 
 from dvclive import Live
-from insurance.common import OUT_PATH, TARGET_COLUMN
-from insurance.data_pipeline import get_feat_columns, get_folds
+from insurance.common import OUT_PATH, TARGET_COLUMN, RAW_DATA_PATH
+from insurance.data_pipeline import get_feat_columns, get_folds, make_pipeline
 from insurance.logger import setup_logger
 
 logger = setup_logger(name="catboost")
@@ -16,7 +17,6 @@ logger = setup_logger(name="catboost")
 
 def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X_train = X_train.copy()
     models = pickle.load(model_path.open("rb"))
 
     oof_preds = np.zeros(len(X_train))
@@ -30,7 +30,6 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
 
 def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X = X.copy()
     models = pickle.load(model_path.open("rb"))
 
     preds = np.zeros(len(X))
@@ -43,34 +42,53 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     return preds
 
 
-def tune_catboost(train_pool: cb.Pool):
+def tune_catboost():
+    feat_cols = get_feat_columns()
+
+    df_train = pd.read_csv(RAW_DATA_PATH / "train.csv")
+    target = df_train[TARGET_COLUMN]
+    df_train = df_train.drop(columns=["id", TARGET_COLUMN])
+    df_train["Policy Start Date"] = (
+        pd.to_datetime(df_train["Policy Start Date"]).dt.strftime("%Y%m%d").astype(np.int64)
+    )
+    logger.info("Transforming training data...")
+    feat_cols = get_feat_columns()
+    data_pipeline = make_pipeline()
+    df_train = data_pipeline.fit_transform(df_train)
+    for col in feat_cols.categorical:
+        df_train[col] = df_train[col].astype("category")
+
+    df_train[TARGET_COLUMN] = np.log1p(target)
+    logger.info(f"{TARGET_COLUMN} transformed with log1p")
+
+    X_train = df_train.drop(columns=[TARGET_COLUMN])
+    y_train = df_train[TARGET_COLUMN]
+
+    logger.info(f"Train shape: {X_train.shape=}")
+    logger.info(f"Columns: {X_train.columns=}")
+
+    cat_features = X_train.select_dtypes(exclude="number").columns.tolist()
+    print(cat_features)
+    train_pool = cb.Pool(data=X_train, label=y_train, cat_features=cat_features)
+
+    folds = get_folds(n_splits=5)
+
     def objective(trial):
         param = {
-            "loss_function": "RMSE",
-            "iterations": 40,
-            "learning_rate": 0.5,
-            "devices": [0],
+            "iterations": trial.suggest_int("iterations", 400, 1000),
+            "learning_rate": trial.suggest_float("learning_rate", 0.01, 0.4, log=True),
+            "depth": trial.suggest_int("depth", 4, 9),
+            "l2_leaf_reg": trial.suggest_float("l2_leaf_reg", 0.1, 1, log=True),
+            "loss_function": trial.suggest_categorical("loss_function", ["RMSE"]),
+            "random_strength": trial.suggest_float("random_strength", 1e-3, 1, log=True),
+            "bagging_temperature": trial.suggest_float("bagging_temperature", 1e-2, 1, log=True),
             "task_type": "GPU",
-            # "colsample_bylevel": trial.suggest_float("colsample_bylevel", 0.01, 0.1, log=True),
-            "depth": trial.suggest_int("depth", 1, 10),
-            "boosting_type": trial.suggest_categorical("boosting_type", ["Ordered", "Plain"]),
-            "bootstrap_type": trial.suggest_categorical(
-                "bootstrap_type", ["Bayesian", "Bernoulli", "MVS"]
-            ),
         }
-        if param["bootstrap_type"] == "Bayesian":
-            param["bagging_temperature"] = trial.suggest_float("bagging_temperature", 0, 10)
-        elif param["bootstrap_type"] == "Bernoulli":
-            param["subsample"] = trial.suggest_float("subsample", 0.1, 1, log=True)
         history = cb.cv(
             pool=train_pool,
             params=param,
-            fold_count=5,
-            partition_random_seed=0,
-            shuffle=True,
-            as_pandas=True,
-            verbose=False,
-            type="Classical",
+            folds=folds,
+            verbose=0,
             return_models=False,
         )
         mean_rmse = history["test-RMSE-mean"].values[-1]
@@ -102,23 +120,16 @@ def tune_catboost(train_pool: cb.Pool):
 def train(
     params: dict, model_name: str, layer: int, train_data: pd.DataFrame, test_data: pd.DataFrame
 ) -> tuple[np.ndarray]:
-    feat_cols = get_feat_columns()
     X_train = train_data.drop(columns=[TARGET_COLUMN])
     y_train = train_data[TARGET_COLUMN]
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns=}")
 
-    train_pool = cb.Pool(
-        data=X_train, label=y_train, cat_features=feat_cols.categorical, has_header=True
-    )
+    cat_features = X_train.select_dtypes(exclude="number").columns.tolist()
+    train_pool = cb.Pool(data=X_train, label=y_train, cat_features=cat_features, has_header=True)
 
-    folds = get_folds(n_splits=5)
-
-    tune = False
-    if tune:
-        tune_catboost(train_pool=train_pool)
-        return
+    folds = get_folds(n_splits=3)
 
     logger.info(f"{params=}")
     history, cv_boosters = cb.cv(
@@ -126,8 +137,7 @@ def train(
         params=params,
         folds=folds,
         as_pandas=True,
-        verbose=False,
-        type="Classical",
+        verbose=True,
         return_models=True,
     )
 
@@ -156,3 +166,7 @@ def train(
     avg_preds = get_avg_preds(X=test_data, model_path=model_path)
 
     return oof_preds, avg_preds
+
+
+if __name__ == "__main__":
+    typer.run(tune_catboost)

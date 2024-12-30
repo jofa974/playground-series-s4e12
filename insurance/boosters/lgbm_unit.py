@@ -15,7 +15,6 @@ logger = setup_logger(name="lgbm")
 
 def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X_train = X_train.copy()
     models = pickle.load(model_path.open("rb"))
     models = models["cvbooster"].boosters
 
@@ -32,7 +31,6 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
 
 def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X = X.copy()
     models = pickle.load(model_path.open("rb"))
     models = models["cvbooster"].boosters
 
@@ -47,18 +45,18 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
 def train(
     params: dict, model_name: str, layer: int, train_data: pd.DataFrame, test_data: pd.DataFrame
 ) -> tuple[np.ndarray]:
-    feat_cols = get_feat_columns()
     X_train = train_data.drop(columns=[TARGET_COLUMN])
     y_train = train_data[TARGET_COLUMN]
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns=}")
 
+    cat_features = X_train.select_dtypes(exclude="number").columns.tolist()
     train_data = lgb.Dataset(
         data=X_train,
         label=y_train,
         feature_name=X_train.columns.to_list(),
-        categorical_feature=feat_cols.categorical,
+        categorical_feature=cat_features,
     )
 
     folds = get_folds(n_splits=5)

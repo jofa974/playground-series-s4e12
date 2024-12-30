@@ -7,9 +7,9 @@ import typer
 
 from insurance.common import OOF_PREDS_PATH, PREDS_PATH, PREP_DATA_PATH
 from insurance.logger import setup_logger
-from insurance.boosters.xgboost import train as xgboost_train
-from insurance.boosters.catboost import train as catboost_train
-from insurance.boosters.lgbm import train as lgbm_train
+from insurance.boosters.xgboost_unit import train as xgboost_train
+from insurance.boosters.catboost_unit import train as catboost_train
+from insurance.boosters.lgbm_unit import train as lgbm_train
 
 
 def main(

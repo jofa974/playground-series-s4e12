@@ -24,7 +24,6 @@ class SaveBestModel(xgb.callback.TrainingCallback):
 
 def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X_train = X_train.copy()
     models = pickle.load(model_path.open("rb"))
 
     oof_preds = np.zeros(len(X_train))
@@ -43,7 +42,6 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
 
 def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     """Assumes data is transformed."""
-    X = X.copy()
     models = pickle.load(model_path.open("rb"))
     preds = np.zeros(len(X))
     for i, model in enumerate(models):
@@ -85,7 +83,7 @@ def train(
         early_stopping_rounds=10,
         callbacks=[SaveBestModel(cv_boosters)],
         folds=folds,
-        verbose_eval=200,
+        verbose_eval=50,
     )
     live_dir = Path(f"dvclive/{model_name}_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
