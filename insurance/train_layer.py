@@ -3,7 +3,7 @@ from typing import Annotated
 import dvc.api
 import pandas as pd
 import typer
-
+import numpy as np
 
 from insurance.common import OOF_PREDS_PATH, PREDS_PATH, PREP_DATA_PATH
 from insurance.logger import setup_logger
@@ -26,6 +26,9 @@ def main(
     else:
         train_data = pd.read_feather(OOF_PREDS_PATH / f"layer_{layer-1}.feather")
         test_data = pd.read_feather(PREDS_PATH / f"layer_{layer-1}.feather")
+        for col in test_data.columns:
+            if "_preds" in col:
+                test_data[col] = np.log1p(test_data[col])
 
     next_train = train_data.copy()
     next_test = test_data.copy()

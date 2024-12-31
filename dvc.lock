@@ -256,12 +256,12 @@ stages:
     deps:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: 4afc5c8339318d2094120922336303c7
-      size: 160835146
+      md5: 42faf52d60899cb5d7a2b39848260acf
+      size: 160806946
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 73f26f76e11bf64fdb1731409906a943
-      size: 106831570
+      md5: c09c565195a51e160744f89b8066e3c1
+      size: 106968658
     - path: insurance/train_ensemble.py
       hash: md5
       md5: 294024c6e7281ed50439f4936cb526cc
@@ -273,12 +273,12 @@ stages:
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 332ae5bcdbc39975df3b8dc61be53aba
+      md5: 156e7c34ba1e2a04761a104911f1e619
       size: 3119
     - path: out/preds.csv
       hash: md5
-      md5: 52b442f773fe65e7de048d6d9193a54e
-      size: 21088723
+      md5: 437411f08b0bc42898c9267dbe8f56ae
+      size: 10948557
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -484,8 +484,8 @@ stages:
       size: 143144866
     - path: insurance/train_layer.py
       hash: md5
-      md5: 7e08469d0667e8a4c2ba0f379c0e323c
-      size: 2661
+      md5: 15fb3f1d68f3d5357d488b9275c76dab
+      size: 2807
     params:
       params.yaml:
         layer_0:
@@ -506,7 +506,7 @@ stages:
           catboost:
             type: catboost
             params:
-              iterations: 200
+              iterations: 210
               learning_rate: 0.33741802035300733
               depth: 5
               l2_leaf_reg: 0.6988750565188863
@@ -536,27 +536,27 @@ stages:
     outs:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: da3a033cb0af94076d9d4d2a95d32c88
-      size: 161540154
+      md5: 9beec40a7177a958c33c4aa3718b8ec9
+      size: 161509970
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: 622b58d3a83b5f965022b49f0bf795f6
-      size: 106762914
+      md5: 327f6c3fc2cbde6c1dfefe9eb31f9ec3
+      size: 106899562
   train_layer_1:
     cmd: poetry run python insurance/train_layer.py --layer 1
     deps:
     - path: data/oof/layer_0.feather
       hash: md5
-      md5: da3a033cb0af94076d9d4d2a95d32c88
-      size: 161540154
+      md5: 9beec40a7177a958c33c4aa3718b8ec9
+      size: 161509970
     - path: data/preds/layer_0.feather
       hash: md5
-      md5: 622b58d3a83b5f965022b49f0bf795f6
-      size: 106762914
+      md5: 327f6c3fc2cbde6c1dfefe9eb31f9ec3
+      size: 106899562
     - path: insurance/train_layer.py
       hash: md5
-      md5: 7e08469d0667e8a4c2ba0f379c0e323c
-      size: 2661
+      md5: 15fb3f1d68f3d5357d488b9275c76dab
+      size: 2807
     params:
       params.yaml:
         layer_1:
@@ -576,9 +576,9 @@ stages:
     outs:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: 4afc5c8339318d2094120922336303c7
-      size: 160835146
+      md5: 42faf52d60899cb5d7a2b39848260acf
+      size: 160806946
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 73f26f76e11bf64fdb1731409906a943
-      size: 106831570
+      md5: c09c565195a51e160744f89b8066e3c1
+      size: 106968658

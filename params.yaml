@@ -33,7 +33,7 @@ layer_0:
   catboost:
     type: catboost
     params:
-      iterations: 200
+      iterations: 210
       learning_rate: 0.33741802035300733
       depth: 5
       l2_leaf_reg: 0.6988750565188863

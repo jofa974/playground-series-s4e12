@@ -51,7 +51,7 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
             enable_categorical=True,
             feature_names=X.columns.to_list(),
         )
-        preds += model.predict(data=data)
+        preds += np.expm1(model.predict(data=data))
     preds = preds / len(models)
     return preds
 
@@ -87,6 +87,7 @@ def train(
     )
     live_dir = Path(f"dvclive/{model_name}_layer_{layer}/")
     live_dir.mkdir(parents=True, exist_ok=True)
+    history["booster"] = np.arange(len(history))
     with Live(dir=str(live_dir)) as live:
         live.log_plot(
             f"XGBoost CV Loss Layer {layer}",

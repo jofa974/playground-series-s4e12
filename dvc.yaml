@@ -100,7 +100,7 @@ plots:
     x: step
 - dvclive/catboost_layer_0/plots/custom/Catboost CV Loss 0.json:
     template: linear
-    x: booster
+    x: iterations
     y:
     - train-RMSE-mean
     - test-RMSE-mean
@@ -128,7 +128,7 @@ plots:
     x: step
 - dvclive/catboost_layer_1/plots/custom/Catboost CV Loss 1.json:
     template: linear
-    x: booster
+    x: iterations
     y:
     - train-RMSE-mean
     - test-RMSE-mean

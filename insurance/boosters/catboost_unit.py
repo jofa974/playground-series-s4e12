@@ -35,8 +35,10 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     preds = np.zeros(len(X))
     for i, model in enumerate(models):
         logger.info(f"Predicting on Test Data -- {i+1}/{len(models)}")
-        preds += model.predict(
-            data=X,
+        preds += np.expm1(
+            model.predict(
+                data=X,
+            )
         )
     preds = preds / len(models)
     return preds
@@ -147,7 +149,7 @@ def train(
         live.log_plot(
             f"Catboost CV Loss {layer}",
             history,
-            x="booster",
+            x="iterations",
             y=["train-RMSE-mean", "test-RMSE-mean"],
             template="linear",
             y_label="RMSLE",
@@ -164,6 +166,10 @@ def train(
 
     oof_preds = get_oof_preds(X_train=X_train, model_path=model_path)
     avg_preds = get_avg_preds(X=test_data, model_path=model_path)
+
+    cat_preds = pd.read_csv(RAW_DATA_PATH / "sample_submission.csv")
+    cat_preds[TARGET_COLUMN] = avg_preds
+    cat_preds.to_csv(OUT_PATH / f"{model_name}_layer_{layer}.csv", index=False)
 
     return oof_preds, avg_preds
 

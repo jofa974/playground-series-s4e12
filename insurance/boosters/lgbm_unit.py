@@ -37,7 +37,7 @@ def get_avg_preds(X: pd.DataFrame, model_path: Path) -> np.ndarray[np.float64]:
     preds = np.zeros(len(X))
     for i, model in enumerate(models):
         logger.info(f"Predicting on Test Data -- {i+1}/{len(models)}")
-        preds += model.predict(X)
+        preds += np.expm1(model.predict(X))
     preds = preds / len(models)
     return preds
 
