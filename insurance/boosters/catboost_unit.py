@@ -131,7 +131,7 @@ def train(
     cat_features = X_train.select_dtypes(exclude="number").columns.tolist()
     train_pool = cb.Pool(data=X_train, label=y_train, cat_features=cat_features, has_header=True)
 
-    folds = get_folds(n_splits=3)
+    folds = get_folds(n_splits=5)
 
     logger.info(f"{params=}")
     history, cv_boosters = cb.cv(

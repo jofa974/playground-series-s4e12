@@ -32,6 +32,9 @@ def main(
 
     next_train = train_data.copy()
     next_test = test_data.copy()
+    to_drop = [col for col in next_test.columns if "_preds" in col]
+    next_train = next_train.drop(columns=to_drop)
+    next_test = next_test.drop(columns=to_drop)
     for model_name, model_def in params.items():
         if model_def["type"] == "xgboost":
             _oof_preds, _avg_preds = xgboost_train(

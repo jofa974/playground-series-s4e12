@@ -137,6 +137,9 @@ def main(
 
     data_pipeline = make_ensemble_pipeline(pred_columns=pred_columns)
     X_train = data_pipeline.fit_transform(X_train)
+    test_data = test_data[pred_columns]
+    test_data = np.log1p(test_data)
+    X_test = data_pipeline.transform(test_data)
 
     data_pipeline_path = OUT_PATH / "data_pipeline_train_ensemble.pkl"
     pickle.dump(data_pipeline, open(data_pipeline_path, "wb"))
@@ -179,7 +182,7 @@ def main(
     pickle.dump(ensemble_regressors, open(model_path, "wb"))
     logger.info(f"Model saved at {model_path}")
 
-    X_test = data_pipeline.transform(test_data)
+    breakpoint()
     preds = np.expm1(model.predict(X=X_test))
 
     output = pd.read_csv(RAW_DATA_PATH / "sample_submission.csv")
