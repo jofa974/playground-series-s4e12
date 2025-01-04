@@ -1,62 +1,72 @@
 [
     {
-        "train-rmse-mean": 1.0701245070483485,
-        "train-rmse-std": 0.00014672633491930447,
-        "test-rmse-mean": 1.0703812220783366,
-        "test-rmse-std": 0.0006719079503456623
+        "train-rmse-mean": 1.06108138080417,
+        "train-rmse-std": 0.0002565344973340308,
+        "test-rmse-mean": 1.0655885054629657,
+        "test-rmse-std": 0.0007523727854343099,
+        "booster": 0
     },
     {
-        "train-rmse-mean": 1.0571575514052745,
-        "train-rmse-std": 0.00015171593268981334,
-        "test-rmse-mean": 1.057698117737721,
-        "test-rmse-std": 0.000706276147514041
+        "train-rmse-mean": 1.0418030212180702,
+        "train-rmse-std": 0.00024778018372170215,
+        "test-rmse-mean": 1.050405850330137,
+        "test-rmse-std": 0.0008126815876476235,
+        "booster": 1
     },
     {
-        "train-rmse-mean": 1.0506082238247463,
-        "train-rmse-std": 0.00017616450680202052,
-        "test-rmse-mean": 1.0513722760437094,
-        "test-rmse-std": 0.000763984662161936
+        "train-rmse-mean": 1.0306149525927804,
+        "train-rmse-std": 0.0002652736459015471,
+        "test-rmse-mean": 1.042667965545395,
+        "test-rmse-std": 0.000908439457952796,
+        "booster": 2
     },
     {
-        "train-rmse-mean": 1.0472646276298536,
-        "train-rmse-std": 0.00021031325274683697,
-        "test-rmse-mean": 1.0483089017191163,
-        "test-rmse-std": 0.0007746467550970218
+        "train-rmse-mean": 1.02350312137268,
+        "train-rmse-std": 0.0003399575555736394,
+        "test-rmse-mean": 1.0388604469137248,
+        "test-rmse-std": 0.0008594570251681796,
+        "booster": 3
     },
     {
-        "train-rmse-mean": 1.0455097437468466,
-        "train-rmse-std": 0.00021639187566580622,
-        "test-rmse-mean": 1.0468106800914057,
-        "test-rmse-std": 0.0007717392250319691
+        "train-rmse-mean": 1.0190340260887614,
+        "train-rmse-std": 0.00038315004307453695,
+        "test-rmse-mean": 1.0369213417887235,
+        "test-rmse-std": 0.000835723604949523,
+        "booster": 4
     },
     {
-        "train-rmse-mean": 1.0445126841846473,
-        "train-rmse-std": 0.00022902093935094764,
-        "test-rmse-mean": 1.0460950273778635,
-        "test-rmse-std": 0.0007752120187968263
+        "train-rmse-mean": 1.0159245039062015,
+        "train-rmse-std": 0.00045087812087798366,
+        "test-rmse-mean": 1.0359619136898448,
+        "test-rmse-std": 0.0008845748267203456,
+        "booster": 5
     },
     {
-        "train-rmse-mean": 1.0439145420358866,
-        "train-rmse-std": 0.00022312092461939168,
-        "test-rmse-mean": 1.045773558964093,
-        "test-rmse-std": 0.0007957732083382894
+        "train-rmse-mean": 1.0135318718839734,
+        "train-rmse-std": 0.00043987958551208755,
+        "test-rmse-mean": 1.0354913991625252,
+        "test-rmse-std": 0.0009165429952792907,
+        "booster": 6
     },
     {
-        "train-rmse-mean": 1.0435003227352384,
-        "train-rmse-std": 0.0002183368350178016,
-        "test-rmse-mean": 1.0456042672340466,
-        "test-rmse-std": 0.0007839035183844422
+        "train-rmse-mean": 1.0114358055673658,
+        "train-rmse-std": 0.000583415305358707,
+        "test-rmse-mean": 1.0352594799439256,
+        "test-rmse-std": 0.0009360207670890784,
+        "booster": 7
     },
     {
-        "train-rmse-mean": 1.043187857087574,
-        "train-rmse-std": 0.00023288249690408037,
-        "test-rmse-mean": 1.045540325283624,
-        "test-rmse-std": 0.0007813969760406402
+        "train-rmse-mean": 1.0090810097274425,
+        "train-rmse-std": 0.0005042905260317464,
+        "test-rmse-mean": 1.0351433236450287,
+        "test-rmse-std": 0.00093860420746013,
+        "booster": 8
     },
     {
-        "train-rmse-mean": 1.0429455406874468,
-        "train-rmse-std": 0.00022768014579528024,
-        "test-rmse-mean": 1.0455392985457235,
-        "test-rmse-std": 0.0007681773937376727
+        "train-rmse-mean": 1.0076367093260914,
+        "train-rmse-std": 0.0005975909781322414,
+        "test-rmse-mean": 1.035144924564609,
+        "test-rmse-std": 0.0009277095910811348,
+        "booster": 9
     }
 ]

@@ -256,12 +256,12 @@ stages:
     deps:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: 490c2b299c71e0278a61b73ee010ac8a
-      size: 156867066
+      md5: 805a39f7126da10412957ec26ff592ad
+      size: 160489722
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 9c71ad001d3ea518c00cd91a1da5a816
-      size: 101845914
+      md5: fb52d2b6b6a5028c5515e87f1385a37d
+      size: 104293834
     - path: insurance/train_ensemble.py
       hash: md5
       md5: 6a806e8360f7495353ebbdc21d1bb30f
@@ -273,12 +273,12 @@ stages:
     outs:
     - path: out/data_pipeline_train_ensemble.pkl
       hash: md5
-      md5: 8b176456b56b10f52e71bde02509b98b
-      size: 3023
+      md5: 035f73f845aea200d36514d1b13f5419
+      size: 3069
     - path: out/preds.csv
       hash: md5
-      md5: c303fd4b3f22e637084d1d80bf21ed01
-      size: 20754655
+      md5: 86c72dccdf718b46569bc64bd6e87d41
+      size: 20763350
   train_lgbm:
     cmd: poetry run python insurance/train_lgbm.py data/prepared/prepared_data.feather
     deps:
@@ -560,6 +560,15 @@ stages:
     params:
       params.yaml:
         layer_1:
+          xgboost:
+            type: xgboost
+            params:
+              random_state: 12
+              objective: reg:squarederror
+              eval_metric: rmse
+              device: cuda
+              verbosity: 0
+              enable_categorical: true
           catboost:
             type: catboost
             params:
@@ -576,9 +585,9 @@ stages:
     outs:
     - path: data/oof/layer_1.feather
       hash: md5
-      md5: 490c2b299c71e0278a61b73ee010ac8a
-      size: 156867066
+      md5: 805a39f7126da10412957ec26ff592ad
+      size: 160489722
     - path: data/preds/layer_1.feather
       hash: md5
-      md5: 9c71ad001d3ea518c00cd91a1da5a816
-      size: 101845914
+      md5: fb52d2b6b6a5028c5515e87f1385a37d
+      size: 104293834

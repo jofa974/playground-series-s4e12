@@ -1,6 +1,6 @@
 {
     "catboost": {
-        "train-cv-loss": 1.029888565262572,
-        "test-cv-loss": 1.0295887422292822
+        "train-cv-loss": 1.0299024356052962,
+        "test-cv-loss": 1.029627123682777
     }
 }

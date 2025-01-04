@@ -63,15 +63,15 @@ layer_0:
       feature_pre_filter: False
 
 layer_1:
-  # xgboost:
-  #   type: xgboost
-  #   params:
-  #     random_state: 12
-  #     objective: reg:squarederror
-  #     eval_metric: rmse
-  #     device: cuda
-  #     verbosity: 0
-  #     enable_categorical: True
+  xgboost:
+    type: xgboost
+    params:
+      random_state: 12
+      objective: reg:squarederror
+      eval_metric: rmse
+      device: cuda
+      verbosity: 0
+      enable_categorical: True
   catboost:
     type: catboost
     params:
