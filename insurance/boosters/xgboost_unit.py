@@ -36,7 +36,7 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
             enable_categorical=True,
             feature_names=X_train.columns.to_list(),
         )
-        oof_preds[test_index] = model.predict(data=data)
+        oof_preds[test_index] = np.expm1(model.predict(data=data))
     return oof_preds
 
 

@@ -1,34 +1,34 @@
 import pickle
 from pathlib import Path
 
+import dvc.api
 import numpy as np
 import optuna
 import pandas as pd
 import typer
-from typing import Annotated
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
+from typing import Annotated, Optional
+from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.preprocessing import (
     StandardScaler,
 )
-from sklearn.impute import SimpleImputer
 
 from sklearn.linear_model import Ridge
 from sklearn.metrics import root_mean_squared_error
 
 from dvclive import Live
-from insurance.common import OUT_PATH, TARGET_COLUMN, OOF_PREDS_PATH, PREDS_PATH, RAW_DATA_PATH
+from insurance.common import (
+    OUT_PATH,
+    TARGET_COLUMN,
+    OOF_PREDS_PATH,
+    PREDS_PATH,
+    RAW_DATA_PATH,
+    ModelType,
+)
 from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
 
 logger = setup_logger(name="ensemble")
-
-
-PARAMS = {
-    "alpha": 1.6333478843987628,
-    "solver": "saga",
-    "random_state": 42,
-}
 
 
 def tune_ensemble(X_train: pd.DataFrame, y_train: pd.Series):
@@ -83,41 +83,12 @@ def tune_ensemble(X_train: pd.DataFrame, y_train: pd.Series):
 
 
 def make_ensemble_pipeline(pred_columns: list[str]) -> Pipeline:
-    num_transformer = Pipeline([("scaler", StandardScaler())])
-    imputer = Pipeline([("imputer", SimpleImputer(strategy="median"))])
-    pipeline = Pipeline(
-        [
-            # (
-            #     "claims_imputer",
-            #     ColumnTransformer(
-            #         transformers=[
-            #             (
-            #                 "impute",
-            #                 imputer,
-            #                 [
-            #                     "Previous Claims",
-            #                 ],
-            #             ),
-            #         ],
-            #         remainder="passthrough",
-            #         verbose_feature_names_out=False,
-            #     ),
-            # ),
-            (
-                "num_scaler",
-                ColumnTransformer(
-                    transformers=[
-                        (
-                            "num",
-                            num_transformer,
-                            pred_columns,
-                        ),
-                    ],
-                    remainder="drop",
-                    verbose_feature_names_out=False,
-                ),
-            ),
-        ]
+    pipeline = make_pipeline(
+        make_column_transformer(
+            (StandardScaler(), pred_columns),
+            remainder="drop",
+            verbose_feature_names_out=False,
+        )
     )
     pipeline.set_output(transform="pandas")
     return pipeline
@@ -125,25 +96,38 @@ def make_ensemble_pipeline(pred_columns: list[str]) -> Pipeline:
 
 def main(
     previous_layer: Annotated[int, typer.Option(help="Previous layer number")],
+    ensemble_name: Annotated[
+        str, typer.Option(help="Name of ensemble model. Must be an entry in params.yaml:ensemble")
+    ],
+    additional_data: Annotated[
+        Optional[list[Path]],
+        typer.Option(help="Path to additional predictions or features."),
+    ] = None,
 ):
-    train_data = pd.read_feather(OOF_PREDS_PATH / f"layer_{previous_layer}.feather")
-    test_data = pd.read_feather(PREDS_PATH / f"layer_{previous_layer}.feather")
+    params = dvc.api.params_show()
+    try:
+        params = params["ensemble"][ensemble_name]
+    except KeyError as err:
+        msg = f"{ensemble_name} must be defined in params.yaml:ensemble"
+        raise KeyError(msg) from err
 
-    X_train = train_data.drop(columns=[TARGET_COLUMN])
-    y_train = train_data[TARGET_COLUMN]
+    raw_train_data = pd.read_csv(RAW_DATA_PATH / "train.csv")
+    train_data = pd.read_feather(OOF_PREDS_PATH / f"layer_{previous_layer}_concatenated.feather")
+    test_data = pd.read_feather(PREDS_PATH / f"layer_{previous_layer}_concatenated.feather")
+
+    X_train = train_data.drop(columns=[TARGET_COLUMN], errors="ignore")
+    y_train = raw_train_data[TARGET_COLUMN]
+    y_train = np.log1p(y_train)
 
     # Select only predictions of models from last layer
     pred_columns = [col for col in X_train if "_preds" in col]
 
     data_pipeline = make_ensemble_pipeline(pred_columns=pred_columns)
+    X_train = np.log1p(X_train)
     X_train = data_pipeline.fit_transform(X_train)
     test_data = test_data[pred_columns]
     test_data = np.log1p(test_data)
     X_test = data_pipeline.transform(test_data)
-
-    data_pipeline_path = OUT_PATH / "data_pipeline_train_ensemble.pkl"
-    pickle.dump(data_pipeline, open(data_pipeline_path, "wb"))
-    logger.info(f"Data pipeline saved at {data_pipeline_path}")
 
     logger.info(f"Train shape: {X_train.shape=}")
     logger.info(f"Columns: {X_train.columns}")
@@ -157,37 +141,46 @@ def main(
         return
     ensemble_regressors = []
     metrics = {"train-rmse-mean": 0.0, "test-rmse-mean": 0.0}
-    for train_idx, val_idx in folds.split(X_train):
-        model = Ridge()
-        X, X_val = X_train.iloc[train_idx], X_train.iloc[val_idx]
-        y, y_val = y_train.iloc[train_idx], y_train.iloc[val_idx]
 
-        model.fit(X=X, y=y)
-        train_preds = model.predict(X=X)
-        train_rmse = root_mean_squared_error(y_true=y, y_pred=train_preds)
-        val_preds = model.predict(X=X_val)
-        val_rmse = root_mean_squared_error(y_true=y_val, y_pred=val_preds)
-        metrics["train-rmse-mean"] += train_rmse / n_splits
-        metrics["test-rmse-mean"] += val_rmse / n_splits
-        ensemble_regressors.append(model)
+    if params["type"] == ModelType.SKLEARN.value:
+        cap_class = params["class"].capitalize()
+        mod = __import__("sklearn.linear_model", fromlist=[cap_class])
+        sklearn_model = getattr(mod, cap_class)
+        logger.info(f"Loaded {cap_class} from sklearn")
 
-    live_dir = Path("dvclive/ensemble/")
-    live_dir.mkdir(parents=True, exist_ok=True)
-    with Live(dir=str(live_dir)) as live:
-        live.log_metric("ensemble/train-cv-loss", metrics["train-rmse-mean"])
-        live.log_metric("ensemble/test-cv-loss", metrics["test-rmse-mean"])
+        for train_idx, val_idx in folds.split(X_train):
+            model = sklearn_model(**params["params"])
+            X, X_val = X_train.iloc[train_idx], X_train.iloc[val_idx]
+            y, y_val = y_train.iloc[train_idx], y_train.iloc[val_idx]
 
-    model_path = OUT_PATH / "models/ensemble_model.pkl"
-    model_path.parent.mkdir(parents=True, exist_ok=True)
-    pickle.dump(ensemble_regressors, open(model_path, "wb"))
-    logger.info(f"Model saved at {model_path}")
+            model.fit(X=X, y=y)
+            train_preds = model.predict(X=X)
+            train_rmse = root_mean_squared_error(y_true=y, y_pred=train_preds)
+            val_preds = model.predict(X=X_val)
+            val_rmse = root_mean_squared_error(y_true=y_val, y_pred=val_preds)
+            metrics["train-rmse-mean"] += train_rmse / n_splits
+            metrics["test-rmse-mean"] += val_rmse / n_splits
+            ensemble_regressors.append(model)
+        live_dir = Path(f"dvclive/ensemble_{ensemble_name}/")
+        live_dir.mkdir(parents=True, exist_ok=True)
+        with Live(dir=str(live_dir)) as live:
+            live.log_metric(f"ensemble_{ensemble_name}/train-cv-loss", metrics["train-rmse-mean"])
+            live.log_metric(f"ensemble_{ensemble_name}/test-cv-loss", metrics["test-rmse-mean"])
 
-    breakpoint()
-    preds = np.expm1(model.predict(X=X_test))
+        model_path = OUT_PATH / f"models/ensemble_model_{ensemble_name}.pkl"
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+        pickle.dump(ensemble_regressors, open(model_path, "wb"))
+        logger.info(f"Model saved at {model_path}")
+
+        preds = np.expm1(model.predict(X=X_test))
+
+    elif params["class"] == "hill-climbing":
+        logger.info("Calling Hill Climbing")
+        raise NotImplementedError
 
     output = pd.read_csv(RAW_DATA_PATH / "sample_submission.csv")
     output["Premium Amount"] = preds
-    predictions_path = OUT_PATH / "preds.csv"
+    predictions_path = OUT_PATH / f"preds_{ensemble_name}.csv"
     output.to_csv(predictions_path, index=False)
     logger.info(f"Final prediction on test set saved at {predictions_path}")
 

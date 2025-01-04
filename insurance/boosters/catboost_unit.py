@@ -24,7 +24,7 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
     splits = folds.split(X_train)
     for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
-        oof_preds[test_index] = model.predict(data=X_train.loc[test_index, :])
+        oof_preds[test_index] = np.expm1(model.predict(data=X_train.loc[test_index, :]))
     return oof_preds
 
 

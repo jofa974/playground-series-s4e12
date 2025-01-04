@@ -132,8 +132,8 @@ class DateTransformer(BaseEstimator, TransformerMixin):
 
         X.drop(columns=["time_from_first_policy", self.date_column], inplace=True)
 
-        for col in feat_cols.numeric:
-            X[f"cat_{col}"] = X[col].astype("string")
+        # for col in feat_cols.numeric:
+        #     X[f"cat_{col}"] = X[col].astype("string")
 
         # Return a pandas DataFrame with consistent column names
         return X

@@ -1,4 +1,5 @@
 from pathlib import Path
+from enum import Enum
 
 TARGET_COLUMN = "Premium Amount"
 
@@ -10,3 +11,12 @@ OOF_PREDS_PATH = Path(__file__).parent.parent / "data/oof/"
 PREDS_PATH = Path(__file__).parent.parent / "data/preds"
 
 OUT_PATH = Path(__file__).parent.parent / "out/"
+
+
+class ModelType(Enum):
+    XGBOOST = "xgboost"
+    CATBOOST = "catboost"
+    LGBM = "lgbm"
+    SKLEARN = "sklearn"
+    TORCH = "torch"
+    CUSTOM = "custom"

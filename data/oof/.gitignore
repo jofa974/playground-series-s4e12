@@ -6,3 +6,7 @@
 /catboost_layer_1.feather
 /layer_0.feather
 /layer_1.feather
+/layer_0_model_xgboost.feather
+/layer_0_model_catboost.feather
+/layer_0_model_lgbm_simple.feather
+/layer_0_concatenated.feather

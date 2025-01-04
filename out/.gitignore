@@ -1,7 +1,1 @@
-/xgboost_model_params.yaml
-/data_pipeline_train_xgboost.pkl
-/data_pipeline_train_catboost.pkl
-/data_pipeline_train_ensemble.pkl
-/data_pipeline_train_lgbm.pkl
-/preds.csv
-/data_pipeline_train.pkl
+/preds_ridge.csv

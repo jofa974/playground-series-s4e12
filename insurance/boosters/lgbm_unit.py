@@ -7,7 +7,7 @@ import pandas as pd
 
 from dvclive import Live
 from insurance.common import OUT_PATH, TARGET_COLUMN
-from insurance.data_pipeline import get_feat_columns, get_folds
+from insurance.data_pipeline import get_folds
 from insurance.logger import setup_logger
 
 logger = setup_logger(name="lgbm")
@@ -23,8 +23,10 @@ def get_oof_preds(X_train: pd.DataFrame, model_path: Path) -> np.ndarray[np.floa
     splits = folds.split(X_train)
     for i, ((_, test_index), model) in enumerate(zip(splits, models)):
         logger.info(f"Predicting OOF -- {i+1}/{len(models)}")
-        oof_preds[test_index] = model.predict(
-            X_train.loc[test_index, :],
+        oof_preds[test_index] = np.expm1(
+            model.predict(
+                X_train.loc[test_index, :],
+            )
         )
     return oof_preds
 

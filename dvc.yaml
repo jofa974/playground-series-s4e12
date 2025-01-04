@@ -19,52 +19,56 @@ stages:
     - out/data_pipeline_train.pkl
 
   train_layer_0:
-    cmd: poetry run python insurance/train_layer.py --layer 0
+    foreach: ${layer_0}
+    do:
+      cmd: poetry run python insurance/train_unit.py --layer 0 --model-name ${key}
+        --model-type ${item.type}
+      deps:
+      - data/prepared/train_data.feather
+      - data/prepared/test_data.feather
+      - insurance/train_unit.py
+      outs:
+      - data/oof/layer_0/model_${key}.feather
+      - data/preds/layer_0/model_${key}.feather
+
+
+  summarize_layer_0:
+    cmd: poetry run python insurance/summarize_layer.py --layer 0
     params:
     - layer_0
     deps:
-    - data/prepared/train_data.feather
-    - data/prepared/test_data.feather
-    - insurance/train_layer.py
+    - data/oof/layer_0/
+    - data/preds/layer_0/
     outs:
-    - data/oof/layer_0.feather
-    - data/preds/layer_0.feather
+    - data/oof/layer_0_concatenated.feather
+    - data/preds/layer_0_concatenated.feather
 
-  train_layer_1:
-    cmd: poetry run python insurance/train_layer.py --layer 1
-    params:
-    - layer_1
-    deps:
-    - data/oof/layer_0.feather
-    - data/preds/layer_0.feather
-    - insurance/train_layer.py
-    outs:
-    - data/oof/layer_1.feather
-    - data/preds/layer_1.feather
 
   train_ensemble:
-    cmd: poetry run python insurance/train_ensemble.py --previous-layer 1
-    params:
-    - ensemble
-    deps:
-    - data/oof/layer_1.feather
-    - data/preds/layer_1.feather
-    - insurance/train_ensemble.py
-    outs:
-    - out/data_pipeline_train_ensemble.pkl
-    - out/preds.csv # Final submission to kaggle
+    foreach: ${ensemble}
+    do:
+      cmd: poetry run python insurance/train_ensemble.py --previous-layer ${item.prev_layer}
+        --ensemble-name ${key}
+      deps:
+      - data/oof/layer_${item.prev_layer}_concatenated.feather
+      - data/preds/layer_${item.prev_layer}_concatenated.feather
+      - insurance/train_ensemble.py
+      outs:
+      - out/preds_${key}.csv   # Can be final submission to kaggle
+
 
 
 metrics:
 - dvclive/xgboost_simple_layer_0/metrics.json
-- dvclive/xgboost_layer_0/metrics.json
-- dvclive/catboost_layer_0/metrics.json
 - dvclive/lgbm_layer_0/metrics.json
-- dvclive/lgbm_simple_layer_0/metrics.json
 - dvclive/xgboost_layer_1/metrics.json
 - dvclive/catboost_layer_1/metrics.json
 - dvclive/lgbm_layer_1/metrics.json
 - dvclive/ensemble/metrics.json
+- dvclive/xgboost_layer_0/metrics.json
+- dvclive/catboost_layer_0/metrics.json
+- dvclive/lgbm_simple_layer_0/metrics.json
+- dvclive/ensemble_{ensemble_name}/metrics.json
 plots:
 - dvclive/xgboost_simple_layer_0/plots/metrics:
     x: step
@@ -76,38 +80,9 @@ plots:
     - test-rmse-mean
     x_label: RMSLE
     y_label: Booster
-- dvclive/xgboost_layer_0/plots/metrics:
-    x: step
-- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
-    template: linear
-    x: booster
-    y:
-    - train-rmse-mean
-    - test-rmse-mean
-    x_label: Booster
-    y_label: RMSLE
-- dvclive/catboost_layer_0/plots/metrics:
-    x: step
-- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss 0.json:
-    template: linear
-    x: iterations
-    y:
-    - train-RMSE-mean
-    - test-RMSE-mean
-    x_label: Booster
-    y_label: RMSLE
 - dvclive/lgbm_layer_0/plots/metrics:
     x: step
 - dvclive/lgbm_layer_0/plots/custom/LGBM CV Loss 0.json:
-    template: linear
-    x: x
-    y:
-    - valid rmse-mean
-    x_label: Booster
-    y_label: RMSLE
-- dvclive/lgbm_simple_layer_0/plots/metrics:
-    x: step
-- dvclive/lgbm_simple_layer_0/plots/custom/LGBM CV Loss 0.json:
     template: linear
     x: x
     y:
@@ -144,4 +119,35 @@ plots:
     x_label: Booster
     y_label: RMSLE
 - dvclive/ensemble/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/metrics:
+    x: step
+- dvclive/xgboost_layer_0/plots/custom/XGBoost CV Loss Layer 0.json:
+    template: linear
+    x: booster
+    y:
+    - train-rmse-mean
+    - test-rmse-mean
+    x_label: Booster
+    y_label: RMSLE
+- dvclive/catboost_layer_0/plots/metrics:
+    x: step
+- dvclive/catboost_layer_0/plots/custom/Catboost CV Loss 0.json:
+    template: linear
+    x: iterations
+    y:
+    - train-RMSE-mean
+    - test-RMSE-mean
+    x_label: Booster
+    y_label: RMSLE
+- dvclive/lgbm_simple_layer_0/plots/metrics:
+    x: step
+- dvclive/lgbm_simple_layer_0/plots/custom/LGBM CV Loss 0.json:
+    template: linear
+    x: x
+    y:
+    - valid rmse-mean
+    x_label: Booster
+    y_label: RMSLE
+- dvclive/ensemble_{ensemble_name}/plots/metrics:
     x: step
