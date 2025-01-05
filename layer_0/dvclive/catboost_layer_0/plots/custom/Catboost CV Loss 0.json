@@ -1,0 +1,72 @@
+[
+    {
+        "iterations": 0,
+        "test-RMSE-mean": 3.4689676038933213,
+        "test-RMSE-std": 0.003189462852043423,
+        "train-RMSE-mean": 3.468961583402252,
+        "train-RMSE-std": 0.0003811375709701595
+    },
+    {
+        "iterations": 1,
+        "test-RMSE-mean": 1.9663915202442734,
+        "test-RMSE-std": 0.0028558116365186396,
+        "train-RMSE-mean": 1.9663816504091436,
+        "train-RMSE-std": 0.00018658402741543863
+    },
+    {
+        "iterations": 2,
+        "test-RMSE-mean": 1.3491042614670696,
+        "test-RMSE-std": 0.0020757226831248764,
+        "train-RMSE-mean": 1.349079629114151,
+        "train-RMSE-std": 0.00013078715988600786
+    },
+    {
+        "iterations": 3,
+        "test-RMSE-mean": 1.1419465973238676,
+        "test-RMSE-std": 0.0012885240784715436,
+        "train-RMSE-mean": 1.141912414436132,
+        "train-RMSE-std": 0.00016632664997201824
+    },
+    {
+        "iterations": 4,
+        "test-RMSE-mean": 1.0825644422405394,
+        "test-RMSE-std": 0.0009087684634388559,
+        "train-RMSE-mean": 1.0825599329794973,
+        "train-RMSE-std": 9.442209890744892e-05
+    },
+    {
+        "iterations": 5,
+        "test-RMSE-mean": 1.0660062273229436,
+        "test-RMSE-std": 0.0006191143252554645,
+        "train-RMSE-mean": 1.065946934170379,
+        "train-RMSE-std": 0.00035756602567586424
+    },
+    {
+        "iterations": 6,
+        "test-RMSE-mean": 1.0610198338394876,
+        "test-RMSE-std": 0.0005237973038070446,
+        "train-RMSE-mean": 1.0609888878693219,
+        "train-RMSE-std": 0.0003637641508179913
+    },
+    {
+        "iterations": 7,
+        "test-RMSE-mean": 1.058910419565969,
+        "test-RMSE-std": 0.0005095459050338838,
+        "train-RMSE-mean": 1.0588293910746374,
+        "train-RMSE-std": 0.0003746050907110338
+    },
+    {
+        "iterations": 8,
+        "test-RMSE-mean": 1.0578783990244935,
+        "test-RMSE-std": 0.0004580902946870382,
+        "train-RMSE-mean": 1.0577842398734734,
+        "train-RMSE-std": 0.000600347432200842
+    },
+    {
+        "iterations": 9,
+        "test-RMSE-mean": 1.0570205888450663,
+        "test-RMSE-std": 0.000722379715609402,
+        "train-RMSE-mean": 1.0569125328100948,
+        "train-RMSE-std": 0.0005841542501857284
+    }
+]

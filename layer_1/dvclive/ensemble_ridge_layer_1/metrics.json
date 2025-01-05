@@ -1,0 +1,6 @@
+{
+    "ensemble_ridge_layer_1": {
+        "train-cv-loss": 1.0463767593541804,
+        "test-cv-loss": 1.0463969185562818
+    }
+}

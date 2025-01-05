@@ -1,7 +1,9 @@
 data:
   random_state: 42
 
-layer_0:
+layer: 0
+
+models:
   xgboost:
     type: xgboost
     params:
@@ -51,41 +53,8 @@ layer_0:
       metric: rmse
       feature_pre_filter: False
 
-layer_1:
-  xgboost:
-    type: xgboost
-    params:
-      random_state: 12
-      objective: reg:squarederror
-      eval_metric: rmse
-      device: cuda
-      verbosity: 0
-      enable_categorical: True
-  catboost:
-    type: catboost
-    params:
-      iterations: 200
-      loss_function: RMSE
-      task_type: GPU
-      random_seed: 12
-  lgbm: 
-    type: lgbm
-    params:
-      objective: regression
-      metric: rmse
-      feature_pre_filter: False
-
 ensemble:
   ridge:
-    layer: 0
-    type: sklearn
-    class: ridge
-    params:
-      alpha: 1.6333478843987628
-      solver: saga
-      random_state: 41
-  ridge_1:
-    layer: 1
     type: sklearn
     class: ridge
     params:

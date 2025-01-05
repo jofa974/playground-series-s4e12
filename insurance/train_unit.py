@@ -19,8 +19,8 @@ def main(
 ):
     logger = setup_logger(name=f"Layer {layer}")
 
-    params = dvc.api.params_show()
-    params = params[f"layer_{layer}"][model_name]["params"]
+    params = dvc.api.params_show(f"layer_{layer}/params.yaml")
+    params = params["models"][model_name]["params"]
 
     train_data = pd.read_feather(PREP_DATA_PATH / "train_data.feather")
     test_data = pd.read_feather(PREP_DATA_PATH / "test_data.feather")

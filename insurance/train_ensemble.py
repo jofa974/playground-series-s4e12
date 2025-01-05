@@ -104,7 +104,7 @@ def main(
         typer.Option(help="Path to additional predictions or features."),
     ] = None,
 ):
-    params = dvc.api.params_show()
+    params = dvc.api.params_show(f"layer_{layer}/params.yaml")
     try:
         params = params["ensemble"][ensemble_name]
     except KeyError as err:
