@@ -27,10 +27,12 @@ def main(
 
     if layer != 0:
         train_data = pd.concat(
-            [train_data, pd.read_feather(OOF_PREDS_PATH / f"layer_{layer-1}.feather")], axis=1
+            [train_data, pd.read_feather(OOF_PREDS_PATH / f"layer_{layer-1}_concatenated.feather")],
+            axis=1,
         )
         test_data = pd.concat(
-            [test_data, pd.read_feather(PREDS_PATH / f"layer_{layer-1}.feather")], axis=1
+            [test_data, pd.read_feather(PREDS_PATH / f"layer_{layer-1}_concatenated.feather")],
+            axis=1,
         )
         for col in train_data.columns:
             if "_preds" in col:

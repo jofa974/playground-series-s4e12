@@ -95,7 +95,7 @@ def make_ensemble_pipeline(pred_columns: list[str]) -> Pipeline:
 
 
 def main(
-    previous_layer: Annotated[int, typer.Option(help="Previous layer number")],
+    layer: Annotated[int, typer.Option(help="Layer number")],
     ensemble_name: Annotated[
         str, typer.Option(help="Name of ensemble model. Must be an entry in params.yaml:ensemble")
     ],
@@ -112,12 +112,18 @@ def main(
         raise KeyError(msg) from err
 
     raw_train_data = pd.read_csv(RAW_DATA_PATH / "train.csv")
-    train_data = pd.read_feather(OOF_PREDS_PATH / f"layer_{previous_layer}_concatenated.feather")
-    test_data = pd.read_feather(PREDS_PATH / f"layer_{previous_layer}_concatenated.feather")
-
-    X_train = train_data.drop(columns=[TARGET_COLUMN], errors="ignore")
     y_train = raw_train_data[TARGET_COLUMN]
     y_train = np.log1p(y_train)
+
+    train_data_path = OOF_PREDS_PATH / f"layer_{layer}_concatenated.feather"
+    train_data = pd.read_feather(train_data_path)
+    logger.info(f"Read train data {train_data_path}")
+
+    test_data_path = PREDS_PATH / f"layer_{layer}_concatenated.feather"
+    test_data = pd.read_feather(test_data_path)
+    logger.info(f"Read train data {test_data_path}")
+
+    X_train = train_data.drop(columns=[TARGET_COLUMN], errors="ignore")
 
     # Select only predictions of models from last layer
     pred_columns = [col for col in X_train if "_preds" in col]
@@ -161,13 +167,19 @@ def main(
             metrics["train-rmse-mean"] += train_rmse / n_splits
             metrics["test-rmse-mean"] += val_rmse / n_splits
             ensemble_regressors.append(model)
-        live_dir = Path(f"dvclive/ensemble_{ensemble_name}/")
+        live_dir = Path(f"dvclive/ensemble_{ensemble_name}_layer_{layer}/")
         live_dir.mkdir(parents=True, exist_ok=True)
         with Live(dir=str(live_dir)) as live:
-            live.log_metric(f"ensemble_{ensemble_name}/train-cv-loss", metrics["train-rmse-mean"])
-            live.log_metric(f"ensemble_{ensemble_name}/test-cv-loss", metrics["test-rmse-mean"])
+            live.log_metric(
+                f"ensemble_{ensemble_name}_layer_{layer}/train-cv-loss",
+                metrics["train-rmse-mean"],
+            )
+            live.log_metric(
+                f"ensemble_{ensemble_name}_layer_{layer}/test-cv-loss",
+                metrics["test-rmse-mean"],
+            )
 
-        model_path = OUT_PATH / f"models/ensemble_model_{ensemble_name}.pkl"
+        model_path = OUT_PATH / f"models/ensemble_model_{ensemble_name}_layer_{layer}.pkl"
         model_path.parent.mkdir(parents=True, exist_ok=True)
         pickle.dump(ensemble_regressors, open(model_path, "wb"))
         logger.info(f"Model saved at {model_path}")
@@ -180,7 +192,7 @@ def main(
 
     output = pd.read_csv(RAW_DATA_PATH / "sample_submission.csv")
     output["Premium Amount"] = preds
-    predictions_path = OUT_PATH / f"preds_{ensemble_name}.csv"
+    predictions_path = OUT_PATH / f"layer_{layer}_preds_{ensemble_name}.csv"
     output.to_csv(predictions_path, index=False)
     logger.info(f"Final prediction on test set saved at {predictions_path}")
 

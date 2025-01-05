@@ -77,7 +77,15 @@ layer_1:
 
 ensemble:
   ridge:
-    prev_layer: 0
+    layer: 0
+    type: sklearn
+    class: ridge
+    params:
+      alpha: 1.6333478843987628
+      solver: saga
+      random_state: 41
+  ridge_1:
+    layer: 1
     type: sklearn
     class: ridge
     params:
@@ -88,3 +96,5 @@ ensemble:
   #   prev_layer: 0
   #   type: custom
   #   class: hill-climbing
+
+

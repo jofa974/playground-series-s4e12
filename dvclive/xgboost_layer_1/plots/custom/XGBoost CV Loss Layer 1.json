@@ -1,72 +1,72 @@
 [
     {
-        "train-rmse-mean": 1.06108138080417,
-        "train-rmse-std": 0.0002565344973340308,
-        "test-rmse-mean": 1.0655885054629657,
-        "test-rmse-std": 0.0007523727854343099,
+        "train-rmse-mean": 1.0708463302253655,
+        "train-rmse-std": 0.00014704353198443935,
+        "test-rmse-mean": 1.071101224748272,
+        "test-rmse-std": 0.0007067852174617473,
         "booster": 0
     },
     {
-        "train-rmse-mean": 1.0418030212180702,
-        "train-rmse-std": 0.00024778018372170215,
-        "test-rmse-mean": 1.050405850330137,
-        "test-rmse-std": 0.0008126815876476235,
+        "train-rmse-mean": 1.058255115556517,
+        "train-rmse-std": 0.00016546417785921064,
+        "test-rmse-mean": 1.0587418328691607,
+        "test-rmse-std": 0.0007566494809940273,
         "booster": 1
     },
     {
-        "train-rmse-mean": 1.0306149525927804,
-        "train-rmse-std": 0.0002652736459015471,
-        "test-rmse-mean": 1.042667965545395,
-        "test-rmse-std": 0.000908439457952796,
+        "train-rmse-mean": 1.0518581635418873,
+        "train-rmse-std": 0.0001734145205503522,
+        "test-rmse-mean": 1.052611660667639,
+        "test-rmse-std": 0.0007683306401477914,
         "booster": 2
     },
     {
-        "train-rmse-mean": 1.02350312137268,
-        "train-rmse-std": 0.0003399575555736394,
-        "test-rmse-mean": 1.0388604469137248,
-        "test-rmse-std": 0.0008594570251681796,
+        "train-rmse-mean": 1.0484947100668456,
+        "train-rmse-std": 0.00016274300882011296,
+        "test-rmse-mean": 1.0495388148984928,
+        "test-rmse-std": 0.0007435817097671,
         "booster": 3
     },
     {
-        "train-rmse-mean": 1.0190340260887614,
-        "train-rmse-std": 0.00038315004307453695,
-        "test-rmse-mean": 1.0369213417887235,
-        "test-rmse-std": 0.000835723604949523,
+        "train-rmse-mean": 1.0467145019299384,
+        "train-rmse-std": 0.00018638132384786257,
+        "test-rmse-mean": 1.048017393021377,
+        "test-rmse-std": 0.0007037906622366419,
         "booster": 4
     },
     {
-        "train-rmse-mean": 1.0159245039062015,
-        "train-rmse-std": 0.00045087812087798366,
-        "test-rmse-mean": 1.0359619136898448,
-        "test-rmse-std": 0.0008845748267203456,
+        "train-rmse-mean": 1.0457177668863127,
+        "train-rmse-std": 0.000160629854148575,
+        "test-rmse-mean": 1.0472583526565893,
+        "test-rmse-std": 0.0006893460990338487,
         "booster": 5
     },
     {
-        "train-rmse-mean": 1.0135318718839734,
-        "train-rmse-std": 0.00043987958551208755,
-        "test-rmse-mean": 1.0354913991625252,
-        "test-rmse-std": 0.0009165429952792907,
+        "train-rmse-mean": 1.0451037375353456,
+        "train-rmse-std": 0.0001656772220390113,
+        "test-rmse-mean": 1.0468806008442981,
+        "test-rmse-std": 0.0006808809145349104,
         "booster": 6
     },
     {
-        "train-rmse-mean": 1.0114358055673658,
-        "train-rmse-std": 0.000583415305358707,
-        "test-rmse-mean": 1.0352594799439256,
-        "test-rmse-std": 0.0009360207670890784,
+        "train-rmse-mean": 1.0446865969646653,
+        "train-rmse-std": 0.0001862191594987112,
+        "test-rmse-mean": 1.0466958232288472,
+        "test-rmse-std": 0.0006551153505136108,
         "booster": 7
     },
     {
-        "train-rmse-mean": 1.0090810097274425,
-        "train-rmse-std": 0.0005042905260317464,
-        "test-rmse-mean": 1.0351433236450287,
-        "test-rmse-std": 0.00093860420746013,
+        "train-rmse-mean": 1.0443684595971003,
+        "train-rmse-std": 0.00020917676564465934,
+        "test-rmse-mean": 1.0466208573972726,
+        "test-rmse-std": 0.0006623970336137922,
         "booster": 8
     },
     {
-        "train-rmse-mean": 1.0076367093260914,
-        "train-rmse-std": 0.0005975909781322414,
-        "test-rmse-mean": 1.035144924564609,
-        "test-rmse-std": 0.0009277095910811348,
+        "train-rmse-mean": 1.0440878531486377,
+        "train-rmse-std": 0.00021697677252101945,
+        "test-rmse-mean": 1.0465861192849406,
+        "test-rmse-std": 0.0006599525097012132,
         "booster": 9
     }
 ]

@@ -317,8 +317,8 @@ stages:
       size: 117106410
     - path: insurance/train_unit.py
       hash: md5
-      md5: 0ec439ef9a8f120a2f8105c8c99f947f
-      size: 3097
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
     - path: data/oof/layer_0/model_xgboost.feather
       hash: md5
@@ -329,33 +329,30 @@ stages:
       md5: 63eeb634498da278a43a3e25887af002
       size: 4570122
   train_layer_1@xgboost:
-    cmd: poetry run python insurance/train_xgboost.py --layer 1 --model-name xgboost
+    cmd: poetry run python insurance/train_unit.py --layer 1 --model-name xgboost
+      --model-type xgboost
     deps:
-    - path: data/oof/catboost_layer_0.feather
+    - path: data/oof/layer_0_concatenated.feather
       hash: md5
-      md5: 8ba0c284116c51b2caaac17554f6fca1
-      size: 145258162
-    - path: data/oof/lgbm_layer_0.feather
+      md5: c76b2990287d208ecc2989b961bb1550
+      size: 13541578
+    - path: data/preds/layer_0_concatenated.feather
       hash: md5
-      md5: b15859f9d6cd8bac6a7ce1b311fef157
-      size: 145258138
-    - path: data/oof/xgboost_layer_0.feather
+      md5: a71871250164e658838415620d8bf403
+      size: 9340938
+    - path: insurance/train_unit.py
       hash: md5
-      md5: 9ff83257916b443774b6a2938000de27
-      size: 141852058
-    - path: insurance/train_xgboost.py
-      hash: md5
-      md5: b0ce08c44dfdd48eeb0c0a68c2738538
-      size: 4205
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
-    - path: data/oof/xgboost_layer_1.feather
+    - path: data/oof/layer_1/model_xgboost.feather
       hash: md5
-      md5: f052c525f9beed50150dfcda73f49414
-      size: 167216986
-    - path: out/models/xgboost_model_layer_1.pkl
+      md5: 2290513a38c17c7662a9c55c5a2a53a9
+      size: 5636450
+    - path: data/preds/layer_1/model_xgboost.feather
       hash: md5
-      md5: b588d473ce6a612dd508961074119b81
-      size: 479510
+      md5: c7aa89b21e19e93ddd707a4c3448b9cf
+      size: 4592226
   train_layer_0@catboost:
     cmd: poetry run python insurance/train_unit.py --layer 0 --model-name catboost
       --model-type catboost
@@ -370,8 +367,8 @@ stages:
       size: 117106410
     - path: insurance/train_unit.py
       hash: md5
-      md5: 0ec439ef9a8f120a2f8105c8c99f947f
-      size: 3097
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
     - path: data/oof/layer_0/model_catboost.feather
       hash: md5
@@ -410,61 +407,55 @@ stages:
       md5: 445ee0c4b060cfc9e4063003fa7ca1fd
       size: 3093608
   train_layer_1@lgbm:
-    cmd: poetry run python insurance/train_lgbm.py --layer 1 --model-name lgbm
+    cmd: poetry run python insurance/train_unit.py --layer 1 --model-name lgbm --model-type
+      lgbm
     deps:
-    - path: data/oof/catboost_layer_0.feather
+    - path: data/oof/layer_0_concatenated.feather
       hash: md5
-      md5: 8ba0c284116c51b2caaac17554f6fca1
-      size: 145258162
-    - path: data/oof/lgbm_layer_0.feather
+      md5: c76b2990287d208ecc2989b961bb1550
+      size: 13541578
+    - path: data/preds/layer_0_concatenated.feather
       hash: md5
-      md5: b15859f9d6cd8bac6a7ce1b311fef157
-      size: 145258138
-    - path: data/oof/xgboost_layer_0.feather
+      md5: a71871250164e658838415620d8bf403
+      size: 9340938
+    - path: insurance/train_unit.py
       hash: md5
-      md5: 9ff83257916b443774b6a2938000de27
-      size: 141852058
-    - path: insurance/train_lgbm.py
-      hash: md5
-      md5: 82500739892e18721142e3f69744a64b
-      size: 3669
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
-    - path: data/oof/lgbm_layer_1.feather
+    - path: data/oof/layer_1/model_lgbm.feather
       hash: md5
-      md5: 5d192e353acddea514ad9bc717448d85
-      size: 170659114
-    - path: out/models/lgbm_model_layer_1.pkl
+      md5: cf630c700f503901762e70b2e7cba020
+      size: 4314378
+    - path: data/preds/layer_1/model_lgbm.feather
       hash: md5
-      md5: 360585f8ee2d973ff8d2a98ca62515ad
-      size: 1484136
+      md5: c6c2373ecefb019c7bf20b6214c1dcf3
+      size: 3150994
   train_layer_1@catboost:
-    cmd: poetry run python insurance/train_catboost.py --layer 1 --model-name catboost
+    cmd: poetry run python insurance/train_unit.py --layer 1 --model-name catboost
+      --model-type catboost
     deps:
-    - path: data/oof/catboost_layer_0.feather
+    - path: data/oof/layer_0_concatenated.feather
       hash: md5
-      md5: 8ba0c284116c51b2caaac17554f6fca1
-      size: 145258162
-    - path: data/oof/lgbm_layer_0.feather
+      md5: c76b2990287d208ecc2989b961bb1550
+      size: 13541578
+    - path: data/preds/layer_0_concatenated.feather
       hash: md5
-      md5: b15859f9d6cd8bac6a7ce1b311fef157
-      size: 145258138
-    - path: data/oof/xgboost_layer_0.feather
+      md5: a71871250164e658838415620d8bf403
+      size: 9340938
+    - path: insurance/train_unit.py
       hash: md5
-      md5: 9ff83257916b443774b6a2938000de27
-      size: 141852058
-    - path: insurance/train_catboost.py
-      hash: md5
-      md5: e3ec18a1dc272c7e5adfd49301158f40
-      size: 5502
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
-    - path: data/oof/catboost_layer_1.feather
+    - path: data/oof/layer_1/model_catboost.feather
       hash: md5
-      md5: 03dffa9720f68ea27ee7b7d72088102f
-      size: 170659138
-    - path: out/models/catboost_model_layer_1.pkl
+      md5: d84f5f32c967e77b5ed495588c9b2a4c
+      size: 9605866
+    - path: data/preds/layer_1/model_catboost.feather
       hash: md5
-      md5: 34b4e4cb196f1d5b72cb947cc36c99ca
-      size: 5819441
+      md5: c7a9fc50e862fbdbd5db9da224d40439
+      size: 6404426
   train_layer_0:
     cmd: poetry run python insurance/train_layer.py --layer 0
     deps:
@@ -599,8 +590,8 @@ stages:
       size: 117106410
     - path: insurance/train_unit.py
       hash: md5
-      md5: 0ec439ef9a8f120a2f8105c8c99f947f
-      size: 3097
+      md5: 0a8ed0e0f265b3393cad3d89278bced4
+      size: 3149
     outs:
     - path: data/oof/layer_0/model_lgbm_simple.feather
       hash: md5
@@ -667,8 +658,7 @@ stages:
       md5: a71871250164e658838415620d8bf403
       size: 9340938
   train_ensemble@ridge:
-    cmd: poetry run python insurance/train_ensemble.py --previous-layer 0 --ensemble-name
-      ridge
+    cmd: poetry run python insurance/train_ensemble.py --layer 0 --ensemble-name ridge
     deps:
     - path: data/oof/layer_0_concatenated.feather
       hash: md5
@@ -680,10 +670,77 @@ stages:
       size: 9340938
     - path: insurance/train_ensemble.py
       hash: md5
-      md5: 4a3669154c3c1e4588003d031fe60d21
-      size: 6664
+      md5: a64e973e80143c3eb20dde8de9f6099f
+      size: 6955
     outs:
-    - path: out/preds_ridge.csv
+    - path: out/layer_0_preds_ridge.csv
       hash: md5
       md5: 3608c821f8bdb89ce759c13bb2bd156b
       size: 20738853
+  summarize_layer_1:
+    cmd: poetry run python insurance/summarize_layer.py --layer 1
+    deps:
+    - path: data/oof/layer_1/
+      hash: md5
+      md5: 157845e0cbe205507803c19f549b5594.dir
+      size: 19556761
+      nfiles: 4
+    - path: data/preds/layer_1/
+      hash: md5
+      md5: 5d4b1b25993f850b03ab20bec0987777.dir
+      size: 14147713
+      nfiles: 4
+    params:
+      params.yaml:
+        layer_1:
+          xgboost:
+            type: xgboost
+            params:
+              random_state: 12
+              objective: reg:squarederror
+              eval_metric: rmse
+              device: cuda
+              verbosity: 0
+              enable_categorical: true
+          catboost:
+            type: catboost
+            params:
+              iterations: 200
+              loss_function: RMSE
+              task_type: GPU
+              random_seed: 12
+          lgbm:
+            type: lgbm
+            params:
+              objective: regression
+              metric: rmse
+              feature_pre_filter: false
+    outs:
+    - path: data/oof/layer_1_concatenated.feather
+      hash: md5
+      md5: abdb91bf053ae4bb3cd11d7b5fa21660
+      size: 19549602
+    - path: data/preds/layer_1_concatenated.feather
+      hash: md5
+      md5: 78485c6c9ba2b32176c99860522d6508
+      size: 14142202
+  train_ensemble@ridge_1:
+    cmd: poetry run python insurance/train_ensemble.py --layer 1 --ensemble-name ridge_1
+    deps:
+    - path: data/oof/layer_1_concatenated.feather
+      hash: md5
+      md5: abdb91bf053ae4bb3cd11d7b5fa21660
+      size: 19549602
+    - path: data/preds/layer_1_concatenated.feather
+      hash: md5
+      md5: 78485c6c9ba2b32176c99860522d6508
+      size: 14142202
+    - path: insurance/train_ensemble.py
+      hash: md5
+      md5: a64e973e80143c3eb20dde8de9f6099f
+      size: 6955
+    outs:
+    - path: out/layer_1_preds_ridge_1.csv
+      hash: md5
+      md5: 22fa558614ab010fda3b57886b5c1d5d
+      size: 20739784
